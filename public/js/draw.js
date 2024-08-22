@@ -55,12 +55,21 @@ document.addEventListener('DOMContentLoaded', () => {
         // let dy = directions[randomInt][1];
         x += dxy[0];
         y += dxy[1];
+        
+        if (x > cols) {
+            x = 0;
+        }
+        if (y > rows) {
+            y = 0;
+        }
+
         // for (let i = 0; i < x.length - 1; i++) {
         //     x[i+1] = x[i];
         //     y[i+1] = y[i];
         // }
         // x[0] += dx;
         // y[0] += dy;
+
         changeColorByCoordinates(x, y, 'var(--mint)');
     }
 

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>i take pictures</title>
+        <link rel="stylesheet" href="../css/main.css">
+        <link rel="stylesheet" href="../css/photos.css">
+
+
+        <script defer src="/__/firebase/10.12.5/firebase-app-compat.js"></script>
+        <script defer src="/__/firebase/10.12.5/firebase-storage-compat.js"></script>
+        <!-- 
+            initialize the SDK after all desired features are loaded, set useEmulator to false
+            to avoid connecting the SDK to running emulators.
+        -->
+        <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    </head>
+    <body class="moving-gradient pbody">
+        <div class="bar nav">
+            <p class="text navitem"> Public photos. </p>
+            <a class="link text" href="../"> -> go back. </a>
+            <p class="text navitem"></p>
+            <form id="token_form">
+                <input type="text" id="token_input" placeholder="private folder key" required>
+                <button type="submit" class="link btn">-> enter.</button>
+            </form>
+
+        </div>
+        <div class="gallery">
+            <img src="./EHW01084.jpg" class="picture"></img>
+            <img src="./EHW01129.jpg" class="picture"></img>
+            <img src="./EHW01084.jpg" class="picture"></img>
+            <img src="./EHW01084.jpg" class="picture"></img>
+            <img src="./EHW01084.jpg" class="picture"></img>
+            <img src="./EHW01129.jpg" class="picture"></img>
+            <img src="./SUM01380.jpg" class="picture"></img>
+            <img src="./EHW01084.jpg" class="picture"></img>
+            <img src="./EHW01084.jpg" class="picture"></img>
+            <img src="./EHW01129.jpg" class="picture"></img>
+            <img src="./SUM01380.jpg" class="picture"></img>
+            <img src="./EHW01129.jpg" class="picture"></img>
+            <img src="./SUM01380.jpg" class="picture"></img>
+            <img src="./EHW01084.jpg" class="picture"></img>
+            <img src="./EHW01084.jpg" class="picture"></img>
+            <img src="./EHW01129.jpg" class="picture"></img>
+
+        </div>
+
+        <div class="footer bar">
+            <p class="text"> (c) 2024 Andreas Tsatsanis </p>
+
+    <p class="text" id="load">Firebase SDK Loading&hellip;</p>
+        </div>
+
+
+
+        <script src="../js/photos.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('.gallery img').forEach(img => {
+                    img.addEventListener('load', function() {
+                        const aspectRatio = img.naturalWidth / img.naturalHeight;
+                        if (aspectRatio > 1.5) {
+                            img.classList.add('landscape');
+                        } else if (aspectRatio < 0.67) {
+                            img.classList.add('portrait');
+                        } else {
+                            img.classList.add('square');
+                        }
+                    });
+
+            
+                    // If the image is already loaded (cached), trigger the load event handler manually
+                    if (img.complete) {
+                        img.dispatchEvent(new Event('load'));
+                    }
+                });
+            });
+        </script>
+
+    </body>
+</html>
