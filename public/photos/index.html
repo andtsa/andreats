@@ -23,10 +23,19 @@
             <p class="text navitem"></p>
             <form id="token_form">
                 <input type="text" id="token_input" placeholder="private folder key" required>
-                <button type="submit" class="link btn">-> enter.</button>
+                <button type="submit" class="link text btn">-> enter.</button>
             </form>
 
         </div>
+
+        <div id="overlay" class="hidden">
+            <div id="overlay_grid">
+                <button id="close" class="btn overlay_btn" onClick="hide_preview()"> [close] </button>
+
+                <button id="save" class="btn overlay_btn" onClick="save_image()"> [save] </button>
+            </div>
+        </div>
+
         <div class="gallery">
             <img src="./EHW01084.jpg" class="picture"></img>
             <img src="./EHW01129.jpg" class="picture"></img>
@@ -50,7 +59,8 @@
         <div class="footer bar">
             <p class="text"> (c) 2024 Andreas Tsatsanis </p>
 
-    <p class="text" id="load">Firebase SDK Loading&hellip;</p>
+            <p class="text" id="load">Firebase SDK Loading&hellip;</p>
+            
         </div>
 
 
@@ -70,6 +80,10 @@
                         }
                     });
 
+                    img.addEventListener('click', () => {
+                        img.id = 'preview';
+                        document.getElementById('overlay').classList.remove('hidden');
+                    });
             
                     // If the image is already loaded (cached), trigger the load event handler manually
                     if (img.complete) {

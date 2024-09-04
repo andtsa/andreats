@@ -1,11 +1,13 @@
 :root {
     --white: #fcf0da;
+    --faded-white: #fcf0daa0;
+    --tsp: #fcf0da00;
     --blue: #1d4569;
     --dp: #190426;
 
     --cw: #1904260a;
     --cb: #190426a0;
-
+    --cd: #190426e0;
 
     --mp: #15062e00;
     --green: #1cff46;

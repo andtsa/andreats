@@ -41,5 +41,13 @@ document.addEventListener('DOMContentLoaded', function() {
     reloadCss();
 });
 
+let hide_preview = () => {
+    document.querySelectorAll('.gallery img').forEach(img => {
+        img.id = '';
+        document.getElementById('overlay').classList.add('hidden');
+    });
+}
 
-
+let save_image = () => {
+    let img = document.getElementById('preview');
+}

@@ -62,6 +62,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (y > rows) {
             y = 0;
         }
+        if (x < 0) {
+            x = cols;
+        }
+        if (y < 0) {
+            y = rows;
+        }
+
 
         // for (let i = 0; i < x.length - 1; i++) {
         //     x[i+1] = x[i];
