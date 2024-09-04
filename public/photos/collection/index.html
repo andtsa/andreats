@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Cache-Control" content="no-store">
+        <meta http-equiv="Pragma" content="no-cache">
+        <title>i take pictures</title>
+        <link rel="stylesheet" href="../../css/main.css">
+        <link rel="stylesheet" href="../../css/photos.css">
+    </head>
+    <body class="moving-gradient pbody">
+        <div class="bar nav">
+            <p class="text navitem" id="col_name"> Private collection. </p>
+            <a class="link text" href="../"> -> go back. </a>
+            <p class="text navitem"></p>
+            <form id="collection_form" class="nav_form">
+                <input type="text" id="collection_input" class="nav_input" placeholder="collection name" required>
+                <input type="text" id="passkey_input" class="nav_input" placeholder="pass key" required>
+                <button type="submit" class="link text btn">-> enter.</button>
+            </form>
+
+        </div>
+
+        <div id="overlay" class="hidden">
+            <div id="overlay_grid">
+                <button id="close" class="btn overlay_btn" onClick="hide_preview()"> [close] </button>
+
+                <button id="save" class="btn overlay_btn" onClick="download_preview_image()"> [save] </button>
+            </div>
+        </div>
+
+        <div class="gallery" id="gallery">
+            <p id="status_text" class="text"> loading collection... </p>
+        </div>
+
+        <div class="footer bar">
+            <p class="text"> (c) 2024 Andreas Tsatsanis </p>
+        </div>
+
+
+        <script src="../../js/openpgp.min.js"></script>
+
+        <script>
+            var valid = true;
+            function getQueryParams() {
+                const params = new URLSearchParams(window.location.search);
+                const valid_until = params.get('v');
+                const name = params.get('n');
+                const passkey = params.get('pk');
+                if (valid_until == null) {
+                    document.getElementById('status_text').innerHTML = `malformed link, couldn't find collection. <a class="link text" href="../"> -> go back. </a>`;
+                    valid = false;
+                } else {
+                    console.log(`valid_until exists: ${valid_until}`);
+                    const now = new Date();
+                    const valid_until_date = new Date(0);
+                    valid_until_date.setUTCMilliseconds(valid_until);
+                    console.log(`now: ${now}`);
+                    console.log(`valid_until: ${valid_until_date}`);
+                    if (now > valid_until_date) {
+                        document.getElementById('status_text').innerHTML = `link has expired. <a class="link text" href="../"> -> go back. </a>`;
+                        valid = false;
+                    }
+                }
+                if (name == null) {
+                    document.getElementById('status_text').innerHTML = `no collection specified. <a class="link text" href="../"> -> go back. </a>`;
+                    valid = false;
+                } else {
+                    console.log(`name exists: ${name}`);
+                    document.getElementById('collection_input').value = name;
+                }
+                if (passkey == null) {
+                    document.getElementById('status_text').innerHTML = `no passkey given. <a class="link text" href="../"> -> go back. </a>`;
+                    valid = false;
+                } else {
+                    console.log(`pk exists: ${passkey}`);
+                    document.getElementById('passkey_input').value = passkey;
+                }
+
+                return [name, passkey];
+            }
+
+            // Example: Using the extracted query parameters
+            const collection_details = getQueryParams();
+            console.log('collection name:', collection_details[0]);
+            console.log('passkey:', collection_details[1]);
+         
+
+            document.getElementById('collection_form').addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+            
+                const inputOneValue = document.getElementById('collection_input').value;
+                const inputTwoValue = document.getElementById('passkey_input').value;
+            
+                // Redirect to the new URL with query parameters
+                window.location.href = `../collection?v=${new Date().getTime() + 86400000}&n=${encodeURIComponent(inputOneValue)}&pk=${encodeURIComponent(inputTwoValue)}`;
+            });
+
+        </script>
+
+        <script src="../../js/photos.js"></script>
+        <script src="../../js/load_collection.js"></script>
+    </body>
+</html>
