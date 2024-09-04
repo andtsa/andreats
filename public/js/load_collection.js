@@ -3,7 +3,7 @@ const imageBlobMap = new Map();
 
 
 async function fetchIndexFile(collectionName) {
-    const col_url = `../encrypted/${collectionName}.col`;
+    const col_url = `../collection/${collectionName}.col`;
     if (!UrlExists(col_url)) {
         document.getElementById('status_text').innerText = `error: unknown collection "${collectionName}".`;
         console.error(`collection file 404: ${col_url}`);
