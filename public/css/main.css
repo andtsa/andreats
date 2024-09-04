@@ -1,11 +1,13 @@
 :root {
     --white: #fcf0da;
+    --faded-white: #fcf0daa0;
+    --tsp: #fcf0da00;
     --blue: #1d4569;
     --dp: #190426;
 
     --cw: #1904260a;
     --cb: #190426a0;
-
+    --cd: #190426e0;
 
     --mp: #15062e00;
     --green: #1cff46;
@@ -14,6 +16,9 @@
 
 * {
     font-family: monospace;
+    scrollbar-color: var(--dp) var(--green);
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
 }
 
 *::selection {
@@ -21,13 +26,27 @@
     color: var(--green);
 }
 
-body, html {
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--blue);
+    opacity: 0.3;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--white);
+}
+
+.page {
     margin: 0;
     padding: 0;
     height: 100%;
     overflow: hidden;
     background: var(--white);
 }
+
 
 .lpage {
     position: fixed;
@@ -62,7 +81,20 @@ body, html {
 .text {
     text-decoration: none;
     color: var(--white);
-    text-shadow: 1px 0px 0px var(--dp), -1px 0px 0px var(--dp), 0px 1px 0px var(--dp), 0px -1px 0px var(--dp);
+    text-shadow: 1px 1px 0px var(--dp), 2px 2px 0px var(--dp), 3px 3px 0px var(--dp);
+}
+
+.text::selection {
+
+    text-shadow: -1px -1px 0px var(--dp), -2px -2px 0px var(--dp), -3px -3px 0px var(--dp);
+}
+
+.link {
+    
+}
+
+.link:hover {
+    color: var(--green);
 }
 
 .checkerboard {

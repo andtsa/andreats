@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>i take pictures</title>
+        <link rel="stylesheet" href="../css/main.css">
+        <link rel="stylesheet" href="../css/photos.css">
+    </head>
+    <body class="moving-gradient pbody">
+        <div class="bar nav">
+            <p class="text navitem"> Public photos. </p>
+            <a class="link text" href="../"> -> go back. </a>
+            <p class="text navitem"></p>
+            <form id="collection_form" class="nav_form">
+                <input type="text" id="collection_input" class="nav_input" placeholder="collection name" required>
+                <input type="text" id="passkey_input" class="nav_input" placeholder="pass key" required>
+                <button type="submit" class="link text btn">-> enter.</button>
+            </form>
+        </div>
+
+        <div id="overlay" class="hidden">
+            <div id="overlay_grid">
+                <p id="description_text" class="btn overlay_text"> [unknown] </p>                
+                <button id="close" class="btn overlay_btn overlay_text" onClick="hide_preview()"> [close] </button>
+                <!-- <button id="save" class="btn overlay_btn" onClick="save_image()"> [save] </button> -->
+            </div>
+        </div>
+
+        <div class="gallery">
+            <img src="./published/AUG03079.jpg" class="picture", alt="bogor"></img>
+            <img src="./published/hanging-prague-stars.jpg" class="picture", alt="prague"></img>
+            <img src="./published/EHW01166.jpg" class="picture", alt="budapest"></img>
+            
+            <img src="./published/SUM01663.jpg" class="picture", alt="kouremenos"></img>
+            <img src="./published/SUM01380.jpg" class="picture", alt="cluj-napoca"></img>
+
+            <img src="./published/EHW01291.jpg" class="picture", alt="cluj-napoca"></img>
+
+            <img src="./published/AUG03033.jpg" class="picture", alt="bogor botanical garden"></img>
+            <img src="./published/SUM01497.jpg" class="picture", alt="myrsini"></img>
+            <img src="./published/EHW01202.jpg" class="picture", alt="dej"></img>
+            <img src="./published/AUG03065.jpg" class="picture", alt="bogor"></img>
+            <img src="./published/IMG_6845.jpg" class="picture", alt="prague"></img>
+
+            <img src="./published/AUG02849.jpg" class="picture", alt="lenteng agung"></img>
+
+            <img src="./published/AUG03130.jpg" class="picture", alt="UI"></img>
+
+            <img src="./published/EHW01056.jpg" class="picture", alt="budapest"></img>
+            <img src="./published/SUM01845.jpg" class="picture", alt="chania"></img>
+            <img src="./published/prague-river.jpg" class="picture", alt="prague"></img>
+
+            <img src="./published/EHW01277.jpg" class="picture", alt="cluj-napoca"></img>
+            <img src="./published/AUG03067.jpg" class="picture", alt="bogor"></img>
+            <img src="./published/SUM01448.jpg" class="picture", alt="cluj-napoca"></img>
+            <img src="./published/SUM01624.jpg" class="picture", alt="kouremenos"></img>
+            <img src="./published/EHW01206.jpg" class="picture", alt="dej"></img>
+
+            <img src="./published/AUG02876.jpg" class="picture", alt="bogor"></img>
+
+            <img src="./published/AUG03076.jpg" class="picture", alt="bogor"></img>
+            <img src="./published/SUM01802.jpg" class="picture", alt="ierapetra"></img>
+            <img src="./published/SUM01831.jpg" class="picture", alt="chania"></img>
+
+        </div>
+
+        <div class="footer bar">
+            <p class="text"> (c) 2024 Andreas Tsatsanis </p>
+            <p class="text"> all rights reserved </p>
+        </div>
+
+
+
+        <script src="../js/photos.js"></script>
+
+        <script> 
+            document.getElementById('collection_form').addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+            
+                const inputOneValue = document.getElementById('collection_input').value;
+                const inputTwoValue = document.getElementById('passkey_input').value;
+            
+                // Redirect to the new URL with query parameters
+                window.location.href = `./collection?v=${new Date().getTime() + 86400000}&n=${encodeURIComponent(inputOneValue)}&pk=${encodeURIComponent(inputTwoValue)}`;
+            });
+        </script>
+    </body>
+</html>
