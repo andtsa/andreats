@@ -59,7 +59,7 @@ async function displayImages(collectionName, passphrase) {
         } catch (err) {
             document.getElementById('status_text').innerText += `\n\nOpenPGP error: \n"${err}"`;
             console.error(err);
-            document.getElementById('status_text').innerText += `\n\ndouble-check that the passkey you provided is correct.`;
+            document.getElementById('status_text').innerText += `\n\ndouble-check that the passkey you provided is correct,\notherwise refresh the page...`;
             return;
         }
 
