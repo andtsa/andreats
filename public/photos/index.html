@@ -15,8 +15,8 @@
             <a class="link text" href="../"> -> go back. </a>
             <p class="text navitem"></p>
             <form id="collection_form" class="nav_form">
-                <input type="text" id="collection_input" class="nav_input" placeholder="collection name" required>
-                <input type="text" id="passkey_input" class="nav_input" placeholder="pass key" required>
+                <input type="text" id="collection_input" class="nav_input" placeholder="collection name" required autocomplete="off"spellcheck="false">
+                <input type="text" id="passkey_input" class="nav_input" placeholder="pass key" required autocomplete="off"spellcheck="false">
                 <button type="submit" class="link text btn">-> enter.</button>
             </form>
         </div>
@@ -84,7 +84,7 @@
                 const inputTwoValue = document.getElementById('passkey_input').value;
             
                 // Redirect to the new URL with query parameters
-                window.location.href = `./collection?v=${new Date().getTime() + 86400000}&n=${encodeURIComponent(inputOneValue)}&pk=${encodeURIComponent(inputTwoValue)}`;
+                window.location.href = `./collection?v=${new Date().getTime() + (1000 * 60 * 60 * 24 * 7)}&n=${encodeURIComponent(inputOneValue)}&pk=${encodeURIComponent(inputTwoValue)}`;
             });
         </script>
     </body>

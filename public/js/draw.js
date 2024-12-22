@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     square.style.backgroundColor = 'var(--cb)';
                 }
+
+                square.classList.add("square");
                 
                 checkerboard.appendChild(square);
             }

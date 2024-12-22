@@ -116,29 +116,55 @@
     background: linear-gradient(270deg, #0d0313, #25033b);
     background-size: 400% 400%;
 
-    -webkit-animation: AnimationName 9s ease infinite;
-    -moz-animation: AnimationName 9s ease infinite;
-    -o-animation: AnimationName 9s ease infinite;
-    animation: AnimationName 9s ease infinite;
+    -webkit-animation: MoveBG 9s ease infinite;
+    -moz-animation: MoveBG 9s ease infinite;
+    -o-animation: MoveBG 9s ease infinite;
+    animation: MoveBG 9s ease infinite;
 }
 
-@-webkit-keyframes AnimationName {
+@-webkit-keyframes MoveBG {
     0%{background-position:0% 52%}
     50%{background-position:100% 49%}
     100%{background-position:0% 52%}
 }
-@-moz-keyframes AnimationName {
+@-moz-keyframes MoveBG {
     0%{background-position:0% 52%}
     50%{background-position:100% 49%}
     100%{background-position:0% 52%}
 }
-@-o-keyframes AnimationName {
+@-o-keyframes MoveBG {
     0%{background-position:0% 52%}
     50%{background-position:100% 49%}
     100%{background-position:0% 52%}
 }
-@keyframes AnimationName {
+@keyframes MoveBG {
     0%{background-position:0% 52%}
     50%{background-position:100% 49%}
     100%{background-position:0% 52%}
 }
+
+@-webkit-keyframes Rotate {
+    0%{transform: rotate(0deg)}
+    33%{transform: rotate(45deg)}
+    66%{transform: rotate(270deg)}
+    100%{transform: rotate(0deg)}
+}
+@-moz-keyframes Rotate {
+    0%{transform: rotate(0deg)}
+    33%{transform: rotate(45deg)}
+    66%{transform: rotate(270deg)}
+    100%{transform: rotate(0deg)}
+}
+@-o-keyframes Rotate {
+    0%{transform: rotate(0deg)}
+    33%{transform: rotate(45deg)}
+    66%{transform: rotate(270deg)}
+    100%{transform: rotate(0deg)}
+}
+@keyframes Rotate {
+    0%{transform: rotate(0deg)}
+    33%{transform: rotate(45deg)}
+    66%{transform: rotate(270deg)}
+    100%{transform: rotate(0deg)}
+}
+

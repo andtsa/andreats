@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" class="page">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Andreas Tsatsanis">
+        <meta name="description" content="Computer Science Student">
+        <meta name="og:name" content="Andreas Tsatsanis">
+        <meta property="og:title" content="Home">
+        <meta property="og:site_name" content="https://docs.andreats.com/">
+        <meta property="og:type" content="website">
+        <link rel="icon" href="./favicon.ico" type="image/x-icon">
+        <meta name="msapplication-TileColor" content="#1cff46">
+        <meta name="theme-color" content="#1cff46" media="(prefers-color-scheme: light)">
+        <meta name="theme-color" content="#190426" media="(prefers-color-scheme: dark)">
+        <title>Library</title>
+        <link rel="stylesheet" href="../public/css/main.css">
+        <link rel="stylesheet" href="../public/css/photos.css">
+    </head>
+    <body class="moving-gradient page">
+        <div class="checkerboard"></div>
+    
+        <div class="lpage">
+            <div class="content">
+                <h1 class="name item text">Library</h1>
+                <p class="text item">Occasionally, <br>some documents may appear here<br> </p>
+                <!-- <a class="text item link" href="https://github.com/andtsa"></a> -->
+                <!-- <br> -->
+                <a class="text item link" href="https://andreats.com">-> home</a>
+
+                <h1 class="name item"></h1>
+            </div>
+        </div>
+
+        <script>
+            const squareSize = 10;
+            const c = Math.ceil(window.innerWidth / squareSize);
+            const r = Math.ceil(window.innerHeight / squareSize);
+        
+            const x_start = Math.floor(c/1.5 - 5);
+            const y_start = Math.floor(r/2 - 2);
+
+        </script>
+        <script src="../public/js/draw.js"></script>
+        <script src="../public/js/escape.js"></script>
+    </body>
+</html>
+
