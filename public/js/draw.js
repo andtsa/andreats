@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
         changeColorByCoordinates(x, y, 'var(--mint)');
     }
 
+    window.setInterval(move, 15);
     window.setInterval(move, 20);
     window.setInterval(move, 30);
     window.setInterval(move, 50);
