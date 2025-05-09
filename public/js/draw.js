@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let directions = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1], [0, 0]];
 
     function move() {
-        let randomInt = Math.floor(Math.random() * 9);
+        let randomInt = Math.floor(Math.random() * directions.length);
         let dxy = directions[randomInt];
         // let dy = directions[randomInt][1];
         x += dxy[0];
@@ -82,10 +82,36 @@ document.addEventListener('DOMContentLoaded', () => {
         changeColorByCoordinates(x, y, 'var(--mint)');
     }
 
-    window.setInterval(move, 15);
-    window.setInterval(move, 20);
+    function move_n(n) {
+        if (n<=0) {
+            return;
+        } else {
+            move();
+            move_n(n - 1);
+        }
+    }
+
+    function move_2() {
+        move();
+    }
+    function move_3() {
+        move();
+        move_2();
+    }
+    function move_5() {
+        move_2();
+        move_3();
+    }
+    function move_10() {
+        move_5();
+        move_5();
+    }
+
+    // window.setInterval(move, 15);
+    window.setInterval(move_3, 20);
     window.setInterval(move, 30);
-    window.setInterval(move, 50);
-    window.setInterval(move, 70);
+    // window.setInterval(move_5, 50);
+    window.setInterval(move_5, 70);
+    window.setInterval(move_10, 100);
 });
 
