@@ -1,0 +1,826 @@
+.\" *********************************** start of \input{docs/user/latex2man_styling.tex}
+.\" *********************************** end of \input{docs/user/latex2man_styling.tex}
+'\" t
+.\" Manual page created with latex2man on Sun May 11 21:13:18 2025
+.\" NOTE: This file is generated, DO NOT EDIT.
+.de Vb
+.ft CW
+.nf
+..
+.de Ve
+.ft R
+
+.fi
+..
+.TH "GOURD.TOML" "5" "25 MARCH 2025" "File Formats Manual " "File Formats Manual "
+.SH NAME
+
+.PP
+\fBgourd.toml\fP
+An experimental setup file for the Gourd experiment scheduler. 
+.PP
+.SH DESCRIPTION
+
+.PP
+\fBgourd.toml\fP
+is a declarative configuration file that, 
+when provided to \fBgourd(1)\fP,
+can be used to create a new \fIexperiment\fP\&.
+The rules for typesetting the file follow the standard TOML format. 
+.PP
+By default, the filename is gourd.toml\&.
+.PP
+.SH PREFACE
+
+.PP
+Values ending with `?\&'
+can be omitted, the default value 
+for them is mentioned in their description. 
+.PP
+.SS VALUE TYPES
+The configuration uses the following value types. 
+.PP
+.TP
+string 
+A string of characters surrounded by "". 
+.TP
+path 
+A file path surrounded by "". 
+.TP
+fetched_path 
+Information about this is in the \fBRESOURCE FETCHING\fP
+section. 
+.TP
+boolean 
+Either \fItrue\fP
+or \fIfalse\fP\&.
+.TP
+number 
+Zero or a positive number. 
+.TP
+regex 
+A regular expression. 
+.TP
+duration 
+A human\-readable amount of time, for example: "2d 4h". 
+.TP
+list of T 
+A list of values of type T surrounded by []. 
+.PP
+.SH GLOBAL CONTEXT
+
+.PP
+These should be put at the beginning of the file before defining any sections. 
+.PP
+.TP
+\fBoutput_path\fP = path
+ This path specifies where to store the stdout and stderr outputs for \fIprograms\fP\&.
+.PP
+.TP
+\fBmetrics_path\fP = path
+ Where to store the metrics for \fBgourd(1)\fP
+\fIstatus\fP\&.
+These metrics contain information such as: Wall clock time, 
+User time, System time, the amount of context switches etc. 
+.PP
+.TP
+\fBexperiments_folder\fP = path
+ Where to store state of previously ran experiments. 
+.PP
+Essentially this folder specifies where \fBgourd\fP
+will store all of its information about experiments. 
+If this folder is removed \fBgourd\fP
+looses all information about past experiments. 
+.PP
+.TP
+\fBwrapper?\fP = path
+ Defines the path to the gourd_wrapper
+binary. 
+.br
+.br
+The default value is \fIgourd_wrapper\fP\&.
+(That is, \fBgourd\fP
+will look for it in the $PATH)
+.br
+.br
+If you installed \fBgourd\fP
+correctly this values should not be changed. 
+.PP
+.TP
+\fBinput_schema?\fP = path
+ Defines the path to an optional machine generated input schema. 
+.br
+.br
+For more information about this continue to the \fBINPUT SCHEMA\fP
+section. 
+.br
+.br
+The default values is no input schema. 
+.PP
+.SH SLURM
+
+.PP
+The configuration contains some Slurm specific options namely: 
+.PP
+.SS SLURM CONFIGURATION
+.PP
+This section is optional for running locally, but required 
+for running on Slurm. 
+.PP
+A Slurm configuration starts with the header \fI[slurm]\fP
+and can contain the following options: 
+.PP
+.TP
+\fBexperiment_name\fP = string
+ The name under which runs for this experiment will be scheduled 
+on Slurm. 
+.TP
+\fBoutput_folder\fP = path
+ The folder where the raw slurm outputs will be stored. 
+This can be useful for debugging. 
+.TP
+\fBpartition\fP = string
+ The partition on which this should be run on the supercomputer. 
+Running \fBgourd\fP
+\fIrun\fP
+\fIslurm\fP
+with an invalid partition 
+will display all the valid partitions. 
+.TP
+\fBarray_size_limit?\fP = number
+ This specifies the limit of runs that can be put in one Slurm batch. 
+\fBgourd\fP
+will work to split the workload such that this limit 
+is never exceeded. 
+.br
+.br
+By default this is auto\-detected. 
+.TP
+\fBmax_submit?\fP = number
+ This specifies the limits of possible batches of runs. 
+Once again \fBgourd\fP
+will work to never cross this limit. 
+.br
+.br
+By default this is auto\-detected. 
+.TP
+\fBaccount\fP = string
+ Which account to use for running jobs on Slurm. 
+For example one account available on DelftBlue is "Education\-EEMCS\-MSc\-CS". 
+To get a list of available accounts on your cluster, 
+you can use Slurm\&'s \fBsacctmgr\fP \fIshow\fP \fIaccount\fP
+command 
+.TP
+\fBmail_type\fP = string
+ Choose one of Slurm\&'s options for sending emails when a run\&'s status changes. 
+Default is "NONE". Valid options are: 
+"NONE", "BEGIN", "END", "FAIL", "REQUEUE", "ALL", "INVALID_DEPEND", "STAGE_OUT", "TIME_LIMIT", "TIME_LIMIT_90", "TIME_LIMIT_80", "TIME_LIMIT_50", "ARRAY_TASKS"
+.TP
+\fBmail_user\fP = string
+ Your email address, if you want to receive email updates from Slurm. 
+.TP
+\fBbegin\fP = string
+ Submit runs to the Slurm controller immediately, like normal, but tell the 
+controller to defer the allocation of the job until the specified time. 
+.PP
+Time may be of the form HH:MM:SS
+or HH:MM
+to run a job at a specific time of day, 
+or in the now+
+format (for example, now+1hour,
+or now+32min)
+.TP
+\fBadditional_args?\fP = list of string
+ Custom arguments for Slurm. 
+.br
+.br
+By default there are no additional arguments. 
+.PP
+.SS Example
+An example Slurm Configuration: 
+.PP
+.Vb
+[slurm]
+experiment_name = "my test experiment"
+output_folder = "./slurmout/"
+partition = "compute"
+account = "Education\-EEMCS\-MSc\-CS"
+.Ve
+.PP
+.SS RESOURCE LIMITS
+.PP
+To run on Slurm one must also specify resource limits. 
+The available limits are: 
+.PP
+.TP
+\fBtime_limit\fP = duration
+ The global time limit for all program\-input pairs. 
+.TP
+\fBcpu_limit\fP = number
+ The global cpu limit for all program\-input pairs. 
+.TP
+\fBmem_per_cpu\fP = number
+ The global memory limit per one cpu for all program\-input pairs. 
+.br
+.br
+This number is specified in megabytes. 
+.PP
+.SS Example
+An example Resource Limits section: 
+.PP
+.Vb
+[resource_limits]
+time_limit = "5min"
+cpus = 1
+mem_per_cpu = 512
+.Ve
+.PP
+.SH LOCAL
+
+.TP
+\fBnum_threads?\fP = number
+ How many threads should \fBgourd\fP
+\fIrun\fP
+\fIlocal\fP
+use. 
+.PP
+.SS NUM_THREADS
+For the parallel execution of \fBgourd\fP
+\fIrun\fP
+\fIlocal\fP
+you can 
+limit the number of threads that will be used by specifying: 
+.Vb
+[local]
+num_threads = 8
+.Ve
+If this option is not specified, the program will try to detect the number 
+of CPUs present on the system, and use that number of threads. Setting a 
+value of 0 will result in a number of threads equal to the number of runs in 
+the program (and the OS will limit the resource use thereafter). 
+.SH PROGRAMS
+
+.PP
+Multiple programs can be specified. 
+A program represents a compiled executable and is a combination of a binary file and parameters. 
+Each program begins with \fI[programs.program\-name]\fP,
+where \fIprogram\-name\fP
+can be any unique name. 
+.PP
+.TP
+\fBbinary\fP = path
+ Path to the program executable. 
+.TP
+\fBfetch\fP = fetched_path
+ URL to the program executable. 
+.TP
+\fBgit\fP = git_object
+ See the \fBPROGRAM VERSIONS\fP
+section for more information. 
+.br
+.br
+.TP
+\fBarguments?\fP = list of string
+ Arguments to be passed to the executable. 
+.br
+.br
+By default an empty list. 
+.TP
+\fBafterscript?\fP = path
+ See the \fBAFTERSCRIPTS\fP
+section for more information. 
+.br
+.br
+By default there is no afterscript. 
+.TP
+\fBnext?\fP = list of string
+ See the \fBPOSTPROCESSING\fP
+section for more information. 
+.br
+.br
+By default there is no postprocessing. 
+.TP
+\fBresource_limits?\fP
+ As defined in the \fBRESOURCE LIMITS\fP
+section. 
+.br
+.br
+These essentially override the global resource limits for 
+this program. 
+.br
+.br
+By default, use the global resource limits. 
+.PP
+Only one of \fBbinary\fP,
+\fBfetch\fP,
+\fBgit\fP
+must be specified. 
+.PP
+.SS EXAMPLE
+.PP
+Assume that there is a script called test.sh
+in the current directory. 
+We can specify a program that runs this script with the argument \fB--test\fP
+like so: 
+.PP
+.Vb
+[program.some_name_for_this_program]
+binary = "./test.sh"
+arguments = ["\-\-test"]
+.Ve
+.PP
+.SH INPUTS
+
+.PP
+A \fBgourd(1)\fP
+experiment consists of a cross\-product mapping between programs 
+and inputs. 
+The experiment created from a gourd.toml
+file runs every combination 
+of program and input in the file. 
+.PP
+Multiple inputs can be specified. 
+Each input begins with \fI[inputs.input\-name]\fP
+where \fIinput\-name\fP
+can be any unique name. 
+\fBThe string\fP
+\fI_i_\fP
+\fBis reserved and cannot be used.\fP
+Each input contains the following keys: 
+.PP
+.TP
+\fBfile?\fP = path
+ Path to a file, the contents of which are passed to the program as standard input. 
+.br
+.br
+By default, no standard input is provided. 
+.TP
+\fBfetch?\fP = fetched_path
+ URL to a file, the contents of which are passed to the program as standard input. 
+.TP
+\fBglob?\fP = fetched_path
+ A glob expression of multiple files, the contents of which are passed to the program 
+as standard input. 
+.TP
+\fBarguments?\fP = list of string
+ Additional command\-line arguments to be passed to the program. 
+The input arguments are appended to the programs arguments. 
+.br
+.br
+By default, there are no additional arguments. 
+.PP
+Only one of \fBfile\fP,
+\fBfetch\fP,
+\fBglob\fP
+can be specified. 
+.PP
+.SS EXAMPLE
+A valid input would be for example: 
+.PP
+.Vb
+[input.some_name_for_this_input]
+file = "./test.txt"
+arguments = ["\-\-a", "\-\-b"]
+.Ve
+This applied to program `program\&'
+would be equivalent to: 
+.PP
+.Vb
+program [program args] \-\-a \-\-b < ./test.txt
+.Ve
+.PP
+.SS GLOBS
+.PP
+Globs can be applied to arguments of inputs and conveniently reference multiple files. 
+.PP
+If an argument starts with \fIpath|\fP,
+it will be treated as a glob. 
+The input will be instantiated for every match of the provided glob. 
+.PP
+.SS Example
+.PP
+.Vb
+[inputs.testrun1]
+arguments = ["\-f1", "path|./inputs/*.in", "\-f2", "path|./input2/*.in"]
+.Ve
+.PP
+Given that the current directory contains the files 
+input/1.in,
+input/2.in,
+input2/test.in,
+the glob 
+expands to the following experiment inputs: 
+.PP
+.Vb
+[inputs.testrun1_glob_0]
+arguments = ["\-f1", "./inputs/1.in", "\-f2", "./input2/test.in"]
+
+[inputs.testrun1_glob_1]
+arguments = ["\-f1", "./inputs/2.in", "\-f2", "./input2/test.in"]
+.Ve
+.PP
+.SS PARAMETERS
+.PP
+Parameters can be applied to arguments to conveniently perform experiments with grid search 
+(a Cartesian product between all parameter values). 
+.PP
+If an argument starts with \fIparam|some\-parameter\-name\fP,
+it will be treated as a parameter. 
+For each value of that parameter the new input will be created with that value inserted into the argument 
+into that argument place. 
+.PP
+Values of a parameter are specified in \fI[parameter.name]\fP
+using \fIvalues = list of string\fP
+.PP
+This results in cross product between all parameters. 
+.PP
+.SS Example
+.PP
+.Vb
+[inputs.testrun1]
+arguments = ["\-f", "param|x", "\-x", "param|y"]
+
+[parameters.x]
+values = ["a", "b"]
+
+[parameters.y]
+values = ["10", "20"]
+.Ve
+It will be transformed into following inputs: 
+.PP
+.Vb
+[inputs.testrun1_x_0_y_0]
+arguments = ["\-f", "a", "\-x", "10"]
+
+[inputs.testrun1_x_0_y_1]
+arguments = ["\-f", "a", "\-x", "20"]
+
+[inputs.testrun1_x_1_y_0]
+arguments = ["\-f", "b", "\-x", "10"]
+
+[inputs.testrun1_x_1_y_1]
+arguments = ["\-f", "b", "\-x", "20"]
+.Ve
+.PP
+.SS SUBPARAMETERS
+.PP
+Subparameters are used when there is a need for 1\-1 relation between two parameters. 
+There is no cross product between subparameters of the same parameter. 
+.PP
+Subparameters are specified in inputs similarly to parameters with the difference of doing 
+\fIsubparam|parameter\-name.some\-subparameter\-name\fP\&.
+.PP
+Values of a subparameter are specified in \fI[parameter.name.sub.subparameter\-name]\fP
+using \fIvalues = []\fP
+.PP
+Note! Parameters can have either values or subparameters with values. Never both. 
+.PP
+.SS Example
+This example: 
+.PP
+.Vb
+[input.testrun1]
+arguments = ["\-f", "subparam|x.1", "\-x", "param|y", "\-g", "subparam|x.2"]
+
+[parameter.x.sub.1]
+values = ["a", "b"]
+
+[parameter.x.sub.2]
+values = ["c", "d"]
+
+[parameter.y]
+values = ["10", "20"]
+.Ve
+Will be transformed into following inputs: 
+.PP
+.Vb
+[input.testrun1_x\-0_y\-0]
+arguments = ["\-f" "a", "\-x", "10", "\-g", "c"]
+
+[input.testrun1_x\-0_y\-1]
+arguments = ["\-f", "a", "\-x", "20", "\-g", "c"]
+
+[input.testrun1_x\-1_y\-0]
+arguments = ["\-f", "b", "\-x", "10", "\-g", "d"]
+
+[input.testrun1_x\-1_y\-1]
+arguments = ["\-f", "b", "\-x", "20", "\-g", "d"]
+
+[parameter.x]
+values = ["a", "b"]
+
+[parameter.y]
+values = ["10", "20"]
+.Ve
+Where as this example: 
+.PP
+.Vb
+[input.testrun1]
+arguments = ["param|x"]
+
+[parameter.x.sub.1]
+values = ["a", "b"]
+
+[parameter.x.sub.2]
+values = ["c", "d"]
+
+[parameter.x]
+values = ["10", "20"]
+.Ve
+.PP
+Is not correct and \fBgourd\fP
+will throw an error! 
+.PP
+.SH POSTPROCESSING
+
+.PP
+Postprocessing jobs are jobs that run after another job and 
+can transform its input without influencing the original jobs input. 
+.PP
+Postprocessing programs are just normal programs but they a different 
+program references them in their next
+field. 
+.PP
+Postprocessing programs are ran in the same directory as the original 
+job, and get the originals job stdout
+as their stdin\&.
+.PP
+.SS EXAMPLE
+.PP
+.Vb
+[program.test_program]
+binary = "./algorithm"
+arguments = []
+next = ["example_name"]
+
+[program.example_name]
+binary = "./verifier"
+arguments = []
+.Ve
+.PP
+.SH AFTERSCRIPTS
+
+.PP
+Afterscripts are postprocessing but one that does not constitute 
+a full Slurm job. 
+.PP
+These are ran when \fBgourd\fP
+\fIstatus\fP
+is invoked, and their results are 
+cached. 
+.PP
+The afterscript is assumed to: 
+.PP
+.TP
+.B *
+Be executable. 
+.TP
+.B *
+Will receive the path to the jobs output as the first CLI parameter. 
+.TP
+.B *
+Print its output to the standard output stdout\&.
+.PP
+.SS EXAMPLE
+.PP
+.Vb
+[program.test_program]
+binary = "./algorithm"
+arguments = []
+afterscript = "./script"
+.Ve
+.PP
+After running the job the after script will be called as: 
+.PP
+.Vb
+script path/to/job/stdout
+.Ve
+.PP
+And for example if: 
+.PP
+in \fBscript\fP:
+.Vb
+#!/bin/sh
+cat $1
+.Ve
+.PP
+The afterscript\&'s output will be exactly the jobs output (ie. No postprocessing happened). 
+But these scripts may be more complex if the use case requires it. 
+.PP
+.SH LABELS
+
+.PP
+When running \fBgourd\fP
+\fIstatus\fP,
+by default the statuses only display information 
+about Slurm scheduling of the run or an exit code. 
+.PP
+In the case that a job execution can succeed (exit code 0) but the run should still 
+be considered a failure, the user can add a custom label to the run, derived from 
+the output of the run\&'s `afterscript\&'\&. 
+.PP
+Labels can be created in the configuration file as names with a regular expression, 
+where if the regex is matched in the afterscript\&'s output, the label is assigned to the run. 
+.PP
+These are specified as \fI[label.label\-name]\fP
+and the fields available are: 
+.PP
+.TP
+\fBregex\fP = regex
+ A regular expression that the afterscripts output will be matched to, 
+if the output matches the expression this label will be assigned. 
+.PP
+.TP
+\fBpriority\fP = number
+ In the case that more than one label matches a run the \fBhighest\fP
+priority label will be assigned. 
+Higher priority value = higher priority. 
+Default is 0. 
+Note that if two or more labels have the same priority and are both present 
+at the same time, the result is undefined behaviour. 
+Set `warn_on_label_overlap` to `true` to prevent this. 
+.PP
+.TP
+\fBrerun_by_default?\fP = boolean
+ If true makes this label essentially mean `failure\&', in the sense that 
+\fBgourd\fP
+will treat a run with this label as a failure even if the 
+run itself succeeded. 
+.br
+.br
+By default \fIfalse\fP\&.
+.PP
+.SS EXAMPLE
+.PP
+.Vb
+[label.label_name]
+# matches any output
+regex = ".*"
+priority = 1
+rerun_by_default = true
+.Ve
+Labels are assigned based on priority. 
+For example if the configuration file looks like: 
+.PP
+.Vb
+[label.label1]
+regex = "Success"
+priority = 1
+rerun_by_default = false
+
+[label.label2]
+regex = "RuntimeException"
+priority = 2
+.Ve
+and the afterscript output looks like: 
+.PP
+.Vb
+Starting afterscript...
+Success! The output was correct.
+Verifying something else...
+RuntimeException thrown while parsing
+.Ve
+then by principle of priorities, the run will be assigned 
+\fIlabel2\fP
+even though both regexes match. 
+.PP
+.SH REMOTE RESOURCE FETCHING
+
+.PP
+In order to prevent having to manually transfer large files, input files 
+or (precompiled) program binaries can be fetched from a URL. 
+.PP
+Suppose you are hosting a large text file, or want to download a binary from CI artefacts: 
+.PP
+https://test.com/input.txt
+.PP
+https://test.com/program.exe
+.PP
+Any config field which accepts fetched_path
+can accept remote resources. 
+.PP
+The syntax for fetched resources is "remote_path | local_path"
+(whitespace insensitive). 
+.PP
+.SS EXAMPLE
+.PP
+Consider this fetched input as an example: 
+.PP
+.Vb
+[input.some_input]
+fetch = “https://test.com/input.txt | ./path/to/store/the/file.txt”
+arguments = [“any”, “input”, “arguments”]
+.Ve
+This will download the file at test.com/input.txt
+and save it 
+contents in the provided path. 
+The contents of this will then be passed as input to all programs. 
+.PP
+Note that the “|” character needs to be escaped in URLs as 
+%7C
+since it is used as a delimiter 
+.PP
+Similarly for programs: 
+.PP
+.Vb
+[program.some_example]
+fetch = “https://test.com/program.exe | ./path/to/store/the/program.exe”
+arguments = [“any”, “program”, “arguments”]
+.Ve
+.PP
+.SS CACHING
+.PP
+These resources will be downloaded and saved at the paths, but they will 
+not be redownloaded again as long as these cached files exist. 
+.PP
+It may be beneficial to create a folder and store all downloaded resources 
+inside, then when there is a need for cleaning the cache this amounts 
+to deleting the folder 
+.PP
+.SH PROGRAM VERSIONS
+
+.PP
+Programs may be fetched and compiled straight from a git repository. 
+.PP
+The user in this case has to provide the commit ID of the desired HEAD, 
+the build command and the path to the output binary. 
+.PP
+The build command and the path to the output binary are both ran relative 
+to the repository root. 
+.PP
+.SS EXAMPLE
+.PP
+.Vb
+[program.testprogram1]
+arguments = ["a"]
+
+[program.testprogram1.git]
+git_uri = "https://github.com/Nerdylicious/DijkstraShortestPath.git"
+build_command = "g++ ./DijkstraShortestPath.cpp"
+path = "./a.out"
+commit_id = "e90e7f6811f399075bc058f12e2324fb64701b02"
+.Ve
+This will clone the repository, check it out at the correct point in time 
+build the Dijkstra algorithm and finally run it. 
+.PP
+.SS CACHING
+.PP
+Similarly to fetching, delete the repository folder if you want to refetch the files. 
+.PP
+.SH INPUT SCHEMA
+
+.PP
+The input_schema
+field can be specified with a file that contains 
+an additional list unnamed of inputs. 
+.PP
+This is an option to allow for script\-generated input lists, in case 
+the structure of the files cannot be expressed by a glob pattern. 
+.PP
+\fBAvoid using this if possible.\fP
+.PP
+.SS EXAMPLE
+.PP
+Assume that gourd.toml
+specifies: 
+.PP
+.Vb
+input_schema = "./inputs.toml"
+.Ve
+And a file in the same folder called inputs.toml
+exists, containing: 
+.PP
+.Vb
+[[input]]
+file = "./jeden"
+
+[[input]]
+file = "./dwa"
+.Ve
+We have just added two new inputs programatically to the input list. 
+.PP
+These inputs have all of the fields of normal inputs, but 
+they do not support naming and will always have automatically assigned 
+names. 
+.PP
+.SH SEE ALSO
+
+\fBgourd(1)\fP
+\fBgourd\-tutorial(7)\fP
+.PP
+.SH CONTACT
+
+Ανδρέας Τσατσάνης <\fBa.tsatsanis@tudelft.nl\fP>
+.br[0.1cm]
+.br
+
+Lukáš Chládek <\fBl@chla.cz\fP>
+.br[0.1cm]
+.br
+
+Mikołaj Gazeel <\fBm.j.gazeel@tudelft.nl\fP>
+.br[0.1cm]
+.br
+
+.PP
+.\" NOTE: This file is generated, DO NOT EDIT.

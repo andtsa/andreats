@@ -1,0 +1,407 @@
+.\" *********************************** start of \input{docs/user/latex2man_styling.tex}
+.\" *********************************** end of \input{docs/user/latex2man_styling.tex}
+'\" t
+.\" Manual page created with latex2man on Sun May 11 21:13:21 2025
+.\" NOTE: This file is generated, DO NOT EDIT.
+.de Vb
+.ft CW
+.nf
+..
+.de Ve
+.ft R
+
+.fi
+..
+.TH "GOURD\-TUTORIAL" "7" "25 MARCH 2025" "DelftBlue Tools Manual " "DelftBlue Tools Manual "
+.SH NAME
+
+.PP
+\fBgourd\-tutorial\fP
+\- A step\-by\-step walkthrough for the Gourd experiment scheduler. 
+.PP
+.SH INTRODUCTION
+
+.PP
+Welcome to \fBgourd\-tutorial\fP!
+.PP
+If you haven\&'t been introduced yet, \fBgourd(1)\fP
+is an application 
+that makes it easy to set up experiments on a supercomputer. 
+By experiment, we mean a large\-scale comparative evaluation of one or 
+more \fIalgorithms\fP
+(runnable programs) that each run on a set of 
+\fIinputs\fP
+and are subsequently timed and profiled. 
+.PP
+While this tool offers a lot of versatility, this set of runnable 
+examples will show that \fBgourd\fP
+experiments only take a minute to 
+set up. 
+.PP
+.SH INSTALLATION AND REFERENCE
+
+.PP
+This tutorial is designed to be interactive, so be sure to have a working copy of 
+\fBgourd(1)\fP
+installed on your computer. 
+You can verify this by typing \fBgourd\fP \fIversion\fP
+in a terminal. 
+For installation instructions, refer to the README.md
+file in the 
+source repository. 
+.PP
+When installed, you will also have access to the user manuals. 
+For Linux, macOS, and the like, type \fBman\fP \fBgourd\-tutorial\fP
+to 
+see this tutorial or \fBgourd\fP
+and \fBgourd.toml\fP
+for complete 
+documentation. 
+.PP
+.SH INTERACTING WITH GOURD
+
+.PP
+Gourd is a command\-line application that keeps life easy. 
+You take actions by typing \fBgourd\fP
+followed by a command in your 
+terminal; a complete list is in the manual. 
+.PP
+For example, type: 
+\fBgourd\fP \fIinit\fP
+\fI--example\fP \fIfibonacci\-comparison\fP \fImy_fib\fP
+.PP
+The \fBgourd\fP \fIinit\fP
+command will set up the myexample
+folder 
+to match the example below! 
+Furthermore, \fBgourd\fP \fIinit\fP \fB--list\-examples\fP
+will show what 
+other examples are accessible to you. 
+.PP
+.SH FIBONACCI COMPARISON
+
+.PP
+Let\&'s begin by designing a simple experiment. 
+We will compare three versions of an algorithm that calculates Fibonacci 
+numbers. 
+.PP
+First, let\&'s define the experimental setup using a gourd.toml
+file. This file will specify the files, programs, and parameters of our 
+setup in a reproducible way. 
+.PP
+Open gourd.toml
+in an editor and type in the following lines: 
+.PP
+.Vb
+
+`                             ./gourd.toml
+`  +\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-+
+1  | experiments_folder = "experiments"                                |
+2  | metrics_path = "experiments"                                      |
+3  | output_path = "experiments"                                       |
+4  |                                                                   |
+`  /_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_/
+`  \\___________________________________________________________________\\
+.Ve
+.PP
+In the TOML format, values (such as file paths) are in quotes (").
+You can also add comments using the hash character. 
+.PP
+The lines above set up the folder structure for our experiment\&'s outputs. 
+This particular setup puts everything in the same folder. 
+.PP
+Now, let\&'s configure programs \- the algorithms we are evaluating. 
+.PP
+.SS DEFINING PROGRAMS
+.PP
+.Vb
+    ____________________________________________________________________
+`  /_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _/
+`  \\                          ./gourd.toml                             \\
+`  |` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` `|
+5  | [program.fibonacci]                                               |
+6  | binary = "./fibonacci"                                            |
+7  |                                                                   |
+8  | [program.fast\-fibonacci]                                          |
+9  | binary = "./fibonacci\-dynamic"                                    |
+10 |                                                                   |
+11 | [program.fastest\-fibonacci]                                       |
+12 | binary = "./fibonacci\-dynamic"                                    |
+13 | arguments = ["\-f"]                                                |
+14 |                                                                   |
+`  /_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_/
+`  \\___________________________________________________________________\\
+.Ve
+.PP
+The lines above set up three uniquely named programs: 
+.TP
+fibonacci: 
+a slow Fibonacci number calculator. 
+.TP
+fast\-fibonacci 
+a faster version using Dynamic Programming. 
+.TP
+fastest\-fibonacci: 
+the same binary file as \fIfast\-fibonacci\fP
+run 
+with an additional command\-line argument, \fB\-f\fP,
+which should make it 
+even faster! 
+.PP
+Each program links to a \fIbinary\fP
+\-\- the executable file that runs our 
+algorithm. 
+In this case, our Fibonacci algorithms are compiled in Rust. 
+If you are following this tutorial with 
+\fBgourd\fP \fIinit\fP
+\fI\-\-example\fP \fIfibonacci\-comparison\fP,
+the folder contains both binaries: 
+fibonacci
+and fibonacci\-dynamic\&.
+.PP
+In our evaluation, we are going to see how the three programs compare when 
+running different test cases as inputs. 
+Let\&'s add inputs to our gourd.toml\&.
+.PP
+.SS DEFINING INPUTS
+.PP
+.Vb
+    ____________________________________________________________________
+`  /_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _/
+`  \\                          ./gourd.toml                             \\
+`  |` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` `|
+15 | [input.test_2]                                                    |
+16 | input = "./inputs/input_2"                                        |
+17 |                                                                   |
+18 | [input.test_8]                                                    |
+19 | input = "./inputs/input_8"                                        |
+20 |                                                                   |
+21 | [input.test_35]                                                   |
+22 | input = "./inputs/input_35"                                       |
+23 |                                                                   |
+24 | [input.bad_test]                                                  |
+25 | input = "./inputs/input_bad"                                      |
+26 |                                                                   |
+`  /_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_/
+`  \\___________________________________________________________________\\
+
+.Ve
+.PP
+The lines above set up four uniquely named inputs. 
+Each input refers to a file whose contents are fed into the program. 
+.PP
+In this example, inputs test_2,
+test_8,
+and test_35
+link to files containing the numbers 2,
+8,
+and 35\&.
+These should make the Fibonacci algorithms output the 2nd, 8th, and 35th 
+numbers of the Fibonacci sequence. 
+The input named bad_test
+contains "some text",
+which isn\&'t 
+a valid number \- let\&'s see how this will crash the programs. 
+.PP
+Inputs are combined with programs in a \fBcross product\fP
+to create 
+\fIruns\fP\&.
+Each program\-input combination is exactly one \fIrun\fP\&.
+In this example, 3 programs * 4 inputs results in 12 \fIruns\fP\&.
+.PP
+.SS RUNNING THE EVALUATION
+.PP
+Our gourd.toml
+is complete \- now it is time to run the evaluation 
+using \fBgourd\fP \fIrun\fP\&.
+Typing \fBgourd\fP \fIrun\fP
+in a terminal 
+will tell you that it has two subcommands: 
+.PP
+.TP
+\fIlocal\fP
+ Run locally on your computer. 
+If connected via SSH to a 
+cluster computer, \fIlocal\fP
+uses the very limited computing power of 
+the login node. 
+.TP
+\fIslurm\fP
+ Send to the SLURM cluster scheduler on a supercomputer. 
+.PP
+The \fIslurm\fP
+subcommand needs some extra configuration, so let\&'s go with 
+\fIlocal\fP
+for now. 
+Type \fBgourd\fP \fIrun\fP \fIlocal\fP\&.
+.PP
+.Vb
+
+|   $ gourd run local
+|
+| > info: Experiment started
+| >
+| > For program fast\-fibonacci:
+| >    0. bad_test.... failed, code: 25856
+| >    1. test_2...... success, took: 171ms 903us 417ns
+| >    2. test_35..... success, took: 172ms 2us 417ns
+| >    3. test_8...... success, took: 175ms 546us 750ns
+| >
+| > For program fastest\-fibonacci:
+| >    4. bad_test.... failed, code: 25856
+| >    5. test_2...... success, took: 149ms 219us 542ns
+| >    6. test_35..... success, took: 154ms 733us 667ns
+| >    7. test_8...... success, took: 146ms 695us 334ns
+| >
+| > For program fibonacci:
+| >    8. bad_test.... failed, code: 25856
+| >    9. test_2...... success, took: 272ms 265us 667ns
+| >   10. test_35..... success, took: 328ms 935us 292ns
+| >   11. test_8...... success, took: 273ms 159us 167ns
+| >
+| >
+| > [ ] #################### Running jobs... 12/12
+| > info: Experiment finished
+| >
+| > info: Run gourd status 1 to check on this experiment
+
+.Ve
+.PP
+If you are seeing similar output, you have successfully reproduced a Gourd experiment! 
+.PP
+.SS DISPLAYING STATUS
+.PP
+The \fIrun\fP
+command has created an experiment from the experimental setup and executed it on your computer. 
+Each of the twelve runs are shown here, grouped by program, alongside with their completion status. 
+In fact, you can show this view at any time by typing \fBgourd\fP \fIstatus\fP\&.
+.PP
+We can see that runs 0, 4, and 8 have failed. 
+Let\&'s take a closer look at why that is! 
+Type \fBgourd\fP \fIstatus\fP \fB\-i\fP \fI4\fP
+to check on run number 4. 
+.PP
+.Vb
+
+|   $ gourd status \-i 4
+|
+| > program: fastest\-fibonacci
+| >   binary: FetchedPath("/fib\-folder/fibonacci\-dynamic")
+| > input: Regular("bad_test")
+| >   file: Some(FetchedPath("/fib\-folder/inputs/input_bad"))
+| >   arguments: ["\-f"]
+| >
+| > output path: "/fib\-folder/experiments/1/fastest\-fibonacci/4/stdout"
+| > stderr path: "/fib\-folder/experiments/1/fastest\-fibonacci/4/stderr"
+| > metric path: "/fib\-folder/experiments/1/fastest\-fibonacci/4/metrics"
+| >
+| > file status? failed, code: 25856
+| > metrics:
+| >   user   cpu time: 1ms 274us
+| >   system cpu time: 1ms 735us
+| >   page faults: 1
+| >   signals received: 0
+| >   context switches: 11
+
+.Ve
+.PP
+The detailed status, which you can see above, allows us to easily inspect 
+the experiment\&'s output and errors by accessing the files at 
+output path\&.
+.PP
+.SS RERUNNING FAILED RUNS
+.PP
+These files reveal that bad_test
+fails because the Fibonacci 
+programs are expecting a number, but the input is "some text" instead! 
+Let\&'s fix the problem and replace it with 10, a decidedly more valid number. 
+.PP
+.Vb
+
+`                           ./inputs/input_bad
+`  +\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-+
+`  | <<<<<<< new version                                               |
+`  | 10                                                                |
+`  | =======                                                           |
+`  | some text                                                         |
+`  | >>>>>>> old version                                               |
+`  +\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-+
+
+.Ve
+.PP
+Now we have fixed the problem, and the input called bad_test
+is not 
+so bad after all. 
+.PP
+You can imagine that running the whole experiment again when only 1/4 of the results are invalid would be a waste. 
+We are going to use \fBgourd\fP \fIrerun\fP
+to repeat only the runs that failed. 
+.PP
+.Vb
+
+|    $ gourd rerun
+|
+| >  ? What would you like to do?
+| >  * Rerun only failed (3 runs)
+| >    Rerun all finished (12 runs)
+| >  [↑↓ to move, enter to select, type to filter]
+| >
+| >  info: 3 new runs have been created
+| >  info: Run 'gourd continue 1' to schedule them
+
+.Ve
+.PP
+The \fBgourd\fP \fIrerun\fP
+command suggests rerunning the failed runs only! 
+Another option supported by \fIrerun\fP
+is to specify a list of IDs for it to reschedule. 
+.PP
+After \fIrerun\fP,
+it is necessary to use \fBgourd\fP \fIcontinue\fP
+to actually execute the newly created runs. 
+Try this in your terminal. 
+.PP
+.SS COLLECTING DATA
+.PP
+Our simple Fibonacci experiment is done evaluating our two algorithms. All 
+that remains to be done is collecting the runtime data. Fortunately, 
+\fBgourd\fP
+also provides a simple way to process the numerous metrics 
+files that our runs have generated. 
+.PP
+By running \fBgourd\fP \fIanalyse\fP \fItable\fP,
+you can create a CSV 
+file that collects all metrics from the application\&'s run. 
+On UNIX\-like operating systems, RUsage provides a large array of useful 
+data such as context switches and page faults in addition to basic timing. 
+.PP
+Furthermore, \fBgourd\fP \fIanalyse\fP
+supports 
+ways of collecting and visualising the experiment\&'s output. 
+Try the \fBgourd\fP \fIanalyse\fP \fIplot\fP,
+which produces a cactus\-plot summary 
+of the programs\&' runtimes. 
+.PP
+.SH SEE ALSO
+
+.PP
+\fBgourd(1)\fP
+.PP
+\fBgourd.toml(5)\fP
+.PP
+.SH CONTACT
+
+Ανδρέας Τσατσάνης <\fBa.tsatsanis@tudelft.nl\fP>
+.br[0.1cm]
+.br
+
+Lukáš Chládek <\fBl@chla.cz\fP>
+.br[0.1cm]
+.br
+
+Mikołaj Gazeel <\fBm.j.gazeel@tudelft.nl\fP>
+.br[0.1cm]
+.br
+
+.PP
+.\" NOTE: This file is generated, DO NOT EDIT.

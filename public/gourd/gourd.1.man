@@ -1,0 +1,808 @@
+.\" *********************************** start of \input{docs/user/latex2man_styling.tex}
+.\" *********************************** end of \input{docs/user/latex2man_styling.tex}
+'\" t
+.\" Manual page created with latex2man on Sun May 11 21:13:16 2025
+.\" NOTE: This file is generated, DO NOT EDIT.
+.de Vb
+.ft CW
+.nf
+..
+.de Ve
+.ft R
+
+.fi
+..
+.TH "GOURD" "1" "25 MARCH 2025" "DelftBlue Tools Manual " "DelftBlue Tools Manual "
+.SH NAME
+
+.PP
+\fBgourd\fP
+\- A tool for scheduling parallel runs for algorithm comparisons. 
+.PP
+.SH SYNOPSIS
+
+.PP
+\fBgourd\fP
+\fIcommand\fP
+[\fB\-s\fP]
+[\fB\-c\fP\fI filename\fP]
+[\fB\-v|\-vv\fP]
+[\fB\-d\fP]
+[\fB\-h\fP]
+.PP
+.SH DESCRIPTION
+
+.PP
+\fBgourd\fP
+is a tool that schedules parallel runs for algorithm comparisons. 
+Given the parameters of the experiment, a number of test datasets, and algorithm implementations to compare, 
+\fBgourd\fP
+runs the experiment in parallel and provides many options for processing its results. 
+While originally envisioned for the DelftBlue supercomputer at Delft University of Technology, 
+\fBgourd\fP
+can replicate the experiment on any cluster computer with the \fBSlurm\fP
+scheduler, 
+on any UNIX\-like system, and on Microsoft Windows. 
+.PP
+New to \fBgourd\fP?
+Go directly to the \fBgourd\-tutorial(7)\fP
+manual. 
+.PP
+.SH GLOBAL OPTIONS
+
+.PP
+The following options apply to all \fBgourd\fP
+commands. 
+These will be referred to as \fIGLOBAL OPTIONS\fP
+throughout the manual. 
+.PP
+.TP
+\fB\-c\fP\fI filename\fP, \fB--config\fP\fI filename\fP
+ Tell \fBgourd\fP
+to use the given filename as gourd.toml,
+the configuration 
+file that defines the experimental setup. 
+By default, the file is expected in the current working directory at \&./gourd.toml\&.
+.TP
+\fB\-d\fP, \fB--dry\-run\fP
+ Run \fBgourd\fP
+in dry\-run mode, printing all operations (such as writing to files or scheduling runs) 
+without executing them. 
+.TP
+\fB\-h\fP, \fB--help\fP
+ Display usage instructions for the \fBgourd\fP
+utility or any of its commands. 
+This option extends to all the subcommands of \fBgourd\fP:
+for example, running 
+\fBgourd\fP
+\fIstatus\fP
+\fI\-h\fP
+will display help about the \fIstatus\fP
+subcommand. 
+.TP
+\fB\-s\fP, \fB--script\fP
+ Tell \fBgourd\fP
+to use a script\-friendly interface, that is, one that does not use 
+interactive user prompts. 
+.TP
+\fB\-v\fP, \fB\-vv\fP, \fB--verbose\fP
+ Run \fBgourd\fP
+with verbose debugging output, where \fB\-vv\fP
+enables even more logging. 
+.PP
+.SH COMMANDS
+
+.PP
+Using \fBgourd\fP
+is as simple as invoking one of its commands, such as 
+\fBgourd\fP \fIinit\fP\&.
+Command\-line arguments are generally not necessary; to design and run 
+experiments, a gourd.toml
+file should be in the current directory. 
+The following is a summary of available commands. 
+.PP
+.TP
+\fBgourd\fP \fIrun\fP
+ Create an experiment from configuration and run it on \fBSlurm\fP
+or the local machine. 
+.TP
+\fBgourd\fP \fIinit\fP
+ Set up a template of an experiment configuration. 
+.TP
+\fBgourd\fP \fIstatus\fP
+ Display the status of a running or completed experiment. 
+.TP
+\fBgourd\fP \fIcontinue\fP
+ Schedule the incomplete part of a partial experiment. 
+.TP
+\fBgourd\fP \fIcancel\fP
+ Cancel scheduled runs. 
+.TP
+\fBgourd\fP \fIrerun\fP
+ Rerun (possibly) failed runs. 
+.TP
+\fBgourd\fP \fIanalyse\fP
+ Output metrics of completed runs. 
+.TP
+\fBgourd\fP \fIset\-limits\fP
+ Change \fBSlurm\fP
+resource limits for runs not yet scheduled. 
+.TP
+\fBgourd\fP \fIversion\fP
+ Show the software version. 
+.PP
+.SS GOURD RUN
+.PP
+.SS Summary
+The \fBgourd\fP
+\fIrun\fP
+command uses the provided configuration and runs an 
+experiment. 
+Using either \fIlocal\fP
+or \fIslurm\fP,
+it is possible for the execution 
+to run on the local machine, or be scheduled using Slurm on a cluster computer. 
+Using Slurm, additional configuration arguments are required; see 
+\fBgourd.toml(5)\fP\&.
+.PP
+In principle, however, \fBgourd\fP
+\fIrun\fP
+is used in the same way for both 
+Slurm and local execution. 
+A gourd.toml
+configuration file should be present in the current directory, 
+formally describing the experiment that is to be created and run. 
+Because most options are specified in this file, it is usually sufficient to type 
+\fBgourd\fP
+\fIrun\fP
+\fIslurm\fP|\fIlocal\fP
+to run an experiment. 
+.PP
+See the manual page \fBgourd\-tutorial(7)\fP
+for a step\-by\-step guide on 
+designing experiments to run. 
+.PP
+.SS Synopsis
+\fBgourd\fP
+\fIrun\fP
+\fIslurm\fP|\fIlocal\fP
+[\fBGLOBAL OPTIONS\fP]
+[\fB--force\fP]
+[\fB--sequential\fP]
+.PP
+.SS Subcommands
+.TP
+\fIlocal\fP
+ Runs the experiment locally, such that all programs are executed directly on the computer 
+that \fBgourd\fP
+is run from. 
+.PP
+This is useful for running \fBsmall parts\fP
+of an experiment on 
+a personal computer or a login node, allowing you to test that programs 
+are being called correctly and that the configuration is valid. 
+Please note that \fIlocal\fP
+is \fBNOT\fP
+intended for running full 
+experiments on a \fBSlurm\fP\-equipped
+cluster. 
+\fILocal\fP
+will use the login node only and not the actual 
+supercomputer. 
+.PP
+Running using \fIrun\fP
+\fIlocal\fP
+will perform the experiments in 
+parallel based on the number of available CPU cores. 
+Resource limits set in the configuration will not be honoured. 
+While running, experiment status is displayed continuously (see the 
+\fBgourd\fP
+\fIstatus\fP
+command) until all runs have finished executing. 
+Typing Control+C into the terminal will stop the runs. 
+.PP
+\fIlocal\fP
+can additionally take more options: 
+.RS
+.TP
+\fB--force\fP
+ \fBgourd\fP
+will, by default, refuse to run large experiments on \fIlocal\fP\&.
+This is 
+because doing so may rapidly use up too many file descriptors on some operating systems. 
+To ignore the warning and run the experiment anyways, use this optional flag. 
+If the resources are exhausted too quickly, an error will be displayed. 
+.RS
+.PP
+.RE
+.TP
+\fB--sequential\fP
+ By default, runs execute concurrently with a level of parallelism. 
+This option can be specified to force the runs to run sequentially, that is, one after another. 
+This may be useful if you want to run bigger experiments without using too many system resources. 
+Note that the use of this option \fBalso\fP
+enables the \fB--force\fP
+option. 
+.RE
+.RS
+.PP
+.RE
+.TP
+\fIslurm\fP
+ Runs the experiment on a \fBSlurm\fP\-equipped
+cluster computer. 
+.PP
+In this mode, \fBgourd\fP
+will use the \fBSlurm\fP
+command\-line 
+interface to schedule runs on a supercomputer. 
+The prerequisites are that: 
+.RS
+.TP
+.B *
+\fBgourd\fP is running on the login node of a supercomputer, such
+that the \fBsrun\fP
+command is available. 
+.TP
+.B *
+gourd.toml contains all required fields for running on
+\fBSlurm\fP
+(see the manual for \fBgourd.toml\fP(5))
+.TP
+.B *
+gourd.toml contains a valid experiment for which all
+paths (including the programs and output paths) are accessible 
+from the cluster nodes. 
+.RE
+.RS
+.PP
+When \fBgourd\fP
+\fIrun\fP
+\fIslurm\fP
+is called, the experiment\&'s runs 
+are not executed immediately; instead, they are submitted as \fIjob arrays\fP
+to the \fBSlurm\fP
+scheduler. 
+The experiment\&'s runs are then in the supercomputer\&'s queue (status ``pending\&''). 
+The time until the runs are actually executed depends on many factors, which 
+may include the current load and the size of your experiment; this 
+delay can range from seconds to days. 
+For this reason, \fBgourd\fP
+\fIrun\fP
+\fIslurm\fP
+does not show the 
+continuous status of an experiment, use \fBgourd\fP
+\fIstatus\fP
+to do that. 
+.PP
+On successful scheduling, the Slurm IDs of the job arrays that make 
+up the experiment will be shown, and the command will exit. 
+To view the experiment\&'s status, see the \fBgourd\fP
+\fIstatus\fP
+section 
+of this manual. 
+.PP
+Running on Slurm has many configurable options. 
+Please refer to the manual \fBgourd\-tutorial\fP(1)
+for example setups 
+and the manual \fBgourd.toml\fP(5)
+for complete reference. 
+The implementation of the Slurm API used by \fBgourd\fP
+is discussed 
+in depth in the \fBgourd\fP
+maintainer documentation. 
+.RE
+.PP
+.SS GOURD INIT
+.PP
+.SS Summary
+The \fBgourd\fP
+\fIinit\fP
+command creates an experimental configuration. 
+Configurations are represented as TOML files. 
+A template configuration, gourd.toml,
+is created in the directory specified. 
+The directory can optionally be initialized as a Git repository. 
+Unless run with the [\fB\-s\fP]
+flag, this command will ask using interactive prompts 
+to refine the template to your needs. 
+.PP
+If the command is run with the [\fB\-s\fP]
+flag these choices will not be offered and 
+the default options will be picked for all queries. 
+.PP
+.SS Synopsis
+\fBgourd\fP
+\fIinit\fP
+[\fBGLOBAL OPTIONS\fP]
+[\fB\-e\fP\fI example\-name\fP]
+[\fB--list\-examples\fP]
+[\fB--git\fP\fI=true|false\fP]
+[\fIdirectory\fP]
+.PP
+.SS Options
+.TP
+\fB\-e, --example\fP\fI example\-name\fP
+ Initializes the given directory with an example configuration from \fBgourd\-tutorial(7)\fP
+(rather than a custom template for gourd.toml).
+.TP
+\fB--list\-examples\fP
+ Instead of initializing a folder, this will make \fBgourd\fP
+list all the available 
+examples for the \fI\-e\fP
+option. 
+.TP
+\fB--git\fP\fI=true|false\fP
+ Whether to initialize an empty git repository in the newly created folder. 
+.PP
+.SS Listing Examples
+If \fB--list\-examples\fP
+is used, \fBgourd\fP
+\fIinit\fP
+will not initialize a new folder with 
+a configuration. 
+The \fIdirectory\fP
+argument will be ignored. 
+.PP
+A list of available examples and their descriptions will be printed to the output and 
+the program will exit. 
+.PP
+.SS GOURD STATUS
+.PP
+.SS Summary
+The \fBgourd\fP
+\fIstatus\fP
+command displays the status of an existing experiment, 
+that is, one that has been created by \fBgourd\fP
+\fIrun\fP,
+but not necessarily 
+one that has fully executed. 
+This command can also display detailed status of an individual run using the \fB\-i\fP
+flag. 
+.PP
+.SS Synopsis
+\fBgourd\fP
+\fIstatus\fP
+[\fBGLOBAL OPTIONS\fP]
+[\fB\-i\fP\fI run\-id\fP]
+[\fB--follow\fP]
+[\fB--full\fP]
+[\fB--after\-out\fP]
+[\fIexperiment\-id\fP]
+.PP
+.SS Options
+.TP
+\fIexperiment\-id\fP
+ The ID of an experiment to show the status of. 
+By default, this is the most recent experiment. 
+.TP
+\fB\-i\fP\fI run\-id\fP
+ Instead of showing a general overview of the entire experiment show detailed 
+information about a run with this \fIrun\-id\fP\&.
+.TP
+\fB--full\fP
+ By default, \fIstatus\fP
+displays a summary rather than a full list if there 
+is a large number of runs (>100). Using \fB--full\fP,
+the full list is 
+always shown. 
+.TP
+\fB--follow\fP
+ The status will be continually displayed until all of the runs have finished. 
+This is useful when it is known that the jobs will finish 
+in a matter of minutes. 
+.TP
+\fB--after\-out\fP
+ Use only with \fB\-i\fP\fI run\-id\fP,
+displays the raw afterscript output for that run. 
+.PP
+.SS Experiment status
+By default, \fBgourd\fP
+\fIstatus\fP
+uses the gourd.toml
+file to determine the 
+location of experiment files generated using \fBgourd\fP
+\fIrun\fP\&.
+It finds the most recent experiment (unless [\fIexperiment\-id\fP]
+is specified) and shows a summary 
+containing the status of each run, and, if completed, the run\&'s basic timing metrics. 
+The command also shows a summary of each run\&'s error status, if any. 
+.PP
+.SS Run status
+With the \fB\-i\fP\fI run\-id\fP
+argument, \fBgourd\fP
+\fIstatus\fP
+will retrieve detailed 
+run information including the arguments that the binary was called with, RUsage metrics 
+if successful, and detailed error status if it has failed. 
+The file paths provided make it easy to inspect the output of a run, whether it has 
+succeeded or failed. 
+.PP
+.SS Afterscripts
+To postprocess the output of the runs, there are two options available: \fIafterscipts\fP
+and \fIpipelining\fP\&.
+Afterscripts are scripts that run locally (so for DelftBlue they do 
+\fInot\fP
+get scheduled as separate jobs). 
+.PP
+Afterscripts are meant for quick and computationally inexpensive postprocessing 
+(such as getting the first line of the output file). 
+For long or complicated postprocessing with a significant computational cost, look at \fIPipelining\fP\&.
+.PP
+.TP
+.B *
+An afterscript is optional and specified per program. 
+.TP
+.B *
+To indicate the use of an afterscript, the path to the script file needs to be specified in the gourd.toml under the chosen program.
+.TP
+.B *
+Multiple programs can use the same script. 
+.TP
+.B *
+The afterscript can be used to assign labels to runs as a means of specifying custom status. 
+.PP
+\fIHow to design an afterscript:\fP
+.PP
+The afterscript should be an 
+.ul
+executable
+
+file. This can be a normal compiled executable, or possibly a shell/python script if you use the appropriate \fIshebang\fP
+at the start of the file (check out https://en.wikipedia.org/wiki/Shebang_(Unix) for details). 
+.PP
+\fBgourd\fP
+will pass the path to a file containing the main program\&'s output to the afterscript as a command line argument. 
+The afterscript can then print any output to stdout
+(via print,
+printf,
+println,
+echo
+or your preferred language\&'s method), 
+and \fBgourd\fP
+will collect that and display it in 
+\fBgourd\fP \fIstatus\fP \fI\-i\fP \fI<specific run id>\fP
+.PP
+\fIWhat can you do with afterscript output\fP
+.PP
+.TP
+.B *
+use \fBlabels\fP, check out the corresponding chapter for more details.
+.TP
+.B *
+create custom metrics: read in \fBgourd\fP \fIanalyse\fP for how to do this.
+.PP
+.SS GOURD CONTINUE
+.PP
+.SS Summary
+The \fBgourd\fP
+\fIcontinue\fP
+command schedules runs that are part of an existing 
+experiment, but have not yet been scheduled. This includes runs created by \fBgourd\fP
+\fIrerun\fP,
+as well as runs that were not scheduled due to a run limit. 
+For example, an experiment with 30,000 distinct runs can be scheduled in three batches 
+of 10,000 each if that is the maximum number of queued supercomputer jobs. 
+.PP
+.SS Synopsis
+\fBgourd\fP
+\fIcontinue\fP
+[\fBGLOBAL OPTIONS\fP]
+[\fIexperiment\-id\fP]
+.PP
+.SS Options
+.TP
+\fIexperiment\-id\fP
+ The ID of an experiment to continue. 
+By default, this is the most recent experiment. 
+.PP
+.SS Pipelining
+Programs may be pipelined by specifying the next
+programs in the sequence: 
+.Vb
+[program.your_first_progarm]
+binary = "./executable"
+next = ["a_second_program", "another_second_prog"]
+
+[program.a_second_program]
+binary = "./executable2"
+
+[program.another_second_prog]
+binary = "./executable3"
+.Ve
+See the manual for gourd.toml
+for more details on configuration. 
+.PP
+In the example above, when the runs for your_first_progarm
+finish, running 
+\fBgourd\fP
+\fIcontinue\fP
+will start one run for a_second_program
+and one for 
+another_second_prog,
+both of which will receive as input (to stdin)
+the 
+output (stdout)
+of your_first_progarm\&.
+.PP
+.SS GOURD CANCEL
+.PP
+.SS Summary
+The \fBgourd\fP
+\fIcancel\fP
+command cancels runs that have been scheduled on Slurm. 
+By default, it cancels all scheduled runs in the most recent experiment. 
+This command can cancel an individual run using the \fB\-i\fP
+flag. 
+.PP
+.SS Synopsis
+\fBgourd\fP
+\fIcancel\fP
+[\fBGLOBAL OPTIONS\fP]
+[\fIexperiment\-id\fP]
+[\fB\-i\fP\fI run\-ids\fP]
+[\fB\-a\fP]
+.PP
+.SS Options
+.TP
+\fIexperiment\-id\fP
+ The ID of an experiment to cancel runs from. 
+By default, this is the most recent experiment. 
+.TP
+\fB\-i\fP\fI run\-ids\fP
+ The IDs of the runs to cancel. 
+Pass multiple run IDs separated by spaces, for example \fI\-i 1 2 3\fP\&.
+By default, all runs in the experiment are cancelled. 
+.TP
+\fB\-a, --all\fP
+ Cancel all runs from this account. 
+This includes all runs, not just those from \fBgourd\fP\&.
+.PP
+.SS Cancelling All Runs
+Cancelling all runs will \fBcancel all runs scheduled on your account\fP\&.
+This option is included to be able to cancel past or deleted experiments. 
+But be aware of its possible impact. 
+.PP
+You can see which runs would be cancelled without actually doing it 
+by running \fBgourd\fP
+\fIcancel\fP
+\fI--all\fP
+\fI--dry\fP\&.
+.PP
+.SS Latency
+Slurm may take some time to acknowledge the cancellation; thus, running 
+\fBgourd\fP
+\fIstatus\fP
+right away after a cancellation may still display 
+the runs as pending, please wait up to one minute for the changes to propagate. 
+.PP
+.SS GOURD ANALYSE
+.PP
+.SS Summary
+The \fBgourd\fP
+\fIanalyse\fP
+command collects and processes metrics generated 
+when an experiment was run. It can produce a CSV data file or a ``cactus plot\&'' 
+to compare how quickly different algorithms run. 
+.PP
+.SS Synopsis
+\fBgourd\fP
+\fIanalyse\fP
+[\fIexperiment\-id\fP]
+\fItable\fP|\fIplot\fP
+[\fBGLOBAL OPTIONS\fP]
+[\fB\-o\fP\fI path/to/file\fP]
+[\fB\-f\fP\fI format options\fP]
+.PP
+.SS Options
+.TP
+\fIexperiment\-id\fP
+ The ID of an experiment to analyse. 
+By default, this is the most recent experiment. 
+.TP
+\fB\-o\fP\fI path/to/file\fP, \fB--output\fP\fI path/to/file\fP
+ Pass the command\&'s output to a file. 
+.TP
+\fB\-f\fP\fI format options\fP, \fB--format\fP\fI format options\fP
+ Formatting options for the \fItable\fP
+and \fIplot\fP
+subcommands. 
+.PP
+.SS Metrics CSV
+Running \fBgourd\fP
+\fIanalyse\fP
+\fItable\fP
+will create a table with 
+data about the status of the runs, metrics, and afterscript completion, unless there 
+are no completed runs. 
+If the \fI\-o\fP
+option is not passed, the table will be pretty\-printed in the 
+command line, otherwise a CSV file will be saved to the specified path. 
+The CSV generation will take into account all runs of the experiment. If \fBgourd\fP
+\fIanalyse\fP
+is rerun, the CSV will be updated with the newest status of the runs. 
+.PP
+The option \-\-format
+takes a comma\-separated list of columns to use 
+in the table. Without specifying this option, \fBgourd\fP
+will default to 
+\-\-format="program,slurm,fs\-status,wall\-time"\&.
+The first column will 
+always contain the run id\&.
+The possible options are: 
+.TP
+program
+ program name 
+.TP
+file
+ the input file this run was executed with, if there was one 
+.TP
+args
+ command\-line arguments passed to the program 
+.TP
+group
+ the input group, if there is one 
+.TP
+label
+ any label\-associated status 
+.TP
+afterscript
+ afterscript status string 
+.TP
+slurm
+ run status retrieved from the slurm daemon 
+.TP
+fs\-status
+ run status retrieved from the file system 
+.TP
+exit\-code
+ program\&'s exit code 
+.TP
+wall\-time
+ total elapsed real (wall\-clock) time 
+.TP
+user\-time
+ CPU time spent in user mode 
+.TP
+system\-time
+ CPU time spent in kernel (system\-call) mode 
+.TP
+max\-rss
+ peak resident set size (maximum RAM used) 
+.TP
+ix\-rss
+ integral of shared memory size over the run (ru_ixrss) 
+.TP
+id\-rss
+ integral of unshared data segment size (ru_idrss) 
+.TP
+is\-rss
+ integral of unshared stack size (ru_isrss) 
+.TP
+min\-flt
+ number of minor page faults 
+.TP
+maj\-flt
+ number of major page faults 
+.TP
+n\-swap
+ total swap operations performed 
+.TP
+in\-block
+ number of block input operations (disk reads) 
+.TP
+ou\-block
+ number of block output operations (disk writes) 
+.TP
+msg\-sent
+ number of inter\-process messages sent 
+.TP
+msg\-recv
+ number of inter\-process messages received 
+.TP
+n\-signals
+ number of signals delivered to the process 
+.TP
+nv\-csw
+ voluntary context switches count 
+.TP
+n\-iv\-csw
+ involuntary context switches count 
+.PP
+.SS Cactus plots
+Running \fBgourd\fP
+\fIanalyse\fP
+\fIplot\fP
+will create a PNG picture of 
+a cactus plot. 
+The cactus plot is used to showcase the comparison of how many inputs each algorithm 
+can finish running with in a given amount of time. 
+In other words, the horizontal axis represents the time passing, and the vertical axis 
+represents how many runs of this program (algorithm) have already finished. 
+This allows to see a visual comparison of the time each program takes \- the more runs 
+there are, the more informative the plot will result to be. 
+The plot will take into account only the runs that have completed and have valid 
+RUsage data. If \fBgourd\fP
+\fIanalyse\fP
+\fIplot\fP
+is rerun, the graph will be updated 
+according to the newest available data. 
+.PP
+The option \-\-format
+can be used to specify whether the plot output 
+should be in PNG or SVG format, for example: 
+\fBgourd\fP
+\fIanalyse\fP
+\fIplot\fP
+\fI\-\-format="png"\fP
+(png is also the default output) 
+.PP
+.SS GOURD VERSION
+.PP
+.SS Summary
+\fBgourd\fP
+\fIversion\fP
+outputs the software version and exits. 
+Using the [\fB\-s\fP]
+flag will display the version only, otherwise \fBgourd\fP
+will stress\-test your terminal font. 
+.PP
+.SS Synopsis
+\fBgourd\fP
+\fIversion\fP
+[\fB\-s\fP]
+.PP
+.SS Scripting
+By default \fBgourd\fP
+\fIversion\fP
+shows a human readable only output. By 
+running \fBgourd\fP
+\fIversion\fP
+\fB\-s\fP
+one can obtain a version number 
+in the format: 
+.PP
+gourd <version number>
+.PP
+.SH EXAMPLES
+
+.PP
+See the section on \fBgourd\fP
+\fIinit\fP
+for runnable example directories. 
+For a more detailed walkthrough with more focus on examples, use the \fBgourd\-tutorial(7)\fP
+manual. 
+.PP
+.SH FILES
+
+.PP
+.TP
+gourd.toml
+ A configuration file containing the experiment details. See \fBgourd.toml(5)\fP\&.
+.TP
+<experiment\-dir>/<experiment\-number>.lock
+ A file containing the runtime data of the experiment. 
+.PP
+.SH SEE ALSO
+
+.PP
+\fBgourd\-tutorial(7)\fP
+.PP
+\fBgourd.toml(5)\fP
+.PP
+.SH CONTACT
+
+Ανδρέας Τσατσάνης <\fBa.tsatsanis@tudelft.nl\fP>
+.br[0.1cm]
+.br
+
+Lukáš Chládek <\fBl@chla.cz\fP>
+.br[0.1cm]
+.br
+
+Mikołaj Gazeel <\fBm.j.gazeel@tudelft.nl\fP>
+.br[0.1cm]
+.br
+
+.PP
+.\" NOTE: This file is generated, DO NOT EDIT.
