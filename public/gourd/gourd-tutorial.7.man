@@ -1,7 +1,7 @@
 .\" *********************************** start of \input{docs/user/latex2man_styling.tex}
 .\" *********************************** end of \input{docs/user/latex2man_styling.tex}
 '\" t
-.\" Manual page created with latex2man on Sun May 11 21:13:21 2025
+.\" Manual page created with latex2man on Sun May 11 21:31:34 2025
 .\" NOTE: This file is generated, DO NOT EDIT.
 .de Vb
 .ft CW
