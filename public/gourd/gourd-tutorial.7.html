@@ -1,0 +1,398 @@
+<!-- UNDER MIT LICENSE, THIS IS MODIFIED FROM THE mandoc(1) PROJECT. -->
+<!-- ORIGINAL: -->
+<!--   Copyright (c) 2011 Kristaps Dzonsons <kristaps@bsd.lv> -->
+<!-- MODIFIED: -->
+<!--   Manos Pitsidianakis <manos@pitsidianak.is> -->
+<!-- AND LATER: -->
+<!--   Mikołaj Gazeel <M.J.Gazeel@student.tudelft.nl> -->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>gourd documentation</title>
+  <meta name="description" content="Gourd, an empirical evaluator">
+  <meta name="keywords" content="meli,mua,mail,terminal,unix,linux,client">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./manpage.css" />
+</head>
+<body>
+<header>
+  <div class="logo">
+    <a>gourd</a>
+  </div>
+  <nav>
+    <a href="./gourd.toml.5.html">gourd.toml</a>
+    <a href="./gourd.1.html">gourd</a>
+    <a href="./gourd-tutorial.7.html">gourd-tutorial</a>
+  </nav>
+</header>
+
+<main class="article-doc">
+<nav class="nav-doc sticky">
+    <p><span style="border-bottom: 1px solid black">Hello!</span></p>
+    This is the gourd user documentation in HTML form, you may nagivate it here.
+    The top bar contains links to the three documentation pages that gourd ships with. <br/> <br/>
+
+    You may also access the documentation in manpage format and PDF format. <br/> <br/>
+    For more information go to <a class="stovrd " href="https://github.com/ConSol-Lab/gourd" >the repository on GitHub!</a>
+</nav>
+<article>
+<h1></h1>
+<span class="notice-info">Technical documentation: You can view the rustdoc generated documentation <a href="./doc/gourd/index.html">here</a></span>
+<nav class="nav-doc">
+    <p><span style="border-bottom: 1px solid black">Hello!</span></p>
+    This is the gourd user documentation in HTML form, you may nagivate it here.
+    The top bar contains links to the three documentation pages that gourd ships with. <br/> <br/>
+
+    You may also access the documentation in manpage format and PDF format. <br/> <br/>
+    For more information go to <a class="stovrd " href="https://github.com/ConSol-Lab/gourd" >the repository on GitHub</a>!
+</nav>
+</article>
+
+<article>
+<table class="head">
+  <tr>
+    <td class="head-ltitle">GOURD-TUTORIAL(7)</td>
+    <td class="head-vol">DelftBlue Tools Manual </td>
+    <td class="head-rtitle">GOURD-TUTORIAL(7)</td>
+  </tr>
+</table>
+<div class="manual-text">
+<section class="Sh">
+<h1 class="Sh" id="NAME"><a class="permalink" href="#NAME">NAME</a></h1>
+<p class="Pp"><b>gourd-tutorial</b> - A step-by-step walkthrough for the Gourd
+    experiment scheduler.</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="INTRODUCTION"><a class="permalink" href="#INTRODUCTION">INTRODUCTION</a></h1>
+<p class="Pp">Welcome to <b>gourd-tutorial</b>!</p>
+<p class="Pp">If you haven't been introduced yet, <b><a class="manref" href="./gourd.1.html">gourd(1)</a></b> is an
+    application that makes it easy to set up experiments on a supercomputer. By
+    experiment, we mean a large-scale comparative evaluation of one or more
+    <i>algorithms</i> (runnable programs) that each run on a set of
+    <i>inputs</i> and are subsequently timed and profiled.</p>
+<p class="Pp">While this tool offers a lot of versatility, this set of runnable
+    examples will show that <b>gourd</b> experiments only take a minute to set
+    up.</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="INSTALLATION_AND_REFERENCE"><a class="permalink" href="#INSTALLATION_AND_REFERENCE">INSTALLATION
+  AND REFERENCE</a></h1>
+<p class="Pp">This tutorial is designed to be interactive, so be sure to have a
+    working copy of <b><a class="manref" href="./gourd.1.html">gourd(1)</a></b> installed on your computer. You can verify
+    this by typing <b>gourd</b> <i>version</i> in a terminal. For installation
+    instructions, refer to the README.md file in the source repository.</p>
+<p class="Pp">When installed, you will also have access to the user manuals. For
+    Linux, macOS, and the like, type <b>man</b> <b>gourd-tutorial</b> to see
+    this tutorial or <b>gourd</b> and <b>gourd.toml</b> for complete
+    documentation.</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="INTERACTING_WITH_GOURD"><a class="permalink" href="#INTERACTING_WITH_GOURD">INTERACTING
+  WITH GOURD</a></h1>
+<p class="Pp">Gourd is a command-line application that keeps life easy. You take
+    actions by typing <b>gourd</b> followed by a command in your terminal; a
+    complete list is in the manual.</p>
+<p class="Pp">For example, type: <b>gourd</b> <i>init</i> <i>--example</i>
+    <i>fibonacci-comparison</i> <i>my_fib</i></p>
+<p class="Pp">The <b>gourd</b> <i>init</i> command will set up the myexample
+    folder to match the example below! Furthermore, <b>gourd</b> <i>init</i>
+    <b>--list-examples</b> will show what other examples are accessible to
+  you.</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="FIBONACCI_COMPARISON"><a class="permalink" href="#FIBONACCI_COMPARISON">FIBONACCI
+  COMPARISON</a></h1>
+<p class="Pp">Let's begin by designing a simple experiment. We will compare
+    three versions of an algorithm that calculates Fibonacci numbers.</p>
+<p class="Pp">First, let's define the experimental setup using a gourd.toml
+    file. This file will specify the files, programs, and parameters of our
+    setup in a reproducible way.</p>
+<p class="Pp">Open gourd.toml in an editor and type in the following lines:</p>
+<p class="Pp"></p>
+<pre>
+`                             ./gourd.toml
+`  +-------------------------------------------------------------------+
+1  | experiments_folder = &quot;experiments&quot;                                |
+2  | metrics_path = &quot;experiments&quot;                                      |
+3  | output_path = &quot;experiments&quot;                                       |
+4  |                                                                   |
+`  /_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_/
+`  \___________________________________________________________________\
+</pre>
+<p class="Pp">In the TOML format, values (such as file paths) are in quotes
+    (&quot;). You can also add comments using the hash character.</p>
+<p class="Pp">The lines above set up the folder structure for our experiment's
+    outputs. This particular setup puts everything in the same folder.</p>
+<p class="Pp">Now, let's configure programs - the algorithms we are
+  evaluating.</p>
+<section class="Ss">
+<h2 class="Ss" id="DEFINING_PROGRAMS"><a class="permalink" href="#DEFINING_PROGRAMS">DEFINING
+  PROGRAMS</a></h2>
+<pre>
+<br/>
+    ____________________________________________________________________
+`  /_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _/
+`  \                          ./gourd.toml                             \
+`  |` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` `|
+5  | [program.fibonacci]                                               |
+6  | binary = &quot;./fibonacci&quot;                                            |
+7  |                                                                   |
+8  | [program.fast-fibonacci]                                          |
+9  | binary = &quot;./fibonacci-dynamic&quot;                                    |
+10 |                                                                   |
+11 | [program.fastest-fibonacci]                                       |
+12 | binary = &quot;./fibonacci-dynamic&quot;                                    |
+13 | arguments = [&quot;-f&quot;]                                                |
+14 |                                                                   |
+`  /_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_/
+`  \___________________________________________________________________\
+</pre>
+<p class="Pp">The lines above set up three uniquely named programs:</p>
+<dl class="Bl-tag">
+  <dt id="fibonacci:"><a class="permalink" href="#fibonacci:">fibonacci:</a></dt>
+  <dd>a slow Fibonacci number calculator.</dd>
+  <dt id="fast"><a class="permalink" href="#fast">fast-fibonacci</a></dt>
+  <dd>a faster version using Dynamic Programming.</dd>
+  <dt id="fastest"><a class="permalink" href="#fastest">fastest-fibonacci:</a></dt>
+  <dd>the same binary file as <i>fast-fibonacci</i> run with an additional
+      command-line argument, <b>-f</b>, which should make it even faster!</dd>
+</dl>
+<p class="Pp">Each program links to a <i>binary</i> -- the executable file that
+    runs our algorithm. In this case, our Fibonacci algorithms are compiled in
+    Rust. If you are following this tutorial with <b>gourd</b> <i>init</i>
+    <i>--example</i> <i>fibonacci-comparison</i>, the folder contains both
+    binaries: fibonacci and fibonacci-dynamic.</p>
+<p class="Pp">In our evaluation, we are going to see how the three programs
+    compare when running different test cases as inputs. Let's add inputs to our
+    gourd.toml.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="DEFINING_INPUTS"><a class="permalink" href="#DEFINING_INPUTS">DEFINING
+  INPUTS</a></h2>
+<pre>
+<br/>
+    ____________________________________________________________________
+`  /_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _/
+`  \                          ./gourd.toml                             \
+`  |` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` `|
+15 | [input.test_2]                                                    |
+16 | input = &quot;./inputs/input_2&quot;                                        |
+17 |                                                                   |
+18 | [input.test_8]                                                    |
+19 | input = &quot;./inputs/input_8&quot;                                        |
+20 |                                                                   |
+21 | [input.test_35]                                                   |
+22 | input = &quot;./inputs/input_35&quot;                                       |
+23 |                                                                   |
+24 | [input.bad_test]                                                  |
+25 | input = &quot;./inputs/input_bad&quot;                                      |
+26 |                                                                   |
+`  /_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_`_/
+`  \___________________________________________________________________\
+</pre>
+<p class="Pp">The lines above set up four uniquely named inputs. Each input
+    refers to a file whose contents are fed into the program.</p>
+<p class="Pp">In this example, inputs test_2, test_8, and test_35 link to files
+    containing the numbers 2, 8, and 35. These should make the Fibonacci
+    algorithms output the 2nd, 8th, and 35th numbers of the Fibonacci sequence.
+    The input named bad_test contains &quot;some text&quot;, which isn't a valid
+    number - let's see how this will crash the programs.</p>
+<p class="Pp">Inputs are combined with programs in a <b>cross product</b> to
+    create <i>runs</i>. Each program-input combination is exactly one
+    <i>run</i>. In this example, 3 programs * 4 inputs results in 12
+    <i>runs</i>.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="RUNNING_THE_EVALUATION"><a class="permalink" href="#RUNNING_THE_EVALUATION">RUNNING
+  THE EVALUATION</a></h2>
+<p class="Pp">Our gourd.toml is complete - now it is time to run the evaluation
+    using <b>gourd</b> <i>run</i>. Typing <b>gourd</b> <i>run</i> in a terminal
+    will tell you that it has two subcommands:</p>
+<dl class="Bl-tag">
+  <dt id="local"><a class="permalink" href="#local"><i>local</i></a></dt>
+  <dd>
+    <br/>
+     Run locally on your computer. If connected via SSH to a cluster computer,
+      <i>local</i> uses the very limited computing power of the login node.</dd>
+  <dt id="slurm"><a class="permalink" href="#slurm"><i>slurm</i></a></dt>
+  <dd>
+    <br/>
+     Send to the SLURM cluster scheduler on a supercomputer.</dd>
+</dl>
+<p class="Pp">The <i>slurm</i> subcommand needs some extra configuration, so
+    let's go with <i>local</i> for now. Type <b>gourd</b> <i>run</i>
+    <i>local</i>.</p>
+<p class="Pp"></p>
+<pre>
+|   $ gourd run local
+|
+| &gt; info: Experiment started
+| &gt;
+| &gt; For program fast-fibonacci:
+| &gt;    0. bad_test.... failed, code: 25856
+| &gt;    1. test_2...... success, took: 171ms 903us 417ns
+| &gt;    2. test_35..... success, took: 172ms 2us 417ns
+| &gt;    3. test_8...... success, took: 175ms 546us 750ns
+| &gt;
+| &gt; For program fastest-fibonacci:
+| &gt;    4. bad_test.... failed, code: 25856
+| &gt;    5. test_2...... success, took: 149ms 219us 542ns
+| &gt;    6. test_35..... success, took: 154ms 733us 667ns
+| &gt;    7. test_8...... success, took: 146ms 695us 334ns
+| &gt;
+| &gt; For program fibonacci:
+| &gt;    8. bad_test.... failed, code: 25856
+| &gt;    9. test_2...... success, took: 272ms 265us 667ns
+| &gt;   10. test_35..... success, took: 328ms 935us 292ns
+| &gt;   11. test_8...... success, took: 273ms 159us 167ns
+| &gt;
+| &gt;
+| &gt; [ ] #################### Running jobs... 12/12
+| &gt; info: Experiment finished
+| &gt;
+| &gt; info: Run gourd status 1 to check on this experiment
+</pre>
+<p class="Pp">If you are seeing similar output, you have successfully reproduced
+    a Gourd experiment!</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="DISPLAYING_STATUS"><a class="permalink" href="#DISPLAYING_STATUS">DISPLAYING
+  STATUS</a></h2>
+<p class="Pp">The <i>run</i> command has created an experiment from the
+    experimental setup and executed it on your computer. Each of the twelve runs
+    are shown here, grouped by program, alongside with their completion status.
+    In fact, you can show this view at any time by typing <b>gourd</b>
+    <i>status</i>.</p>
+<p class="Pp">We can see that runs 0, 4, and 8 have failed. Let's take a closer
+    look at why that is! Type <b>gourd</b> <i>status</i> <b>-i</b> <i>4</i> to
+    check on run number 4.</p>
+<p class="Pp"></p>
+<pre>
+|   $ gourd status -i 4
+|
+| &gt; program: fastest-fibonacci
+| &gt;   binary: FetchedPath(&quot;/fib-folder/fibonacci-dynamic&quot;)
+| &gt; input: Regular(&quot;bad_test&quot;)
+| &gt;   file: Some(FetchedPath(&quot;/fib-folder/inputs/input_bad&quot;))
+| &gt;   arguments: [&quot;-f&quot;]
+| &gt;
+| &gt; output path: &quot;/fib-folder/experiments/1/fastest-fibonacci/4/stdout&quot;
+| &gt; stderr path: &quot;/fib-folder/experiments/1/fastest-fibonacci/4/stderr&quot;
+| &gt; metric path: &quot;/fib-folder/experiments/1/fastest-fibonacci/4/metrics&quot;
+| &gt;
+| &gt; file status? failed, code: 25856
+| &gt; metrics:
+| &gt;   user   cpu time: 1ms 274us
+| &gt;   system cpu time: 1ms 735us
+| &gt;   page faults: 1
+| &gt;   signals received: 0
+| &gt;   context switches: 11
+</pre>
+<p class="Pp">The detailed status, which you can see above, allows us to easily
+    inspect the experiment's output and errors by accessing the files at output
+    path.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="RERUNNING_FAILED_RUNS"><a class="permalink" href="#RERUNNING_FAILED_RUNS">RERUNNING
+  FAILED RUNS</a></h2>
+<p class="Pp">These files reveal that bad_test fails because the Fibonacci
+    programs are expecting a number, but the input is &quot;some text&quot;
+    instead! Let's fix the problem and replace it with 10, a decidedly more
+    valid number.</p>
+<p class="Pp"></p>
+<pre>
+`                           ./inputs/input_bad
+`  +-------------------------------------------------------------------+
+`  | &lt;&lt;&lt;&lt;&lt;&lt;&lt; new version                                               |
+`  | 10                                                                |
+`  | =======                                                           |
+`  | some text                                                         |
+`  | &gt;&gt;&gt;&gt;&gt;&gt;&gt; old version                                               |
+`  +-------------------------------------------------------------------+
+</pre>
+<p class="Pp">Now we have fixed the problem, and the input called bad_test is
+    not so bad after all.</p>
+<p class="Pp">You can imagine that running the whole experiment again when only
+    1/4 of the results are invalid would be a waste. We are going to use
+    <b>gourd</b> <i>rerun</i> to repeat only the runs that failed.</p>
+<p class="Pp"></p>
+<pre>
+|    $ gourd rerun
+|
+| &gt;  ? What would you like to do?
+| &gt;  * Rerun only failed (3 runs)
+| &gt;    Rerun all finished (12 runs)
+| &gt;  [&#x2191;&#x2193; to move, enter to select, type to filter]
+| &gt;
+| &gt;  info: 3 new runs have been created
+| &gt;  info: Run 'gourd continue 1' to schedule them
+</pre>
+<p class="Pp">The <b>gourd</b> <i>rerun</i> command suggests rerunning the
+    failed runs only! Another option supported by <i>rerun</i> is to specify a
+    list of IDs for it to reschedule.</p>
+<p class="Pp">After <i>rerun</i>, it is necessary to use <b>gourd</b>
+    <i>continue</i> to actually execute the newly created runs. Try this in your
+    terminal.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="COLLECTING_DATA"><a class="permalink" href="#COLLECTING_DATA">COLLECTING
+  DATA</a></h2>
+<p class="Pp">Our simple Fibonacci experiment is done evaluating our two
+    algorithms. All that remains to be done is collecting the runtime data.
+    Fortunately, <b>gourd</b> also provides a simple way to process the numerous
+    metrics files that our runs have generated.</p>
+<p class="Pp">By running <b>gourd</b> <i>analyse</i> <i>table</i>, you can
+    create a CSV file that collects all metrics from the application's run. On
+    UNIX-like operating systems, RUsage provides a large array of useful data
+    such as context switches and page faults in addition to basic timing.</p>
+<p class="Pp">Furthermore, <b>gourd</b> <i>analyse</i> supports ways of
+    collecting and visualising the experiment's output. Try the <b>gourd</b>
+    <i>analyse</i> <i>plot</i>, which produces a cactus-plot summary of the
+    programs' runtimes.</p>
+</section>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="SEE_ALSO"><a class="permalink" href="#SEE_ALSO">SEE
+  ALSO</a></h1>
+<p class="Pp"><b><a class="manref" href="./gourd.1.html">gourd(1)</a></b></p>
+<p class="Pp"><b><a class="manref" href="./gourd.toml.5.html">gourd.toml(5)</a></b></p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="CONTACT"><a class="permalink" href="#CONTACT">CONTACT</a></h1>
+<p class="Pp">&#x0391;&#x03BD;&#x03B4;&#x03C1;&#x03AD;&#x03B1;&#x03C2;
+    &#x03A4;&#x03C3;&#x03B1;&#x03C4;&#x03C3;&#x03AC;&#x03BD;&#x03B7;&#x03C2;
+    &lt;<b>a.tsatsanis@tudelft.nl</b>&gt;</p>
+<p class="Pp">Luk&#x00E1;&#x0161; Chl&#x00E1;dek &lt;<b>l@chla.cz</b>&gt;</p>
+<p class="Pp">Miko&#x0142;aj Gazeel &lt;<b>m.j.gazeel@tudelft.nl</b>&gt;</p>
+<p class="Pp"></p>
+</section>
+</div>
+<table class="foot">
+  <tr>
+    <td class="foot-date">25 MARCH 2025</td>
+    <td class="foot-os">DelftBlue Tools Manual </td>
+  </tr>
+</table>
+<!-- UNDER MIT LICENSE, THIS IS MODIFIED FROM THE mandoc(1) PROJECT. -->
+<!-- ORIGINAL: -->
+<!--   Copyright (c) 2011 Kristaps Dzonsons <kristaps@bsd.lv> -->
+<!-- MODIFIED: -->
+<!--   Manos Pitsidianakis <manos@pitsidianak.is> -->
+<!-- AND LATER: -->
+<!--   Mikołaj Gazeel <M.J.Gazeel@student.tudelft.nl> -->
+
+
+<hr />
+<a href="#">[go back]</a>
+</article>
+</main>
+
+
+<footer>
+  mandoc(1) generated.
+</footer>
+</body>
+</html>

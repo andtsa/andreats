@@ -16,3 +16,5 @@ firebase-debug.*.log*
 .firebaserc
 
 public/photos/temp
+
+*.sh

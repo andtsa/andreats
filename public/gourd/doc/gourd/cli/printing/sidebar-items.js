@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["format_table","generate_progress_bar","get_styles","print_version","query_update_resource_limits","query_yes_no"]};

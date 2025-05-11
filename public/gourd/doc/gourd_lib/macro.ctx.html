@@ -1,0 +1,29 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This is a shorthand for returning the context of a error."><title>ctx in gourd_lib - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../static.files/rustdoc-1a91846b.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="gourd_lib" data-themes="" data-resource-suffix="" data-rustdoc-version="1.88.0-nightly (27d6200a7 2025-05-06)" data-channel="nightly" data-search-js="search-f7877310.js" data-settings-js="settings-5514c975.js" ><script src="../static.files/storage-4e99c027.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-7ef8a74a.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-044be391.svg"></head><body class="rustdoc macro"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../gourd_lib/index.html">gourd_<wbr>lib</a><span class="version">1.2.1</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">ctx</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#example" title="Example">Example</a></li></ul></section><div id="rustdoc-modnav"><h2 class="in-crate"><a href="index.html">In crate gourd_<wbr>lib</a></h2></div></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="index.html">gourd_lib</a></div><h1>Macro <span class="macro">ctx</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../src/gourd_lib/error.rs.html#97-101">Source</a> </span></div><pre class="rust item-decl"><code>macro_rules! ctx {
+    {$cause: expr,  $($arg_cause: expr)*; $help: expr, $($arg_help: tt)*} =&gt; { ... };
+}</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>This is a shorthand for returning the context of a error.</p>
+<p>This macro takes a context message, a help message and formats them.</p>
+<p>A macro invocation like so:</p>
+
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="macro">ctx!</span>([context], [context arg <span class="number">1</span>], [context arg <span class="number">2</span>], ...; [help], [help args], ...)</code></pre></div>
+<p>Will desugar to:</p>
+
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code>|| Ctx(<span class="macro">format!</span>([context], [context args]), <span class="macro">format!</span>([help], [help args]))</code></pre></div>
+<p>Note the placement of the <code>;</code> and <code>,</code>. They are required and otherwise the
+macro will not parse.</p>
+<h2 id="example"><a class="doc-anchor" href="#example">§</a>Example</h2>
+<p>Assume that we want to run <a href="https://doc.rust-lang.org/nightly/std/fs/fn.read.html" title="fn std::fs::read">std::fs::read</a> and add context to the error
+message.</p>
+<p>This can be done as follows:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>std::fs::read(<span class="kw-2">&amp;</span>path).with_context(<span class="macro">ctx!</span>(
+  <span class="string">"Could not read the file {path:?}"</span>, ;
+  <span class="string">"Ensure that the file exists and you have permissions to access it"</span>,
+));</code></pre></div>
+<p>If one does not want to print a help message this can be easily done by
+leaving it empty:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>std::fs::read(<span class="kw-2">&amp;</span>path).with_context(<span class="macro">ctx!</span>(
+  <span class="string">"Could not read the file {path:?}"</span>, ;
+  <span class="string">""</span>,
+));</code></pre></div>
+</div></details></section></div></main></body></html>

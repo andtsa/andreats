@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["create_column","create_column_full","metrics_generators","metrics_table","tables_from_command"],"macro":["rusage_metrics"]};

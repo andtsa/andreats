@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["format_slurm_duration","sacctmgr_limit","scontrol_limit"],"struct":["SlurmCli"]};

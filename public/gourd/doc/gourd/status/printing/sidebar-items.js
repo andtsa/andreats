@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["display_job","display_runs","display_statuses","format_input_name","long_status","short_status"]};

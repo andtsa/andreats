@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["AnalyseSubcommand","CsvColumn","GourdCommand","GroupBy","PlotType","RunSubcommand"],"struct":["AnalyseStruct","CancelStruct","Cli","ContinueStruct","CsvFormatting","InitStruct","RerunOptions","RunStruct","StatusStruct"]};

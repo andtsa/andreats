@@ -1,0 +1,817 @@
+<!-- UNDER MIT LICENSE, THIS IS MODIFIED FROM THE mandoc(1) PROJECT. -->
+<!-- ORIGINAL: -->
+<!--   Copyright (c) 2011 Kristaps Dzonsons <kristaps@bsd.lv> -->
+<!-- MODIFIED: -->
+<!--   Manos Pitsidianakis <manos@pitsidianak.is> -->
+<!-- AND LATER: -->
+<!--   Mikołaj Gazeel <M.J.Gazeel@student.tudelft.nl> -->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>gourd documentation</title>
+  <meta name="description" content="Gourd, an empirical evaluator">
+  <meta name="keywords" content="meli,mua,mail,terminal,unix,linux,client">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./manpage.css" />
+</head>
+<body>
+<header>
+  <div class="logo">
+    <a>gourd</a>
+  </div>
+  <nav>
+    <a href="./gourd.toml.5.html">gourd.toml</a>
+    <a href="./gourd.1.html">gourd</a>
+    <a href="./gourd-tutorial.7.html">gourd-tutorial</a>
+  </nav>
+</header>
+
+<main class="article-doc">
+<nav class="nav-doc sticky">
+    <p><span style="border-bottom: 1px solid black">Hello!</span></p>
+    This is the gourd user documentation in HTML form, you may nagivate it here.
+    The top bar contains links to the three documentation pages that gourd ships with. <br/> <br/>
+
+    You may also access the documentation in manpage format and PDF format. <br/> <br/>
+    For more information go to <a class="stovrd " href="https://github.com/ConSol-Lab/gourd" >the repository on GitHub!</a>
+</nav>
+<article>
+<h1></h1>
+<span class="notice-info">Technical documentation: You can view the rustdoc generated documentation <a href="./doc/gourd/index.html">here</a></span>
+<nav class="nav-doc">
+    <p><span style="border-bottom: 1px solid black">Hello!</span></p>
+    This is the gourd user documentation in HTML form, you may nagivate it here.
+    The top bar contains links to the three documentation pages that gourd ships with. <br/> <br/>
+
+    You may also access the documentation in manpage format and PDF format. <br/> <br/>
+    For more information go to <a class="stovrd " href="https://github.com/ConSol-Lab/gourd" >the repository on GitHub</a>!
+</nav>
+</article>
+
+<article>
+<table class="head">
+  <tr>
+    <td class="head-ltitle">GOURD(1)</td>
+    <td class="head-vol">DelftBlue Tools Manual </td>
+    <td class="head-rtitle">GOURD(1)</td>
+  </tr>
+</table>
+<div class="manual-text">
+<section class="Sh">
+<h1 class="Sh" id="NAME"><a class="permalink" href="#NAME">NAME</a></h1>
+<p class="Pp"><b>gourd</b> - A tool for scheduling parallel runs for algorithm
+    comparisons.</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="SYNOPSIS"><a class="permalink" href="#SYNOPSIS">SYNOPSIS</a></h1>
+<p class="Pp"><b>gourd</b> <i>command</i> [<b>-s</b>] [<b>-c</b><i>
+    filename</i>] [<b>-v|-vv</b>] [<b>-d</b>] [<b>-h</b>]</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="DESCRIPTION"><a class="permalink" href="#DESCRIPTION">DESCRIPTION</a></h1>
+<p class="Pp"><b>gourd</b> is a tool that schedules parallel runs for algorithm
+    comparisons. Given the parameters of the experiment, a number of test
+    datasets, and algorithm implementations to compare, <b>gourd</b> runs the
+    experiment in parallel and provides many options for processing its results.
+    While originally envisioned for the DelftBlue supercomputer at Delft
+    University of Technology, <b>gourd</b> can replicate the experiment on any
+    cluster computer with the <b>Slurm</b> scheduler, on any UNIX-like system,
+    and on Microsoft Windows.</p>
+<p class="Pp">New to <b>gourd</b>? Go directly to the <b><a class="manref" href="./gourd-tutorial.7.html">gourd-tutorial(7)</a></b>
+    manual.</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="GLOBAL_OPTIONS"><a class="permalink" href="#GLOBAL_OPTIONS">GLOBAL
+  OPTIONS</a></h1>
+<p class="Pp">The following options apply to all <b>gourd</b> commands. These
+    will be referred to as <i>GLOBAL OPTIONS</i> throughout the manual.</p>
+<dl class="Bl-tag">
+  <dt id="c"><a class="permalink" href="#c"><b>-c</b><i> filename</i>,
+    <b>--config</b><i> filename</i></a></dt>
+  <dd>
+    <br/>
+     Tell <b>gourd</b> to use the given filename as gourd.toml, the
+      configuration file that defines the experimental setup. By default, the
+      file is expected in the current working directory at ./gourd.toml.</dd>
+  <dt id="d"><a class="permalink" href="#d"><b>-d</b>, <b>--dry-run</b></a></dt>
+  <dd>
+    <br/>
+     Run <b>gourd</b> in dry-run mode, printing all operations (such as writing
+      to files or scheduling runs) without executing them.</dd>
+  <dt id="h"><a class="permalink" href="#h"><b>-h</b>, <b>--help</b></a></dt>
+  <dd>
+    <br/>
+     Display usage instructions for the <b>gourd</b> utility or any of its
+      commands. This option extends to all the subcommands of <b>gourd</b>: for
+      example, running <b>gourd</b> <i>status</i> <i>-h</i> will display help
+      about the <i>status</i> subcommand.</dd>
+  <dt id="s"><a class="permalink" href="#s"><b>-s</b>, <b>--script</b></a></dt>
+  <dd>
+    <br/>
+     Tell <b>gourd</b> to use a script-friendly interface, that is, one that
+      does not use interactive user prompts.</dd>
+  <dt id="v"><a class="permalink" href="#v"><b>-v</b>, <b>-vv</b>,
+    <b>--verbose</b></a></dt>
+  <dd>
+    <br/>
+     Run <b>gourd</b> with verbose debugging output, where <b>-vv</b> enables
+      even more logging.</dd>
+</dl>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="COMMANDS"><a class="permalink" href="#COMMANDS">COMMANDS</a></h1>
+<p class="Pp">Using <b>gourd</b> is as simple as invoking one of its commands,
+    such as <b>gourd</b> <i>init</i>. Command-line arguments are generally not
+    necessary; to design and run experiments, a gourd.toml file should be in the
+    current directory. The following is a summary of available commands.</p>
+<dl class="Bl-tag">
+  <dt id="gourd"><a class="permalink" href="#gourd"><b>gourd</b>
+    <i>run</i></a></dt>
+  <dd>
+    <br/>
+     Create an experiment from configuration and run it on <b>Slurm</b> or the
+      local machine.</dd>
+  <dt id="gourd~2"><a class="permalink" href="#gourd~2"><b>gourd</b>
+    <i>init</i></a></dt>
+  <dd>
+    <br/>
+     Set up a template of an experiment configuration.</dd>
+  <dt id="gourd~3"><a class="permalink" href="#gourd~3"><b>gourd</b>
+    <i>status</i></a></dt>
+  <dd>
+    <br/>
+     Display the status of a running or completed experiment.</dd>
+  <dt id="gourd~4"><a class="permalink" href="#gourd~4"><b>gourd</b>
+    <i>continue</i></a></dt>
+  <dd>
+    <br/>
+     Schedule the incomplete part of a partial experiment.</dd>
+  <dt id="gourd~5"><a class="permalink" href="#gourd~5"><b>gourd</b>
+    <i>cancel</i></a></dt>
+  <dd>
+    <br/>
+     Cancel scheduled runs.</dd>
+  <dt id="gourd~6"><a class="permalink" href="#gourd~6"><b>gourd</b>
+    <i>rerun</i></a></dt>
+  <dd>
+    <br/>
+     Rerun (possibly) failed runs.</dd>
+  <dt id="gourd~7"><a class="permalink" href="#gourd~7"><b>gourd</b>
+    <i>analyse</i></a></dt>
+  <dd>
+    <br/>
+     Output metrics of completed runs.</dd>
+  <dt id="gourd~8"><a class="permalink" href="#gourd~8"><b>gourd</b>
+    <i>set-limits</i></a></dt>
+  <dd>
+    <br/>
+     Change <b>Slurm</b> resource limits for runs not yet scheduled.</dd>
+  <dt id="gourd~9"><a class="permalink" href="#gourd~9"><b>gourd</b>
+    <i>version</i></a></dt>
+  <dd>
+    <br/>
+     Show the software version.</dd>
+</dl>
+<section class="Ss">
+<h2 class="Ss" id="GOURD_RUN"><a class="permalink" href="#GOURD_RUN">GOURD
+  RUN</a></h2>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Summary"><a class="permalink" href="#Summary">Summary</a></h2>
+<p class="Pp">The <b>gourd</b> <i>run</i> command uses the provided
+    configuration and runs an experiment. Using either <i>local</i> or
+    <i>slurm</i>, it is possible for the execution to run on the local machine,
+    or be scheduled using Slurm on a cluster computer. Using Slurm, additional
+    configuration arguments are required; see <b><a class="manref" href="./gourd.toml.5.html">gourd.toml(5)</a></b>.</p>
+<p class="Pp">In principle, however, <b>gourd</b> <i>run</i> is used in the same
+    way for both Slurm and local execution. A gourd.toml configuration file
+    should be present in the current directory, formally describing the
+    experiment that is to be created and run. Because most options are specified
+    in this file, it is usually sufficient to type <b>gourd</b> <i>run</i>
+    <i>slurm</i>|<i>local</i> to run an experiment.</p>
+<p class="Pp">See the manual page <b><a class="manref" href="./gourd-tutorial.7.html">gourd-tutorial(7)</a></b> for a step-by-step
+    guide on designing experiments to run.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Synopsis"><a class="permalink" href="#Synopsis">Synopsis</a></h2>
+<p class="Pp"><b>gourd</b> <i>run</i> <i>slurm</i>|<i>local</i> [<b>GLOBAL
+    OPTIONS</b>] [<b>--force</b>] [<b>--sequential</b>]</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Subcommands"><a class="permalink" href="#Subcommands">Subcommands</a></h2>
+<dl class="Bl-tag">
+  <dt id="local"><a class="permalink" href="#local"><i>local</i></a></dt>
+  <dd>
+    <br/>
+     Runs the experiment locally, such that all programs are executed directly
+      on the computer that <b>gourd</b> is run from.</dd>
+</dl>
+<p class="Pp">This is useful for running <b>small parts</b> of an experiment on
+    a personal computer or a login node, allowing you to test that programs are
+    being called correctly and that the configuration is valid. Please note that
+    <i>local</i> is <b>NOT</b> intended for running full experiments on a
+    <b>Slurm</b>-equipped cluster. <i>Local</i> will use the login node only and
+    not the actual supercomputer.</p>
+<p class="Pp">Running using <i>run</i> <i>local</i> will perform the experiments
+    in parallel based on the number of available CPU cores. Resource limits set
+    in the configuration will not be honoured. While running, experiment status
+    is displayed continuously (see the <b>gourd</b> <i>status</i> command) until
+    all runs have finished executing. Typing Control+C into the terminal will
+    stop the runs.</p>
+<p class="Pp"><i>local</i> can additionally take more options:</p>
+<div class="Bd-indent">
+<dl class="Bl-tag">
+  <dt id="force"><a class="permalink" href="#force"><b>--force</b></a></dt>
+  <dd>
+    <br/>
+     <b>gourd</b> will, by default, refuse to run large experiments on
+      <i>local</i>. This is because doing so may rapidly use up too many file
+      descriptors on some operating systems. To ignore the warning and run the
+      experiment anyways, use this optional flag. If the resources are exhausted
+      too quickly, an error will be displayed.</dd>
+</dl>
+<div class="Bd-indent"></div>
+<dl class="Bl-tag">
+  <dt id="sequential"><a class="permalink" href="#sequential"><b>--sequential</b></a></dt>
+  <dd>
+    <br/>
+     By default, runs execute concurrently with a level of parallelism. This
+      option can be specified to force the runs to run sequentially, that is,
+      one after another. This may be useful if you want to run bigger
+      experiments without using too many system resources. Note that the use of
+      this option <b>also</b> enables the <b>--force</b> option.</dd>
+</dl>
+</div>
+<div class="Bd-indent"></div>
+<dl class="Bl-tag">
+  <dt><i>slurm</i></dt>
+  <dd>
+    <br/>
+     Runs the experiment on a <b>Slurm</b>-equipped cluster computer.</dd>
+</dl>
+<p class="Pp">In this mode, <b>gourd</b> will use the <b>Slurm</b> command-line
+    interface to schedule runs on a supercomputer. The prerequisites are
+  that:</p>
+<div class="Bd-indent">
+<dl class="Bl-tag">
+  <dt><b>*</b></dt>
+  <dd><b>gourd</b> is running on the login node of a supercomputer, such that
+      the <b>srun</b> command is available.</dd>
+  <dt><b>*</b></dt>
+  <dd>gourd.toml contains all required fields for running on <b>Slurm</b> (see
+      the manual for <b>gourd.toml</b>(5))</dd>
+  <dt><b>*</b></dt>
+  <dd>gourd.toml contains a valid experiment for which all paths (including the
+      programs and output paths) are accessible from the cluster nodes.</dd>
+</dl>
+</div>
+<div class="Bd-indent">
+<p class="Pp">When <b>gourd</b> <i>run</i> <i>slurm</i> is called, the
+    experiment's runs are not executed immediately; instead, they are submitted
+    as <i>job arrays</i> to the <b>Slurm</b> scheduler. The experiment's runs
+    are then in the supercomputer's queue (status ``pending''). The time until
+    the runs are actually executed depends on many factors, which may include
+    the current load and the size of your experiment; this delay can range from
+    seconds to days. For this reason, <b>gourd</b> <i>run</i> <i>slurm</i> does
+    not show the continuous status of an experiment, use <b>gourd</b>
+    <i>status</i> to do that.</p>
+<p class="Pp">On successful scheduling, the Slurm IDs of the job arrays that
+    make up the experiment will be shown, and the command will exit. To view the
+    experiment's status, see the <b>gourd</b> <i>status</i> section of this
+    manual.</p>
+<p class="Pp">Running on Slurm has many configurable options. Please refer to
+    the manual <b>gourd-tutorial</b>(1) for example setups and the manual
+    <b>gourd.toml</b>(5) for complete reference. The implementation of the Slurm
+    API used by <b>gourd</b> is discussed in depth in the <b>gourd</b>
+    maintainer documentation.</p>
+</div>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="GOURD_INIT"><a class="permalink" href="#GOURD_INIT">GOURD
+  INIT</a></h2>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Summary~2"><a class="permalink" href="#Summary~2">Summary</a></h2>
+<p class="Pp">The <b>gourd</b> <i>init</i> command creates an experimental
+    configuration. Configurations are represented as TOML files. A template
+    configuration, gourd.toml, is created in the directory specified. The
+    directory can optionally be initialized as a Git repository. Unless run with
+    the [<b>-s</b>] flag, this command will ask using interactive prompts to
+    refine the template to your needs.</p>
+<p class="Pp">If the command is run with the [<b>-s</b>] flag these choices will
+    not be offered and the default options will be picked for all queries.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Synopsis~2"><a class="permalink" href="#Synopsis~2">Synopsis</a></h2>
+<p class="Pp"><b>gourd</b> <i>init</i> [<b>GLOBAL OPTIONS</b>] [<b>-e</b><i>
+    example-name</i>] [<b>--list-examples</b>] [<b>--git</b><i>=true|false</i>]
+    [<i>directory</i>]</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Options"><a class="permalink" href="#Options">Options</a></h2>
+<dl class="Bl-tag">
+  <dt id="e,"><a class="permalink" href="#e,"><b>-e, --example</b><i>
+    example-name</i></a></dt>
+  <dd>
+    <br/>
+     Initializes the given directory with an example configuration from
+      <b><a class="manref" href="./gourd-tutorial.7.html">gourd-tutorial(7)</a></b> (rather than a custom template for
+    gourd.toml).</dd>
+  <dt id="list"><a class="permalink" href="#list"><b>--list-examples</b></a></dt>
+  <dd>
+    <br/>
+     Instead of initializing a folder, this will make <b>gourd</b> list all the
+      available examples for the <i>-e</i> option.</dd>
+  <dt id="git"><a class="permalink" href="#git"><b>--git</b><i>=true|false</i></a></dt>
+  <dd>
+    <br/>
+     Whether to initialize an empty git repository in the newly created
+    folder.</dd>
+</dl>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Listing_Examples"><a class="permalink" href="#Listing_Examples">Listing
+  Examples</a></h2>
+<p class="Pp">If <b>--list-examples</b> is used, <b>gourd</b> <i>init</i> will
+    not initialize a new folder with a configuration. The <i>directory</i>
+    argument will be ignored.</p>
+<p class="Pp">A list of available examples and their descriptions will be
+    printed to the output and the program will exit.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="GOURD_STATUS"><a class="permalink" href="#GOURD_STATUS">GOURD
+  STATUS</a></h2>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Summary~3"><a class="permalink" href="#Summary~3">Summary</a></h2>
+<p class="Pp">The <b>gourd</b> <i>status</i> command displays the status of an
+    existing experiment, that is, one that has been created by <b>gourd</b>
+    <i>run</i>, but not necessarily one that has fully executed. This command
+    can also display detailed status of an individual run using the <b>-i</b>
+    flag.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Synopsis~3"><a class="permalink" href="#Synopsis~3">Synopsis</a></h2>
+<p class="Pp"><b>gourd</b> <i>status</i> [<b>GLOBAL OPTIONS</b>] [<b>-i</b><i>
+    run-id</i>] [<b>--follow</b>] [<b>--full</b>] [<b>--after-out</b>]
+    [<i>experiment-id</i>]</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Options~2"><a class="permalink" href="#Options~2">Options</a></h2>
+<dl class="Bl-tag">
+  <dt id="experiment"><a class="permalink" href="#experiment"><i>experiment-id</i></a></dt>
+  <dd>
+    <br/>
+     The ID of an experiment to show the status of. By default, this is the most
+      recent experiment.</dd>
+  <dt id="i"><a class="permalink" href="#i"><b>-i</b><i> run-id</i></a></dt>
+  <dd>
+    <br/>
+     Instead of showing a general overview of the entire experiment show
+      detailed information about a run with this <i>run-id</i>.</dd>
+  <dt id="full"><a class="permalink" href="#full"><b>--full</b></a></dt>
+  <dd>
+    <br/>
+     By default, <i>status</i> displays a summary rather than a full list if
+      there is a large number of runs (&gt;100). Using <b>--full</b>, the full
+      list is always shown.</dd>
+  <dt id="follow"><a class="permalink" href="#follow"><b>--follow</b></a></dt>
+  <dd>
+    <br/>
+     The status will be continually displayed until all of the runs have
+      finished. This is useful when it is known that the jobs will finish in a
+      matter of minutes.</dd>
+  <dt id="after"><a class="permalink" href="#after"><b>--after-out</b></a></dt>
+  <dd>
+    <br/>
+     Use only with <b>-i</b><i> run-id</i>, displays the raw afterscript output
+      for that run.</dd>
+</dl>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Experiment_status"><a class="permalink" href="#Experiment_status">Experiment
+  status</a></h2>
+<p class="Pp">By default, <b>gourd</b> <i>status</i> uses the gourd.toml file to
+    determine the location of experiment files generated using <b>gourd</b>
+    <i>run</i>. It finds the most recent experiment (unless
+    [<i>experiment-id</i>] is specified) and shows a summary containing the
+    status of each run, and, if completed, the run's basic timing metrics. The
+    command also shows a summary of each run's error status, if any.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Run_status"><a class="permalink" href="#Run_status">Run
+  status</a></h2>
+<p class="Pp">With the <b>-i</b><i> run-id</i> argument, <b>gourd</b>
+    <i>status</i> will retrieve detailed run information including the arguments
+    that the binary was called with, RUsage metrics if successful, and detailed
+    error status if it has failed. The file paths provided make it easy to
+    inspect the output of a run, whether it has succeeded or failed.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Afterscripts"><a class="permalink" href="#Afterscripts">Afterscripts</a></h2>
+<p class="Pp">To postprocess the output of the runs, there are two options
+    available: <i>afterscipts</i> and <i>pipelining</i>. Afterscripts are
+    scripts that run locally (so for DelftBlue they do <i>not</i> get scheduled
+    as separate jobs).</p>
+<p class="Pp">Afterscripts are meant for quick and computationally inexpensive
+    postprocessing (such as getting the first line of the output file). For long
+    or complicated postprocessing with a significant computational cost, look at
+    <i>Pipelining</i>.</p>
+<dl class="Bl-tag">
+  <dt><b>*</b></dt>
+  <dd>An afterscript is optional and specified per program.</dd>
+  <dt><b>*</b></dt>
+  <dd>To indicate the use of an afterscript, the path to the script file needs
+      to be specified in the gourd.toml under the chosen program.</dd>
+  <dt><b>*</b></dt>
+  <dd>Multiple programs can use the same script.</dd>
+  <dt><b>*</b></dt>
+  <dd>The afterscript can be used to assign labels to runs as a means of
+      specifying custom status.</dd>
+</dl>
+<p class="Pp"><i>How to design an afterscript:</i></p>
+<p class="Pp">The afterscript should be an executable</p>
+<p class="Pp">file. This can be a normal compiled executable, or possibly a
+    shell/python script if you use the appropriate <i>shebang</i> at the start
+    of the file (check out https://en.wikipedia.org/wiki/Shebang_(Unix) for
+    details).</p>
+<p class="Pp"><b>gourd</b> will pass the path to a file containing the main
+    program's output to the afterscript as a command line argument. The
+    afterscript can then print any output to stdout (via print, printf, println,
+    echo or your preferred language's method), and <b>gourd</b> will collect
+    that and display it in <b>gourd</b> <i>status</i> <i>-i</i> <i>&lt;specific
+    run id&gt;</i></p>
+<p class="Pp"><i>What can you do with afterscript output</i></p>
+<dl class="Bl-tag">
+  <dt><b>*</b></dt>
+  <dd>use <b>labels</b>, check out the corresponding chapter for more
+    details.</dd>
+  <dt><b>*</b></dt>
+  <dd>create custom metrics: read in <b>gourd</b> <i>analyse</i> for how to do
+      this.</dd>
+</dl>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="GOURD_CONTINUE"><a class="permalink" href="#GOURD_CONTINUE">GOURD
+  CONTINUE</a></h2>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Summary~4"><a class="permalink" href="#Summary~4">Summary</a></h2>
+<p class="Pp">The <b>gourd</b> <i>continue</i> command schedules runs that are
+    part of an existing experiment, but have not yet been scheduled. This
+    includes runs created by <b>gourd</b> <i>rerun</i>, as well as runs that
+    were not scheduled due to a run limit. For example, an experiment with
+    30,000 distinct runs can be scheduled in three batches of 10,000 each if
+    that is the maximum number of queued supercomputer jobs.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Synopsis~4"><a class="permalink" href="#Synopsis~4">Synopsis</a></h2>
+<p class="Pp"><b>gourd</b> <i>continue</i> [<b>GLOBAL OPTIONS</b>]
+    [<i>experiment-id</i>]</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Options~3"><a class="permalink" href="#Options~3">Options</a></h2>
+<dl class="Bl-tag">
+  <dt id="experiment~2"><a class="permalink" href="#experiment~2"><i>experiment-id</i></a></dt>
+  <dd>
+    <br/>
+     The ID of an experiment to continue. By default, this is the most recent
+      experiment.</dd>
+</dl>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Pipelining"><a class="permalink" href="#Pipelining">Pipelining</a></h2>
+<p class="Pp">Programs may be pipelined by specifying the next programs in the
+    sequence:</p>
+<pre>[program.your_first_progarm]
+binary = &quot;./executable&quot;
+next = [&quot;a_second_program&quot;, &quot;another_second_prog&quot;]
+[program.a_second_program]
+binary = &quot;./executable2&quot;
+[program.another_second_prog]
+binary = &quot;./executable3&quot;
+</pre>
+<p class="Pp">See the manual for gourd.toml for more details on
+  configuration.</p>
+<p class="Pp">In the example above, when the runs for your_first_progarm finish,
+    running <b>gourd</b> <i>continue</i> will start one run for a_second_program
+    and one for another_second_prog, both of which will receive as input (to
+    stdin) the output (stdout) of your_first_progarm.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="GOURD_CANCEL"><a class="permalink" href="#GOURD_CANCEL">GOURD
+  CANCEL</a></h2>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Summary~5"><a class="permalink" href="#Summary~5">Summary</a></h2>
+<p class="Pp">The <b>gourd</b> <i>cancel</i> command cancels runs that have been
+    scheduled on Slurm. By default, it cancels all scheduled runs in the most
+    recent experiment. This command can cancel an individual run using the
+    <b>-i</b> flag.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Synopsis~5"><a class="permalink" href="#Synopsis~5">Synopsis</a></h2>
+<p class="Pp"><b>gourd</b> <i>cancel</i> [<b>GLOBAL OPTIONS</b>]
+    [<i>experiment-id</i>] [<b>-i</b><i> run-ids</i>] [<b>-a</b>]</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Options~4"><a class="permalink" href="#Options~4">Options</a></h2>
+<dl class="Bl-tag">
+  <dt id="experiment~3"><a class="permalink" href="#experiment~3"><i>experiment-id</i></a></dt>
+  <dd>
+    <br/>
+     The ID of an experiment to cancel runs from. By default, this is the most
+      recent experiment.</dd>
+  <dt id="i~2"><a class="permalink" href="#i~2"><b>-i</b><i>
+    run-ids</i></a></dt>
+  <dd>
+    <br/>
+     The IDs of the runs to cancel. Pass multiple run IDs separated by spaces,
+      for example <i>-i 1 2 3</i>. By default, all runs in the experiment are
+      cancelled.</dd>
+  <dt id="a,"><a class="permalink" href="#a,"><b>-a, --all</b></a></dt>
+  <dd>
+    <br/>
+     Cancel all runs from this account. This includes all runs, not just those
+      from <b>gourd</b>.</dd>
+</dl>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Cancelling_All_Runs"><a class="permalink" href="#Cancelling_All_Runs">Cancelling
+  All Runs</a></h2>
+<p class="Pp">Cancelling all runs will <b>cancel all runs scheduled on your
+    account</b>. This option is included to be able to cancel past or deleted
+    experiments. But be aware of its possible impact.</p>
+<p class="Pp">You can see which runs would be cancelled without actually doing
+    it by running <b>gourd</b> <i>cancel</i> <i>--all</i> <i>--dry</i>.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Latency"><a class="permalink" href="#Latency">Latency</a></h2>
+<p class="Pp">Slurm may take some time to acknowledge the cancellation; thus,
+    running <b>gourd</b> <i>status</i> right away after a cancellation may still
+    display the runs as pending, please wait up to one minute for the changes to
+    propagate.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="GOURD_ANALYSE"><a class="permalink" href="#GOURD_ANALYSE">GOURD
+  ANALYSE</a></h2>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Summary~6"><a class="permalink" href="#Summary~6">Summary</a></h2>
+<p class="Pp">The <b>gourd</b> <i>analyse</i> command collects and processes
+    metrics generated when an experiment was run. It can produce a CSV data file
+    or a ``cactus plot'' to compare how quickly different algorithms run.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Synopsis~6"><a class="permalink" href="#Synopsis~6">Synopsis</a></h2>
+<p class="Pp"><b>gourd</b> <i>analyse</i> [<i>experiment-id</i>]
+    <i>table</i>|<i>plot</i> [<b>GLOBAL OPTIONS</b>] [<b>-o</b><i>
+    path/to/file</i>] [<b>-f</b><i> format options</i>]</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Options~5"><a class="permalink" href="#Options~5">Options</a></h2>
+<dl class="Bl-tag">
+  <dt id="experiment~4"><a class="permalink" href="#experiment~4"><i>experiment-id</i></a></dt>
+  <dd>
+    <br/>
+     The ID of an experiment to analyse. By default, this is the most recent
+      experiment.</dd>
+  <dt id="o"><a class="permalink" href="#o"><b>-o</b><i> path/to/file</i>,
+    <b>--output</b><i> path/to/file</i></a></dt>
+  <dd>
+    <br/>
+     Pass the command's output to a file.</dd>
+  <dt id="f"><a class="permalink" href="#f"><b>-f</b><i> format options</i>,
+    <b>--format</b><i> format options</i></a></dt>
+  <dd>
+    <br/>
+     Formatting options for the <i>table</i> and <i>plot</i> subcommands.</dd>
+</dl>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Metrics_CSV"><a class="permalink" href="#Metrics_CSV">Metrics
+  CSV</a></h2>
+<p class="Pp">Running <b>gourd</b> <i>analyse</i> <i>table</i> will create a
+    table with data about the status of the runs, metrics, and afterscript
+    completion, unless there are no completed runs. If the <i>-o</i> option is
+    not passed, the table will be pretty-printed in the command line, otherwise
+    a CSV file will be saved to the specified path. The CSV generation will take
+    into account all runs of the experiment. If <b>gourd</b> <i>analyse</i> is
+    rerun, the CSV will be updated with the newest status of the runs.</p>
+<p class="Pp">The option --format takes a comma-separated list of columns to use
+    in the table. Without specifying this option, <b>gourd</b> will default to
+    --format=&quot;program,slurm,fs-status,wall-time&quot;. The first column
+    will always contain the run id. The possible options are:</p>
+<dl class="Bl-tag">
+  <dt id="program"><a class="permalink" href="#program">program</a></dt>
+  <dd>
+    <br/>
+     program name</dd>
+  <dt id="file"><a class="permalink" href="#file">file</a></dt>
+  <dd>
+    <br/>
+     the input file this run was executed with, if there was one</dd>
+  <dt id="args"><a class="permalink" href="#args">args</a></dt>
+  <dd>
+    <br/>
+     command-line arguments passed to the program</dd>
+  <dt id="group"><a class="permalink" href="#group">group</a></dt>
+  <dd>
+    <br/>
+     the input group, if there is one</dd>
+  <dt id="label"><a class="permalink" href="#label">label</a></dt>
+  <dd>
+    <br/>
+     any label-associated status</dd>
+  <dt id="afterscript"><a class="permalink" href="#afterscript">afterscript</a></dt>
+  <dd>
+    <br/>
+     afterscript status string</dd>
+  <dt id="slurm"><a class="permalink" href="#slurm">slurm</a></dt>
+  <dd>
+    <br/>
+     run status retrieved from the slurm daemon</dd>
+  <dt id="fs"><a class="permalink" href="#fs">fs-status</a></dt>
+  <dd>
+    <br/>
+     run status retrieved from the file system</dd>
+  <dt id="exit"><a class="permalink" href="#exit">exit-code</a></dt>
+  <dd>
+    <br/>
+     program's exit code</dd>
+  <dt id="wall"><a class="permalink" href="#wall">wall-time</a></dt>
+  <dd>
+    <br/>
+     total elapsed real (wall-clock) time</dd>
+  <dt id="user"><a class="permalink" href="#user">user-time</a></dt>
+  <dd>
+    <br/>
+     CPU time spent in user mode</dd>
+  <dt id="system"><a class="permalink" href="#system">system-time</a></dt>
+  <dd>
+    <br/>
+     CPU time spent in kernel (system-call) mode</dd>
+  <dt id="max"><a class="permalink" href="#max">max-rss</a></dt>
+  <dd>
+    <br/>
+     peak resident set size (maximum RAM used)</dd>
+  <dt id="ix"><a class="permalink" href="#ix">ix-rss</a></dt>
+  <dd>
+    <br/>
+     integral of shared memory size over the run (ru_ixrss)</dd>
+  <dt id="id"><a class="permalink" href="#id">id-rss</a></dt>
+  <dd>
+    <br/>
+     integral of unshared data segment size (ru_idrss)</dd>
+  <dt id="is"><a class="permalink" href="#is">is-rss</a></dt>
+  <dd>
+    <br/>
+     integral of unshared stack size (ru_isrss)</dd>
+  <dt id="min"><a class="permalink" href="#min">min-flt</a></dt>
+  <dd>
+    <br/>
+     number of minor page faults</dd>
+  <dt id="maj"><a class="permalink" href="#maj">maj-flt</a></dt>
+  <dd>
+    <br/>
+     number of major page faults</dd>
+  <dt id="n"><a class="permalink" href="#n">n-swap</a></dt>
+  <dd>
+    <br/>
+     total swap operations performed</dd>
+  <dt id="in"><a class="permalink" href="#in">in-block</a></dt>
+  <dd>
+    <br/>
+     number of block input operations (disk reads)</dd>
+  <dt id="ou"><a class="permalink" href="#ou">ou-block</a></dt>
+  <dd>
+    <br/>
+     number of block output operations (disk writes)</dd>
+  <dt id="msg"><a class="permalink" href="#msg">msg-sent</a></dt>
+  <dd>
+    <br/>
+     number of inter-process messages sent</dd>
+  <dt id="msg~2"><a class="permalink" href="#msg~2">msg-recv</a></dt>
+  <dd>
+    <br/>
+     number of inter-process messages received</dd>
+  <dt id="n~2"><a class="permalink" href="#n~2">n-signals</a></dt>
+  <dd>
+    <br/>
+     number of signals delivered to the process</dd>
+  <dt id="nv"><a class="permalink" href="#nv">nv-csw</a></dt>
+  <dd>
+    <br/>
+     voluntary context switches count</dd>
+  <dt id="n~3"><a class="permalink" href="#n~3">n-iv-csw</a></dt>
+  <dd>
+    <br/>
+     involuntary context switches count</dd>
+</dl>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Cactus_plots"><a class="permalink" href="#Cactus_plots">Cactus
+  plots</a></h2>
+<p class="Pp">Running <b>gourd</b> <i>analyse</i> <i>plot</i> will create a PNG
+    picture of a cactus plot. The cactus plot is used to showcase the comparison
+    of how many inputs each algorithm can finish running with in a given amount
+    of time. In other words, the horizontal axis represents the time passing,
+    and the vertical axis represents how many runs of this program (algorithm)
+    have already finished. This allows to see a visual comparison of the time
+    each program takes - the more runs there are, the more informative the plot
+    will result to be. The plot will take into account only the runs that have
+    completed and have valid RUsage data. If <b>gourd</b> <i>analyse</i>
+    <i>plot</i> is rerun, the graph will be updated according to the newest
+    available data.</p>
+<p class="Pp">The option --format can be used to specify whether the plot output
+    should be in PNG or SVG format, for example: <b>gourd</b> <i>analyse</i>
+    <i>plot</i> <i>--format=&quot;png&quot;</i> (png is also the default
+  output)</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="GOURD_VERSION"><a class="permalink" href="#GOURD_VERSION">GOURD
+  VERSION</a></h2>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Summary~7"><a class="permalink" href="#Summary~7">Summary</a></h2>
+<p class="Pp"><b>gourd</b> <i>version</i> outputs the software version and
+    exits. Using the [<b>-s</b>] flag will display the version only, otherwise
+    <b>gourd</b> will stress-test your terminal font.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Synopsis~7"><a class="permalink" href="#Synopsis~7">Synopsis</a></h2>
+<p class="Pp"><b>gourd</b> <i>version</i> [<b>-s</b>]</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Scripting"><a class="permalink" href="#Scripting">Scripting</a></h2>
+<p class="Pp">By default <b>gourd</b> <i>version</i> shows a human readable only
+    output. By running <b>gourd</b> <i>version</i> <b>-s</b> one can obtain a
+    version number in the format:</p>
+<p class="Pp">gourd &lt;version number&gt;</p>
+</section>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="EXAMPLES"><a class="permalink" href="#EXAMPLES">EXAMPLES</a></h1>
+<p class="Pp">See the section on <b>gourd</b> <i>init</i> for runnable example
+    directories. For a more detailed walkthrough with more focus on examples,
+    use the <b><a class="manref" href="./gourd-tutorial.7.html">gourd-tutorial(7)</a></b> manual.</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="FILES"><a class="permalink" href="#FILES">FILES</a></h1>
+<dl class="Bl-tag">
+  <dt id="gourd.toml"><a class="permalink" href="#gourd.toml">gourd.toml</a></dt>
+  <dd>
+    <br/>
+     A configuration file containing the experiment details. See
+      <b><a class="manref" href="./gourd.toml.5.html">gourd.toml(5)</a></b>.</dd>
+  <dt>&lt;experiment-dir&gt;/&lt;experiment-number&gt;.lock</dt>
+  <dd>
+    <br/>
+     A file containing the runtime data of the experiment.</dd>
+</dl>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="SEE_ALSO"><a class="permalink" href="#SEE_ALSO">SEE
+  ALSO</a></h1>
+<p class="Pp"><b><a class="manref" href="./gourd-tutorial.7.html">gourd-tutorial(7)</a></b></p>
+<p class="Pp"><b><a class="manref" href="./gourd.toml.5.html">gourd.toml(5)</a></b></p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="CONTACT"><a class="permalink" href="#CONTACT">CONTACT</a></h1>
+<p class="Pp">&#x0391;&#x03BD;&#x03B4;&#x03C1;&#x03AD;&#x03B1;&#x03C2;
+    &#x03A4;&#x03C3;&#x03B1;&#x03C4;&#x03C3;&#x03AC;&#x03BD;&#x03B7;&#x03C2;
+    &lt;<b>a.tsatsanis@tudelft.nl</b>&gt;</p>
+<p class="Pp">Luk&#x00E1;&#x0161; Chl&#x00E1;dek &lt;<b>l@chla.cz</b>&gt;</p>
+<p class="Pp">Miko&#x0142;aj Gazeel &lt;<b>m.j.gazeel@tudelft.nl</b>&gt;</p>
+<p class="Pp"></p>
+</section>
+</div>
+<table class="foot">
+  <tr>
+    <td class="foot-date">25 MARCH 2025</td>
+    <td class="foot-os">DelftBlue Tools Manual </td>
+  </tr>
+</table>
+<!-- UNDER MIT LICENSE, THIS IS MODIFIED FROM THE mandoc(1) PROJECT. -->
+<!-- ORIGINAL: -->
+<!--   Copyright (c) 2011 Kristaps Dzonsons <kristaps@bsd.lv> -->
+<!-- MODIFIED: -->
+<!--   Manos Pitsidianakis <manos@pitsidianak.is> -->
+<!-- AND LATER: -->
+<!--   Mikołaj Gazeel <M.J.Gazeel@student.tudelft.nl> -->
+
+
+<hr />
+<a href="#">[go back]</a>
+</article>
+</main>
+
+
+<footer>
+  mandoc(1) generated.
+</footer>
+</body>
+</html>

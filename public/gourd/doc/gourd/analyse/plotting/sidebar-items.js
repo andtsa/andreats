@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["analysis_plot","get_data_for_plot","make_plot"],"type":["PlotData"]};

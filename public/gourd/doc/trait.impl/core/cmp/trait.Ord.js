@@ -1,0 +1,9 @@
+(function() {
+    var implementors = Object.fromEntries([["gourd",[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html\" title=\"trait core::cmp::Ord\">Ord</a> for <a class=\"enum\" href=\"gourd/cli/def/enum.CsvColumn.html\" title=\"enum gourd::cli::def::CsvColumn\">CsvColumn</a>"],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html\" title=\"trait core::cmp::Ord\">Ord</a> for <a class=\"enum\" href=\"gourd/cli/def/enum.GroupBy.html\" title=\"enum gourd::cli::def::GroupBy\">GroupBy</a>"],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html\" title=\"trait core::cmp::Ord\">Ord</a> for <a class=\"enum\" href=\"gourd/rerun/enum.RerunStatus.html\" title=\"enum gourd::rerun::RerunStatus\">RerunStatus</a>"],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html\" title=\"trait core::cmp::Ord\">Ord</a> for <a class=\"struct\" href=\"gourd/chunks/struct.Chunk.html\" title=\"struct gourd::chunks::Chunk\">Chunk</a>"]]],["gourd_lib",[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html\" title=\"trait core::cmp::Ord\">Ord</a> for <a class=\"struct\" href=\"gourd_lib/config/slurm/struct.ResourceLimits.html\" title=\"struct gourd_lib::config::slurm::ResourceLimits\">ResourceLimits</a>"]]]]);
+    if (window.register_implementors) {
+        window.register_implementors(implementors);
+    } else {
+        window.pending_implementors = implementors;
+    }
+})()
+//{"start":57,"fragment_lengths":[1017,310]}

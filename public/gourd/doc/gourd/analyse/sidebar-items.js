@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["get_completion_time","get_completions"],"mod":["csvs","plotting"],"struct":["Column","ColumnGenerator","Table"]};

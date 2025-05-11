@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["OSX_ARCH_MAPPING"],"fn":["verify_arch"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["flatten_job_id","flatten_slurm_id"],"struct":["SacctOutput","SlurmBasedProvider"]};

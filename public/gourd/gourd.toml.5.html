@@ -1,0 +1,808 @@
+<!-- UNDER MIT LICENSE, THIS IS MODIFIED FROM THE mandoc(1) PROJECT. -->
+<!-- ORIGINAL: -->
+<!--   Copyright (c) 2011 Kristaps Dzonsons <kristaps@bsd.lv> -->
+<!-- MODIFIED: -->
+<!--   Manos Pitsidianakis <manos@pitsidianak.is> -->
+<!-- AND LATER: -->
+<!--   Mikołaj Gazeel <M.J.Gazeel@student.tudelft.nl> -->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>gourd documentation</title>
+  <meta name="description" content="Gourd, an empirical evaluator">
+  <meta name="keywords" content="meli,mua,mail,terminal,unix,linux,client">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./manpage.css" />
+</head>
+<body>
+<header>
+  <div class="logo">
+    <a>gourd</a>
+  </div>
+  <nav>
+    <a href="./gourd.toml.5.html">gourd.toml</a>
+    <a href="./gourd.1.html">gourd</a>
+    <a href="./gourd-tutorial.7.html">gourd-tutorial</a>
+  </nav>
+</header>
+
+<main class="article-doc">
+<nav class="nav-doc sticky">
+    <p><span style="border-bottom: 1px solid black">Hello!</span></p>
+    This is the gourd user documentation in HTML form, you may nagivate it here.
+    The top bar contains links to the three documentation pages that gourd ships with. <br/> <br/>
+
+    You may also access the documentation in manpage format and PDF format. <br/> <br/>
+    For more information go to <a class="stovrd " href="https://github.com/ConSol-Lab/gourd" >the repository on GitHub!</a>
+</nav>
+<article>
+<h1></h1>
+<span class="notice-info">Technical documentation: You can view the rustdoc generated documentation <a href="./doc/gourd/index.html">here</a></span>
+<nav class="nav-doc">
+    <p><span style="border-bottom: 1px solid black">Hello!</span></p>
+    This is the gourd user documentation in HTML form, you may nagivate it here.
+    The top bar contains links to the three documentation pages that gourd ships with. <br/> <br/>
+
+    You may also access the documentation in manpage format and PDF format. <br/> <br/>
+    For more information go to <a class="stovrd " href="https://github.com/ConSol-Lab/gourd" >the repository on GitHub</a>!
+</nav>
+</article>
+
+<article>
+<table class="head">
+  <tr>
+    <td class="head-ltitle">GOURD.TOML(5)</td>
+    <td class="head-vol">File Formats Manual </td>
+    <td class="head-rtitle">GOURD.TOML(5)</td>
+  </tr>
+</table>
+<div class="manual-text">
+<section class="Sh">
+<h1 class="Sh" id="NAME"><a class="permalink" href="#NAME">NAME</a></h1>
+<p class="Pp"><b>gourd.toml</b> An experimental setup file for the Gourd
+    experiment scheduler.</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="DESCRIPTION"><a class="permalink" href="#DESCRIPTION">DESCRIPTION</a></h1>
+<p class="Pp"><b>gourd.toml</b> is a declarative configuration file that, when
+    provided to <b><a class="manref" href="./gourd.1.html">gourd(1)</a></b>, can be used to create a new <i>experiment</i>.
+    The rules for typesetting the file follow the standard TOML format.</p>
+<p class="Pp">By default, the filename is gourd.toml.</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="PREFACE"><a class="permalink" href="#PREFACE">PREFACE</a></h1>
+<p class="Pp">Values ending with `?' can be omitted, the default value for them
+    is mentioned in their description.</p>
+<section class="Ss">
+<h2 class="Ss" id="VALUE_TYPES"><a class="permalink" href="#VALUE_TYPES">VALUE
+  TYPES</a></h2>
+<p class="Pp">The configuration uses the following value types.</p>
+<dl class="Bl-tag">
+  <dt id="string"><a class="permalink" href="#string">string</a></dt>
+  <dd>A string of characters surrounded by &quot;&quot;.</dd>
+  <dt id="path"><a class="permalink" href="#path">path</a></dt>
+  <dd>A file path surrounded by &quot;&quot;.</dd>
+  <dt id="fetched_path"><a class="permalink" href="#fetched_path">fetched_path</a></dt>
+  <dd>Information about this is in the <b>RESOURCE FETCHING</b> section.</dd>
+  <dt id="boolean"><a class="permalink" href="#boolean">boolean</a></dt>
+  <dd>Either <i>true</i> or <i>false</i>.</dd>
+  <dt id="number"><a class="permalink" href="#number">number</a></dt>
+  <dd>Zero or a positive number.</dd>
+  <dt id="regex"><a class="permalink" href="#regex">regex</a></dt>
+  <dd>A regular expression.</dd>
+  <dt id="duration"><a class="permalink" href="#duration">duration</a></dt>
+  <dd>A human-readable amount of time, for example: &quot;2d 4h&quot;.</dd>
+  <dt id="list"><a class="permalink" href="#list">list of T</a></dt>
+  <dd>A list of values of type T surrounded by [].</dd>
+</dl>
+</section>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="GLOBAL_CONTEXT"><a class="permalink" href="#GLOBAL_CONTEXT">GLOBAL
+  CONTEXT</a></h1>
+<p class="Pp">These should be put at the beginning of the file before defining
+    any sections.</p>
+<dl class="Bl-tag">
+  <dt id="output_path"><a class="permalink" href="#output_path"><b>output_path</b>
+    = path</a></dt>
+  <dd>
+    <br/>
+     This path specifies where to store the stdout and stderr outputs for
+      <i>programs</i>.</dd>
+  <dt id="metrics_path"><a class="permalink" href="#metrics_path"><b>metrics_path</b>
+    = path</a></dt>
+  <dd>
+    <br/>
+     Where to store the metrics for <b><a class="manref" href="./gourd.1.html">gourd(1)</a></b> <i>status</i>. These metrics
+      contain information such as: Wall clock time, User time, System time, the
+      amount of context switches etc.</dd>
+  <dt id="experiments_folder"><a class="permalink" href="#experiments_folder"><b>experiments_folder</b>
+    = path</a></dt>
+  <dd>
+    <br/>
+     Where to store state of previously ran experiments.</dd>
+</dl>
+<p class="Pp">Essentially this folder specifies where <b>gourd</b> will store
+    all of its information about experiments. If this folder is removed
+    <b>gourd</b> looses all information about past experiments.</p>
+<dl class="Bl-tag">
+  <dt id="wrapper?"><a class="permalink" href="#wrapper?"><b>wrapper?</b> =
+    path</a></dt>
+  <dd>
+    <br/>
+     Defines the path to the gourd_wrapper binary.
+    <br/>
+    The default value is <i>gourd_wrapper</i>. (That is, <b>gourd</b> will look
+      for it in the $PATH)
+    <br/>
+    If you installed <b>gourd</b> correctly this values should not be
+    changed.</dd>
+  <dt id="input_schema?"><a class="permalink" href="#input_schema?"><b>input_schema?</b>
+    = path</a></dt>
+  <dd>
+    <br/>
+     Defines the path to an optional machine generated input schema.
+    <br/>
+    For more information about this continue to the <b>INPUT SCHEMA</b> section.
+    <br/>
+    The default values is no input schema.</dd>
+</dl>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="SLURM"><a class="permalink" href="#SLURM">SLURM</a></h1>
+<p class="Pp">The configuration contains some Slurm specific options namely:</p>
+<section class="Ss">
+<h2 class="Ss" id="SLURM_CONFIGURATION"><a class="permalink" href="#SLURM_CONFIGURATION">SLURM
+  CONFIGURATION</a></h2>
+<p class="Pp">This section is optional for running locally, but required for
+    running on Slurm.</p>
+<p class="Pp">A Slurm configuration starts with the header <i>[slurm]</i> and
+    can contain the following options:</p>
+<dl class="Bl-tag">
+  <dt id="experiment_name"><a class="permalink" href="#experiment_name"><b>experiment_name</b>
+    = string</a></dt>
+  <dd>
+    <br/>
+     The name under which runs for this experiment will be scheduled on
+    Slurm.</dd>
+  <dt id="output_folder"><a class="permalink" href="#output_folder"><b>output_folder</b>
+    = path</a></dt>
+  <dd>
+    <br/>
+     The folder where the raw slurm outputs will be stored. This can be useful
+      for debugging.</dd>
+  <dt id="partition"><a class="permalink" href="#partition"><b>partition</b> =
+    string</a></dt>
+  <dd>
+    <br/>
+     The partition on which this should be run on the supercomputer. Running
+      <b>gourd</b> <i>run</i> <i>slurm</i> with an invalid partition will
+      display all the valid partitions.</dd>
+  <dt id="array_size_limit?"><a class="permalink" href="#array_size_limit?"><b>array_size_limit?</b>
+    = number</a></dt>
+  <dd>
+    <br/>
+     This specifies the limit of runs that can be put in one Slurm batch.
+      <b>gourd</b> will work to split the workload such that this limit is never
+      exceeded.
+    <br/>
+    By default this is auto-detected.</dd>
+  <dt id="max_submit?"><a class="permalink" href="#max_submit?"><b>max_submit?</b>
+    = number</a></dt>
+  <dd>
+    <br/>
+     This specifies the limits of possible batches of runs. Once again
+      <b>gourd</b> will work to never cross this limit.
+    <br/>
+    By default this is auto-detected.</dd>
+  <dt id="account"><a class="permalink" href="#account"><b>account</b> =
+    string</a></dt>
+  <dd>
+    <br/>
+     Which account to use for running jobs on Slurm. For example one account
+      available on DelftBlue is &quot;Education-EEMCS-MSc-CS&quot;. To get a
+      list of available accounts on your cluster, you can use Slurm's
+      <b>sacctmgr</b> <i>show</i> <i>account</i> command</dd>
+  <dt id="mail_type"><a class="permalink" href="#mail_type"><b>mail_type</b> =
+    string</a></dt>
+  <dd>
+    <br/>
+     Choose one of Slurm's options for sending emails when a run's status
+      changes. Default is &quot;NONE&quot;. Valid options are: &quot;NONE&quot;,
+      &quot;BEGIN&quot;, &quot;END&quot;, &quot;FAIL&quot;, &quot;REQUEUE&quot;,
+      &quot;ALL&quot;, &quot;INVALID_DEPEND&quot;, &quot;STAGE_OUT&quot;,
+      &quot;TIME_LIMIT&quot;, &quot;TIME_LIMIT_90&quot;,
+      &quot;TIME_LIMIT_80&quot;, &quot;TIME_LIMIT_50&quot;,
+      &quot;ARRAY_TASKS&quot;</dd>
+  <dt id="mail_user"><a class="permalink" href="#mail_user"><b>mail_user</b> =
+    string</a></dt>
+  <dd>
+    <br/>
+     Your email address, if you want to receive email updates from Slurm.</dd>
+  <dt id="begin"><a class="permalink" href="#begin"><b>begin</b> =
+    string</a></dt>
+  <dd>
+    <br/>
+     Submit runs to the Slurm controller immediately, like normal, but tell the
+      controller to defer the allocation of the job until the specified
+    time.</dd>
+</dl>
+<p class="Pp">Time may be of the form HH:MM:SS or HH:MM to run a job at a
+    specific time of day, or in the now+ format (for example, now+1hour, or
+    now+32min)</p>
+<dl class="Bl-tag">
+  <dt id="additional_args?"><a class="permalink" href="#additional_args?"><b>additional_args?</b>
+    = list of string</a></dt>
+  <dd>
+    <br/>
+     Custom arguments for Slurm.
+    <br/>
+    By default there are no additional arguments.</dd>
+</dl>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Example"><a class="permalink" href="#Example">Example</a></h2>
+<p class="Pp">An example Slurm Configuration:</p>
+<p class="Pp"></p>
+<pre>[slurm]
+experiment_name = &quot;my test experiment&quot;
+output_folder = &quot;./slurmout/&quot;
+partition = &quot;compute&quot;
+account = &quot;Education-EEMCS-MSc-CS&quot;
+</pre>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="RESOURCE_LIMITS"><a class="permalink" href="#RESOURCE_LIMITS">RESOURCE
+  LIMITS</a></h2>
+<p class="Pp">To run on Slurm one must also specify resource limits. The
+    available limits are:</p>
+<dl class="Bl-tag">
+  <dt id="time_limit"><a class="permalink" href="#time_limit"><b>time_limit</b>
+    = duration</a></dt>
+  <dd>
+    <br/>
+     The global time limit for all program-input pairs.</dd>
+  <dt id="cpu_limit"><a class="permalink" href="#cpu_limit"><b>cpu_limit</b> =
+    number</a></dt>
+  <dd>
+    <br/>
+     The global cpu limit for all program-input pairs.</dd>
+  <dt id="mem_per_cpu"><a class="permalink" href="#mem_per_cpu"><b>mem_per_cpu</b>
+    = number</a></dt>
+  <dd>
+    <br/>
+     The global memory limit per one cpu for all program-input pairs.
+    <br/>
+    This number is specified in megabytes.</dd>
+</dl>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Example~2"><a class="permalink" href="#Example~2">Example</a></h2>
+<p class="Pp">An example Resource Limits section:</p>
+<p class="Pp"></p>
+<pre>[resource_limits]
+time_limit = &quot;5min&quot;
+cpus = 1
+mem_per_cpu = 512
+</pre>
+</section>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="LOCAL"><a class="permalink" href="#LOCAL">LOCAL</a></h1>
+<dl class="Bl-tag">
+  <dt id="num_threads?"><a class="permalink" href="#num_threads?"><b>num_threads?</b>
+    = number</a></dt>
+  <dd>
+    <br/>
+     How many threads should <b>gourd</b> <i>run</i> <i>local</i> use.</dd>
+</dl>
+<section class="Ss">
+<h2 class="Ss" id="NUM_THREADS"><a class="permalink" href="#NUM_THREADS">NUM_THREADS</a></h2>
+<p class="Pp">For the parallel execution of <b>gourd</b> <i>run</i> <i>local</i>
+    you can limit the number of threads that will be used by specifying:</p>
+<pre>[local]
+num_threads = 8
+</pre>
+<p class="Pp">If this option is not specified, the program will try to detect
+    the number of CPUs present on the system, and use that number of threads.
+    Setting a value of 0 will result in a number of threads equal to the number
+    of runs in the program (and the OS will limit the resource use
+  thereafter).</p>
+</section>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="PROGRAMS"><a class="permalink" href="#PROGRAMS">PROGRAMS</a></h1>
+<p class="Pp">Multiple programs can be specified. A program represents a
+    compiled executable and is a combination of a binary file and parameters.
+    Each program begins with <i>[programs.program-name]</i>, where
+    <i>program-name</i> can be any unique name.</p>
+<dl class="Bl-tag">
+  <dt id="binary"><a class="permalink" href="#binary"><b>binary</b> =
+    path</a></dt>
+  <dd>
+    <br/>
+     Path to the program executable.</dd>
+  <dt id="fetch"><a class="permalink" href="#fetch"><b>fetch</b> =
+    fetched_path</a></dt>
+  <dd>
+    <br/>
+     URL to the program executable.</dd>
+  <dt id="git"><a class="permalink" href="#git"><b>git</b> = git_object</a></dt>
+  <dd>
+    <br/>
+     See the <b>PROGRAM VERSIONS</b> section for more information.
+    <br/>
+  </dd>
+  <dt id="arguments?"><a class="permalink" href="#arguments?"><b>arguments?</b>
+    = list of string</a></dt>
+  <dd>
+    <br/>
+     Arguments to be passed to the executable.
+    <br/>
+    By default an empty list.</dd>
+  <dt id="afterscript?"><a class="permalink" href="#afterscript?"><b>afterscript?</b>
+    = path</a></dt>
+  <dd>
+    <br/>
+     See the <b>AFTERSCRIPTS</b> section for more information.
+    <br/>
+    By default there is no afterscript.</dd>
+  <dt id="next?"><a class="permalink" href="#next?"><b>next?</b> = list of
+    string</a></dt>
+  <dd>
+    <br/>
+     See the <b>POSTPROCESSING</b> section for more information.
+    <br/>
+    By default there is no postprocessing.</dd>
+  <dt id="resource_limits?"><a class="permalink" href="#resource_limits?"><b>resource_limits?</b></a></dt>
+  <dd>
+    <br/>
+     As defined in the <b>RESOURCE LIMITS</b> section.
+    <br/>
+    These essentially override the global resource limits for this program.
+    <br/>
+    By default, use the global resource limits.</dd>
+</dl>
+<p class="Pp">Only one of <b>binary</b>, <b>fetch</b>, <b>git</b> must be
+    specified.</p>
+<section class="Ss">
+<h2 class="Ss" id="EXAMPLE"><a class="permalink" href="#EXAMPLE">EXAMPLE</a></h2>
+<p class="Pp">Assume that there is a script called test.sh in the current
+    directory. We can specify a program that runs this script with the argument
+    <b>--test</b> like so:</p>
+<p class="Pp"></p>
+<pre>[program.some_name_for_this_program]
+binary = &quot;./test.sh&quot;
+arguments = [&quot;--test&quot;]
+</pre>
+</section>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="INPUTS"><a class="permalink" href="#INPUTS">INPUTS</a></h1>
+<p class="Pp">A <b><a class="manref" href="./gourd.1.html">gourd(1)</a></b> experiment consists of a cross-product mapping
+    between programs and inputs. The experiment created from a gourd.toml file
+    runs every combination of program and input in the file.</p>
+<p class="Pp">Multiple inputs can be specified. Each input begins with
+    <i>[inputs.input-name]</i> where <i>input-name</i> can be any unique name.
+    <b>The string</b> <i>_i_</i> <b>is reserved and cannot be used.</b> Each
+    input contains the following keys:</p>
+<dl class="Bl-tag">
+  <dt id="file?"><a class="permalink" href="#file?"><b>file?</b> = path</a></dt>
+  <dd>
+    <br/>
+     Path to a file, the contents of which are passed to the program as standard
+      input.
+    <br/>
+    By default, no standard input is provided.</dd>
+  <dt id="fetch?"><a class="permalink" href="#fetch?"><b>fetch?</b> =
+    fetched_path</a></dt>
+  <dd>
+    <br/>
+     URL to a file, the contents of which are passed to the program as standard
+      input.</dd>
+  <dt id="glob?"><a class="permalink" href="#glob?"><b>glob?</b> =
+    fetched_path</a></dt>
+  <dd>
+    <br/>
+     A glob expression of multiple files, the contents of which are passed to
+      the program as standard input.</dd>
+  <dt id="arguments?~2"><a class="permalink" href="#arguments?~2"><b>arguments?</b>
+    = list of string</a></dt>
+  <dd>
+    <br/>
+     Additional command-line arguments to be passed to the program. The input
+      arguments are appended to the programs arguments.
+    <br/>
+    By default, there are no additional arguments.</dd>
+</dl>
+<p class="Pp">Only one of <b>file</b>, <b>fetch</b>, <b>glob</b> can be
+    specified.</p>
+<section class="Ss">
+<h2 class="Ss" id="EXAMPLE~2"><a class="permalink" href="#EXAMPLE~2">EXAMPLE</a></h2>
+<p class="Pp">A valid input would be for example:</p>
+<p class="Pp"></p>
+<pre>[input.some_name_for_this_input]
+file = &quot;./test.txt&quot;
+arguments = [&quot;--a&quot;, &quot;--b&quot;]
+</pre>
+This applied to program `program' would be equivalent to:
+<p class="Pp"></p>
+<pre>program [program args] --a --b &lt; ./test.txt
+</pre>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="GLOBS"><a class="permalink" href="#GLOBS">GLOBS</a></h2>
+<p class="Pp">Globs can be applied to arguments of inputs and conveniently
+    reference multiple files.</p>
+<p class="Pp">If an argument starts with <i>path|</i>, it will be treated as a
+    glob. The input will be instantiated for every match of the provided
+  glob.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Example~3"><a class="permalink" href="#Example~3">Example</a></h2>
+<pre>[inputs.testrun1]
+arguments = [&quot;-f1&quot;, &quot;path|./inputs/*.in&quot;, &quot;-f2&quot;, &quot;path|./input2/*.in&quot;]
+</pre>
+<p class="Pp">Given that the current directory contains the files input/1.in,
+    input/2.in, input2/test.in, the glob expands to the following experiment
+    inputs:</p>
+<p class="Pp"></p>
+<pre>[inputs.testrun1_glob_0]
+arguments = [&quot;-f1&quot;, &quot;./inputs/1.in&quot;, &quot;-f2&quot;, &quot;./input2/test.in&quot;]
+[inputs.testrun1_glob_1]
+arguments = [&quot;-f1&quot;, &quot;./inputs/2.in&quot;, &quot;-f2&quot;, &quot;./input2/test.in&quot;]
+</pre>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="PARAMETERS"><a class="permalink" href="#PARAMETERS">PARAMETERS</a></h2>
+<p class="Pp">Parameters can be applied to arguments to conveniently perform
+    experiments with grid search (a Cartesian product between all parameter
+    values).</p>
+<p class="Pp">If an argument starts with <i>param|some-parameter-name</i>, it
+    will be treated as a parameter. For each value of that parameter the new
+    input will be created with that value inserted into the argument into that
+    argument place.</p>
+<p class="Pp">Values of a parameter are specified in <i>[parameter.name]</i>
+    using <i>values = list of string</i></p>
+<p class="Pp">This results in cross product between all parameters.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Example~4"><a class="permalink" href="#Example~4">Example</a></h2>
+<pre>[inputs.testrun1]
+arguments = [&quot;-f&quot;, &quot;param|x&quot;, &quot;-x&quot;, &quot;param|y&quot;]
+[parameters.x]
+values = [&quot;a&quot;, &quot;b&quot;]
+[parameters.y]
+values = [&quot;10&quot;, &quot;20&quot;]
+</pre>
+<p class="Pp">It will be transformed into following inputs:</p>
+<p class="Pp"></p>
+<pre>[inputs.testrun1_x_0_y_0]
+arguments = [&quot;-f&quot;, &quot;a&quot;, &quot;-x&quot;, &quot;10&quot;]
+[inputs.testrun1_x_0_y_1]
+arguments = [&quot;-f&quot;, &quot;a&quot;, &quot;-x&quot;, &quot;20&quot;]
+[inputs.testrun1_x_1_y_0]
+arguments = [&quot;-f&quot;, &quot;b&quot;, &quot;-x&quot;, &quot;10&quot;]
+[inputs.testrun1_x_1_y_1]
+arguments = [&quot;-f&quot;, &quot;b&quot;, &quot;-x&quot;, &quot;20&quot;]
+</pre>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="SUBPARAMETERS"><a class="permalink" href="#SUBPARAMETERS">SUBPARAMETERS</a></h2>
+<p class="Pp">Subparameters are used when there is a need for 1-1 relation
+    between two parameters. There is no cross product between subparameters of
+    the same parameter.</p>
+<p class="Pp">Subparameters are specified in inputs similarly to parameters with
+    the difference of doing
+    <i>subparam|parameter-name.some-subparameter-name</i>.</p>
+<p class="Pp">Values of a subparameter are specified in
+    <i>[parameter.name.sub.subparameter-name]</i> using <i>values = []</i></p>
+<p class="Pp">Note! Parameters can have either values or subparameters with
+    values. Never both.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Example~5"><a class="permalink" href="#Example~5">Example</a></h2>
+<p class="Pp">This example:</p>
+<p class="Pp"></p>
+<pre>[input.testrun1]
+arguments = [&quot;-f&quot;, &quot;subparam|x.1&quot;, &quot;-x&quot;, &quot;param|y&quot;, &quot;-g&quot;, &quot;subparam|x.2&quot;]
+[parameter.x.sub.1]
+values = [&quot;a&quot;, &quot;b&quot;]
+[parameter.x.sub.2]
+values = [&quot;c&quot;, &quot;d&quot;]
+[parameter.y]
+values = [&quot;10&quot;, &quot;20&quot;]
+</pre>
+Will be transformed into following inputs:
+<p class="Pp"></p>
+<pre>[input.testrun1_x-0_y-0]
+arguments = [&quot;-f&quot; &quot;a&quot;, &quot;-x&quot;, &quot;10&quot;, &quot;-g&quot;, &quot;c&quot;]
+[input.testrun1_x-0_y-1]
+arguments = [&quot;-f&quot;, &quot;a&quot;, &quot;-x&quot;, &quot;20&quot;, &quot;-g&quot;, &quot;c&quot;]
+[input.testrun1_x-1_y-0]
+arguments = [&quot;-f&quot;, &quot;b&quot;, &quot;-x&quot;, &quot;10&quot;, &quot;-g&quot;, &quot;d&quot;]
+[input.testrun1_x-1_y-1]
+arguments = [&quot;-f&quot;, &quot;b&quot;, &quot;-x&quot;, &quot;20&quot;, &quot;-g&quot;, &quot;d&quot;]
+[parameter.x]
+values = [&quot;a&quot;, &quot;b&quot;]
+[parameter.y]
+values = [&quot;10&quot;, &quot;20&quot;]
+</pre>
+Where as this example:
+<p class="Pp"></p>
+<pre>[input.testrun1]
+arguments = [&quot;param|x&quot;]
+[parameter.x.sub.1]
+values = [&quot;a&quot;, &quot;b&quot;]
+[parameter.x.sub.2]
+values = [&quot;c&quot;, &quot;d&quot;]
+[parameter.x]
+values = [&quot;10&quot;, &quot;20&quot;]
+</pre>
+<p class="Pp">Is not correct and <b>gourd</b> will throw an error!</p>
+</section>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="POSTPROCESSING"><a class="permalink" href="#POSTPROCESSING">POSTPROCESSING</a></h1>
+<p class="Pp">Postprocessing jobs are jobs that run after another job and can
+    transform its input without influencing the original jobs input.</p>
+<p class="Pp">Postprocessing programs are just normal programs but they a
+    different program references them in their next field.</p>
+<p class="Pp">Postprocessing programs are ran in the same directory as the
+    original job, and get the originals job stdout as their stdin.</p>
+<section class="Ss">
+<h2 class="Ss" id="EXAMPLE~3"><a class="permalink" href="#EXAMPLE~3">EXAMPLE</a></h2>
+<pre>[program.test_program]
+binary = &quot;./algorithm&quot;
+arguments = []
+next = [&quot;example_name&quot;]
+[program.example_name]
+binary = &quot;./verifier&quot;
+arguments = []
+</pre>
+</section>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="AFTERSCRIPTS"><a class="permalink" href="#AFTERSCRIPTS">AFTERSCRIPTS</a></h1>
+<p class="Pp">Afterscripts are postprocessing but one that does not constitute a
+    full Slurm job.</p>
+<p class="Pp">These are ran when <b>gourd</b> <i>status</i> is invoked, and
+    their results are cached.</p>
+<p class="Pp">The afterscript is assumed to:</p>
+<dl class="Bl-tag">
+  <dt><b>*</b></dt>
+  <dd>Be executable.</dd>
+  <dt><b>*</b></dt>
+  <dd>Will receive the path to the jobs output as the first CLI parameter.</dd>
+  <dt><b>*</b></dt>
+  <dd>Print its output to the standard output stdout.</dd>
+</dl>
+<section class="Ss">
+<h2 class="Ss" id="EXAMPLE~4"><a class="permalink" href="#EXAMPLE~4">EXAMPLE</a></h2>
+<pre>[program.test_program]
+binary = &quot;./algorithm&quot;
+arguments = []
+afterscript = &quot;./script&quot;
+</pre>
+<p class="Pp">After running the job the after script will be called as:</p>
+<p class="Pp"></p>
+<pre>script path/to/job/stdout
+</pre>
+<p class="Pp">And for example if:</p>
+<p class="Pp">in <b>script</b>:</p>
+<pre>#!/bin/sh
+cat $1
+</pre>
+<p class="Pp">The afterscript's output will be exactly the jobs output (ie. No
+    postprocessing happened). But these scripts may be more complex if the use
+    case requires it.</p>
+</section>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="LABELS"><a class="permalink" href="#LABELS">LABELS</a></h1>
+<p class="Pp">When running <b>gourd</b> <i>status</i>, by default the statuses
+    only display information about Slurm scheduling of the run or an exit
+  code.</p>
+<p class="Pp">In the case that a job execution can succeed (exit code 0) but the
+    run should still be considered a failure, the user can add a custom label to
+    the run, derived from the output of the run's `afterscript'.</p>
+<p class="Pp">Labels can be created in the configuration file as names with a
+    regular expression, where if the regex is matched in the afterscript's
+    output, the label is assigned to the run.</p>
+<p class="Pp">These are specified as <i>[label.label-name]</i> and the fields
+    available are:</p>
+<dl class="Bl-tag">
+  <dt><b>regex</b> = regex</dt>
+  <dd>
+    <br/>
+     A regular expression that the afterscripts output will be matched to, if
+      the output matches the expression this label will be assigned.</dd>
+  <dt id="priority"><a class="permalink" href="#priority"><b>priority</b> =
+    number</a></dt>
+  <dd>
+    <br/>
+     In the case that more than one label matches a run the <b>highest</b>
+      priority label will be assigned. Higher priority value = higher priority.
+      Default is 0. Note that if two or more labels have the same priority and
+      are both present at the same time, the result is undefined behaviour. Set
+      `warn_on_label_overlap` to `true` to prevent this.</dd>
+  <dt id="rerun_by_default?"><a class="permalink" href="#rerun_by_default?"><b>rerun_by_default?</b>
+    = boolean</a></dt>
+  <dd>
+    <br/>
+     If true makes this label essentially mean `failure', in the sense that
+      <b>gourd</b> will treat a run with this label as a failure even if the run
+      itself succeeded.
+    <br/>
+    By default <i>false</i>.</dd>
+</dl>
+<section class="Ss">
+<h2 class="Ss" id="EXAMPLE~5"><a class="permalink" href="#EXAMPLE~5">EXAMPLE</a></h2>
+<pre>[label.label_name]
+# matches any output
+regex = &quot;.*&quot;
+priority = 1
+rerun_by_default = true
+</pre>
+<p class="Pp">Labels are assigned based on priority. For example if the
+    configuration file looks like:</p>
+<p class="Pp"></p>
+<pre>[label.label1]
+regex = &quot;Success&quot;
+priority = 1
+rerun_by_default = false
+[label.label2]
+regex = &quot;RuntimeException&quot;
+priority = 2
+</pre>
+and the afterscript output looks like:
+<p class="Pp"></p>
+<pre>Starting afterscript...
+Success! The output was correct.
+Verifying something else...
+RuntimeException thrown while parsing
+</pre>
+then by principle of priorities, the run will be assigned <i>label2</i> even
+  though both regexes match.
+</section>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="REMOTE_RESOURCE_FETCHING"><a class="permalink" href="#REMOTE_RESOURCE_FETCHING">REMOTE
+  RESOURCE FETCHING</a></h1>
+<p class="Pp">In order to prevent having to manually transfer large files, input
+    files or (precompiled) program binaries can be fetched from a URL.</p>
+<p class="Pp">Suppose you are hosting a large text file, or want to download a
+    binary from CI artefacts:</p>
+<p class="Pp">https://test.com/input.txt</p>
+<p class="Pp">https://test.com/program.exe</p>
+<p class="Pp">Any config field which accepts fetched_path can accept remote
+    resources.</p>
+<p class="Pp">The syntax for fetched resources is &quot;remote_path |
+    local_path&quot; (whitespace insensitive).</p>
+<section class="Ss">
+<h2 class="Ss" id="EXAMPLE~6"><a class="permalink" href="#EXAMPLE~6">EXAMPLE</a></h2>
+<p class="Pp">Consider this fetched input as an example:</p>
+<p class="Pp"></p>
+<pre>[input.some_input]
+fetch = &#x201C;https://test.com/input.txt | ./path/to/store/the/file.txt&#x201D;
+arguments = [&#x201C;any&#x201D;, &#x201C;input&#x201D;, &#x201C;arguments&#x201D;]
+</pre>
+This will download the file at test.com/input.txt and save it contents in the
+  provided path. The contents of this will then be passed as input to all
+  programs.
+<p class="Pp">Note that the &#x201C;|&#x201D; character needs to be escaped in
+    URLs as %7C since it is used as a delimiter</p>
+<p class="Pp">Similarly for programs:</p>
+<p class="Pp"></p>
+<pre>[program.some_example]
+fetch = &#x201C;https://test.com/program.exe | ./path/to/store/the/program.exe&#x201D;
+arguments = [&#x201C;any&#x201D;, &#x201C;program&#x201D;, &#x201C;arguments&#x201D;]
+</pre>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="CACHING"><a class="permalink" href="#CACHING">CACHING</a></h2>
+<p class="Pp">These resources will be downloaded and saved at the paths, but
+    they will not be redownloaded again as long as these cached files exist.</p>
+<p class="Pp">It may be beneficial to create a folder and store all downloaded
+    resources inside, then when there is a need for cleaning the cache this
+    amounts to deleting the folder</p>
+</section>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="PROGRAM_VERSIONS"><a class="permalink" href="#PROGRAM_VERSIONS">PROGRAM
+  VERSIONS</a></h1>
+<p class="Pp">Programs may be fetched and compiled straight from a git
+    repository.</p>
+<p class="Pp">The user in this case has to provide the commit ID of the desired
+    HEAD, the build command and the path to the output binary.</p>
+<p class="Pp">The build command and the path to the output binary are both ran
+    relative to the repository root.</p>
+<section class="Ss">
+<h2 class="Ss" id="EXAMPLE~7"><a class="permalink" href="#EXAMPLE~7">EXAMPLE</a></h2>
+<pre>[program.testprogram1]
+arguments = [&quot;a&quot;]
+[program.testprogram1.git]
+git_uri = &quot;https://github.com/Nerdylicious/DijkstraShortestPath.git&quot;
+build_command = &quot;g++ ./DijkstraShortestPath.cpp&quot;
+path = &quot;./a.out&quot;
+commit_id = &quot;e90e7f6811f399075bc058f12e2324fb64701b02&quot;
+</pre>
+<p class="Pp">This will clone the repository, check it out at the correct point
+    in time build the Dijkstra algorithm and finally run it.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="CACHING~2"><a class="permalink" href="#CACHING~2">CACHING</a></h2>
+<p class="Pp">Similarly to fetching, delete the repository folder if you want to
+    refetch the files.</p>
+</section>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="INPUT_SCHEMA"><a class="permalink" href="#INPUT_SCHEMA">INPUT
+  SCHEMA</a></h1>
+<p class="Pp">The input_schema field can be specified with a file that contains
+    an additional list unnamed of inputs.</p>
+<p class="Pp">This is an option to allow for script-generated input lists, in
+    case the structure of the files cannot be expressed by a glob pattern.</p>
+<p class="Pp"><b>Avoid using this if possible.</b></p>
+<section class="Ss">
+<h2 class="Ss" id="EXAMPLE~8"><a class="permalink" href="#EXAMPLE~8">EXAMPLE</a></h2>
+<p class="Pp">Assume that gourd.toml specifies:</p>
+<p class="Pp"></p>
+<pre>input_schema = &quot;./inputs.toml&quot;
+</pre>
+And a file in the same folder called inputs.toml exists, containing:
+<p class="Pp"></p>
+<pre>[[input]]
+file = &quot;./jeden&quot;
+[[input]]
+file = &quot;./dwa&quot;
+</pre>
+We have just added two new inputs programatically to the input list.
+<p class="Pp">These inputs have all of the fields of normal inputs, but they do
+    not support naming and will always have automatically assigned names.</p>
+</section>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="SEE_ALSO"><a class="permalink" href="#SEE_ALSO">SEE
+  ALSO</a></h1>
+<p class="Pp"><b><a class="manref" href="./gourd.1.html">gourd(1)</a></b> <b><a class="manref" href="./gourd-tutorial.7.html">gourd-tutorial(7)</a></b></p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="CONTACT"><a class="permalink" href="#CONTACT">CONTACT</a></h1>
+<p class="Pp">&#x0391;&#x03BD;&#x03B4;&#x03C1;&#x03AD;&#x03B1;&#x03C2;
+    &#x03A4;&#x03C3;&#x03B1;&#x03C4;&#x03C3;&#x03AC;&#x03BD;&#x03B7;&#x03C2;
+    &lt;<b>a.tsatsanis@tudelft.nl</b>&gt;</p>
+<p class="Pp">Luk&#x00E1;&#x0161; Chl&#x00E1;dek &lt;<b>l@chla.cz</b>&gt;</p>
+<p class="Pp">Miko&#x0142;aj Gazeel &lt;<b>m.j.gazeel@tudelft.nl</b>&gt;</p>
+<p class="Pp"></p>
+</section>
+</div>
+<table class="foot">
+  <tr>
+    <td class="foot-date">25 MARCH 2025</td>
+    <td class="foot-os">File Formats Manual </td>
+  </tr>
+</table>
+<!-- UNDER MIT LICENSE, THIS IS MODIFIED FROM THE mandoc(1) PROJECT. -->
+<!-- ORIGINAL: -->
+<!--   Copyright (c) 2011 Kristaps Dzonsons <kristaps@bsd.lv> -->
+<!-- MODIFIED: -->
+<!--   Manos Pitsidianakis <manos@pitsidianak.is> -->
+<!-- AND LATER: -->
+<!--   Mikołaj Gazeel <M.J.Gazeel@student.tudelft.nl> -->
+
+
+<hr />
+<a href="#">[go back]</a>
+</article>
+</main>
+
+
+<footer>
+  mandoc(1) generated.
+</footer>
+</body>
+</html>

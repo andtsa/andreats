@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["fetching","maps","parameters","slurm"],"struct":["Config","FetchedResource","GitProgram","InputSchema","Label","LocalOptions","Parameter","Regex","SubParameter","UserInput","UserProgram"]};
