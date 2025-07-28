@@ -11,8 +11,14 @@ function reloadCss() {
 let hide_preview = () => {
     document.querySelectorAll('.gallery img').forEach(img => {
         img.id = '';
-        document.getElementById('overlay').classList.add('hidden');
     });
+    document.getElementById('overlay').classList.add('hidden');
+    if (document.getElementById('coll_form') != null) {
+        document.getElementById('coll_form').classList.add('hidden');
+    }
+    if (document.getElementById('preview') != null) {
+        document.getElementById('preview').id = '';
+    }
 }
 
 let save_image = () => {
@@ -64,4 +70,3 @@ document.addEventListener('DOMContentLoaded', function() {
     orientImages();
     reloadCss();
 });
-

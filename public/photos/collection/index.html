@@ -13,19 +13,36 @@
             <p class="text navitem" id="col_name"> Private collection. </p>
             <a class="link text" href="../"> -> go back. </a>
             <p class="text navitem"></p>
-            <form id="collection_form" class="nav_form">
-                <input type="text" id="collection_input" class="nav_input" placeholder="collection name" required autocomplete="off"spellcheck="false">
-                <input type="text" id="passkey_input" class="nav_input" placeholder="pass key" required autocomplete="off"spellcheck="false">
-                <button type="submit" class="link text btn">-> enter.</button>
-            </form>
+            <!-- <form id="collection_form" class="nav_form"> -->
+            <!--     <input type="text" id="collection_input" class="nav_input" placeholder="collection name" required autocomplete="off"spellcheck="false"> -->
+            <!--     <input type="text" id="passkey_input" class="nav_input" placeholder="pass key" required autocomplete="off"spellcheck="false"> -->
+            <!--     <button type="submit" class="link text btn">-> enter.</button> -->
+            <!-- </form> -->
+
+            <!-- <p id="see_more" class="text link normal_btn" onClick="see_more_btn()"> -> see more. </a> -->
         </div>
 
         <div id="overlay" class="hidden">
             <div id="overlay_grid">
+                <!-- <p id="description_text" class="btn overlay_text"> [now viewing: public photos] </p>                 -->
                 <button id="close" class="btn overlay_btn overlay_text" onClick="hide_preview()"> [close] </button>
 
                 <button id="save" class="btn overlay_btn overlay_text" onClick="download_preview_image()"> [save] </button>
             </div>
+           <!--  <div id="coll_form" class="form_overlay hidden"> -->
+           <!--     <div id="collection_buttons" class="button_carousel"> -->
+           <!--      -->
+           <!--     </div> -->
+           <!--     <br><br><br> -->
+           <!--     <p id="hint" class="overlay_text"> hint: select another collection </p> -->
+           <!--     <form id="collection_form" class="nav_form"> -->
+           <!--     <!--     <input type="text" id="collection_input" class="nav_input" placeholder="collection name" required autocomplete="off"spellcheck="false"> --> -->
+           <!--         <input type="text" id="passkey_input" class="overlay_input" placeholder="pass key" required autocomplete="off"spellcheck="false"> -->
+           <!--     <!--     <button type="submit" class="link text btn">-> enter.</button> --> -->
+           <!--     </form> -->
+           <!--     <!-- <input type="text" id="passkey_input" class="overlay_input" placeholder="pass key" required autocomplete="off"spellcheck="false"> --> -->
+           <!-- </div> -->
+
         </div>
 
         <div class="gallery" id="gallery">
@@ -43,30 +60,30 @@
             var valid = true;
             function getQueryParams() {
                 const params = new URLSearchParams(window.location.search);
-                const valid_until = params.get('v');
+                // const valid_until = params.get('v');
                 const name = params.get('n');
                 const passkey = params.get('pk');
-                if (valid_until == null) {
-                    document.getElementById('status_text').innerHTML = `malformed link, couldn't find collection. <a class="link text" href="../"> -> go back. </a>`;
-                    valid = false;
-                } else {
-                    console.log(`valid_until exists: ${valid_until}`);
-                    const now = new Date();
-                    const valid_until_date = new Date(0);
-                    valid_until_date.setUTCMilliseconds(valid_until);
-                    console.log(`now: ${now}`);
-                    console.log(`valid_until: ${valid_until_date}`);
-                    if (now > valid_until_date) {
-                        document.getElementById('status_text').innerHTML = `link has expired. <a class="link text" href="../"> -> go back. </a>`;
-                        valid = false;
-                    }
-                }
+                // if (valid_until == null) {
+                //     document.getElementById('status_text').innerHTML = `malformed link, couldn't find collection. <a class="link text" href="../"> -> go back. </a>`;
+                //     valid = false;
+                // } else {
+                    // console.log(`valid_until exists: ${valid_until}`);
+                    // const now = new Date();
+                    // const valid_until_date = new Date(0);
+                    // valid_until_date.setUTCMilliseconds(valid_until);
+                    // console.log(`now: ${now}`);
+                    // console.log(`valid_until: ${valid_until_date}`);
+                    // if (now > valid_until_date) {
+                    //     document.getElementById('status_text').innerHTML = `link has expired. <a class="link text" href="../"> -> go back. </a>`;
+                    //     valid = false;
+                    // }
+                // }
                 if (name == null) {
                     document.getElementById('status_text').innerHTML = `no collection specified. <a class="link text" href="../"> -> go back. </a>`;
                     valid = false;
                 } else {
                     console.log(`name exists: ${name}`);
-                    document.getElementById('collection_input').value = name;
+                    // document.getElementById('collection_input').value = name;
                     document.title = `${name} collection`;
                 }
                 if (passkey == null) {
@@ -86,15 +103,15 @@
             console.log('passkey:', collection_details[1]);
          
 
-            document.getElementById('collection_form').addEventListener('submit', function(event) {
-                event.preventDefault(); // Prevent the default form submission
-            
-                const inputOneValue = document.getElementById('collection_input').value;
-                const inputTwoValue = document.getElementById('passkey_input').value;
-            
-                // Redirect to the new URL with query parameters
-                window.location.href = `../collection?v=${new Date().getTime() + (1000 * 60 * 60 * 24 * 7)}&n=${encodeURIComponent(inputOneValue)}&pk=${encodeURIComponent(inputTwoValue)}`;
-            });
+            // document.getElementById('collection_form').addEventListener('submit', function(event) {
+            //     event.preventDefault(); // Prevent the default form submission
+            // 
+            //     const inputOneValue = document.getElementById('collection_input').value;
+            //     const inputTwoValue = document.getElementById('passkey_input').value;
+            // 
+            //     // Redirect to the new URL with query parameters
+            //     window.location.href = `../collection?v=${new Date().getTime() + (1000 * 60 * 60 * 24 * 7)}&n=${encodeURIComponent(inputOneValue)}&pk=${encodeURIComponent(inputTwoValue)}`;
+            // });
 
         </script>
 

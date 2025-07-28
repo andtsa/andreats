@@ -86,7 +86,13 @@ async function displayImages(collectionName, passphrase, start, end) {
         document.getElementById('gallery').appendChild(img);
     }
 
-    document.getElementById('status_text').classList.add('hidden');
+    if (document.getElementById('gallery').children.length > 1) {
+        console.log('gallery with ' + document.getElementById('gallery').children.length + ' children');
+        document.getElementById('status_text').classList.add('hidden');
+    } else {
+        console.log('gallery with ' + document.getElementById('gallery').children.length + ' child');
+        document.getElementById('status_text').innerText = "seems quite empty around here";
+    }
     reloadCss();
     orientImages();
 }

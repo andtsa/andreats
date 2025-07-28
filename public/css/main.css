@@ -12,6 +12,8 @@
     --mp: #15062e00;
     --green: #1cff46;
     --mint: #2bffca;
+
+    /* color-scheme: dark; */
 }
 
 * {
@@ -19,11 +21,14 @@
     scrollbar-color: var(--dp) var(--green);
     scrollbar-width: thin;
     scrollbar-gutter: stable;
+
+    /* color-scheme: dark; */
 }
 
 *::selection {
     background-color: var(--cb);
     color: var(--green);
+    text-decoration: var(--green);
 }
 
 ::-webkit-scrollbar {
@@ -79,18 +84,17 @@
 }
 
 .text {
-    text-decoration: none;
+    /* text-decoration: none; */
     color: var(--white);
-    text-shadow: 1px 1px 0px var(--dp), 2px 2px 0px var(--dp), 3px 3px 0px var(--dp);
+    /* text-shadow: 1px 1px 0px var(--dp), 2px 2px 0px var(--dp), 3px 3px 0px var(--dp); */
 }
 
 .text::selection {
-
     text-shadow: -1px -1px 0px var(--dp), -2px -2px 0px var(--dp), -3px -3px 0px var(--dp);
 }
 
 .link {
-    
+    text-decoration: underline;
 }
 
 .link:hover {

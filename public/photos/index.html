@@ -12,21 +12,37 @@
     <body class="moving-gradient pbody">
         <div class="bar nav">
             <p class="text navitem"> Public photos. </p>
-            <a class="link text" href="../"> -> go back. </a>
+            <a class="text link" href="../"> -> go back. </a>
             <p class="text navitem"></p>
-            <form id="collection_form" class="nav_form">
-                <input type="text" id="collection_input" class="nav_input" placeholder="collection name" required autocomplete="off"spellcheck="false">
-                <input type="text" id="passkey_input" class="nav_input" placeholder="pass key" required autocomplete="off"spellcheck="false">
-                <button type="submit" class="link text btn">-> enter.</button>
-            </form>
+            <p id="see_more" class="text link normal_btn" onClick="see_more_btn()"> -> see more. </a>
+            <!-- <p class="text navitem"></p> -->
+            <!-- <form id="collection_form" class="nav_form"> -->
+            <!--     <input type="text" id="collection_input" class="nav_input" placeholder="collection name" required autocomplete="off"spellcheck="false"> -->
+            <!--     <input type="text" id="passkey_input" class="nav_input" placeholder="pass key" required autocomplete="off"spellcheck="false"> -->
+            <!--     <button type="submit" class="link text btn">-> enter.</button> -->
+            <!-- </form> -->
             <p class="text navitem"> / click the pictures for details </p>
         </div>
 
         <div id="overlay" class="hidden">
             <div id="overlay_grid">
-                <p id="description_text" class="btn overlay_text"> [unknown] </p>                
+                <p id="description_text" class="btn overlay_text"> [now viewing: public photos] </p>                
                 <button id="close" class="btn overlay_btn overlay_text" onClick="hide_preview()"> [close] </button>
                 <!-- <button id="save" class="btn overlay_btn" onClick="save_image()"> [save] </button> -->
+                <div id="coll_form" class="form_overlay hidden">
+                    <div id="collection_buttons" class="button_carousel">
+                        <button id="other_button" class="coll_btn normal_btn"> <form id="other_coll"> <input value="other" id="other_btn"> </form> </button>
+                    </div>
+                    <br><br><br>
+                    <p id="hint" class="overlay_text"> hint: select another collection </p>
+                    <form id="collection_form" class="nav_form">
+                    <!--     <input type="text" id="collection_input" class="nav_input" placeholder="collection name" required autocomplete="off"spellcheck="false"> -->
+                        <input type="text" id="passkey_input" class="overlay_input" placeholder="pass key" autocomplete="off"spellcheck="false">
+                    <!--     <button type="submit" class="link text btn">-> enter.</button> -->
+                    </form>
+                    <!-- <input type="text" id="passkey_input" class="overlay_input" placeholder="pass key" required autocomplete="off"spellcheck="false"> -->
+                </div>
+
             </div>
         </div>
 
@@ -92,14 +108,84 @@
         <script src="../js/photos.js"></script>
 
         <script> 
+
+            // form for "see more"
+            var next_collection = "";
+            var other_collection = "test";
+            
+            let see_more_btn = function () {
+                document.getElementById("description_text").innerText = "[now viewing: public photos]";
+                document.getElementById("hint").innerText = "hint: select another collection";
+                document.getElementById("coll_form").classList.remove("hidden");
+                document.getElementById("overlay").classList.remove("hidden");
+            }
+            
+            function Collection(name, display_name, hint, template) {
+                this.name = name;
+                this.display = display_name;
+                this.hint = hint;
+                this.template = template;
+                this.btn = function () {
+                    let btn = document.createElement("button");
+                    btn.classList.add("coll_btn");
+                    btn.classList.add("normal_btn");
+                    btn.innerText = display_name;
+                    btn.addEventListener('click', function () {
+                        console.log(name);
+                        document.getElementById("hint").innerText = "hint: " + hint;
+                        document.getElementById("description_text").innerText = "[going into: " + display_name + "]"
+                        document.getElementById("passkey_input").value = template;
+                        next_collection = name;
+                    });
+                    // btn.col_obj = this;
+                    return btn;
+                }
+            }
+            
             document.getElementById('collection_form').addEventListener('submit', function(event) {
                 event.preventDefault(); // Prevent the default form submission
             
-                const inputOneValue = document.getElementById('collection_input').value;
-                const inputTwoValue = document.getElementById('passkey_input').value;
+                const cname = next_collection;
+                const cpass = document.getElementById('passkey_input').value.toLowerCase();
+                if (cname == "") {
+                    return;
+                }
             
                 // Redirect to the new URL with query parameters
-                window.location.href = `./collection?v=${new Date().getTime() + (1000 * 60 * 60 * 24 * 7)}&n=${encodeURIComponent(inputOneValue)}&pk=${encodeURIComponent(inputTwoValue)}`;
+                window.location.href = 
+                    `./collection?n=${encodeURIComponent(cname)}&pk=${encodeURIComponent(cpass)}`;
+            });
+
+            document.getElementById('other_coll').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                document.getElementById('other_button').click();
+            });
+
+            
+            let loadCollections = () => {
+                let collections = [
+                    new Collection("bogor", "bogor trip", "when did we go?", "DD/MM/YYYY"),
+                    // new Collection("bandung", "bandung trip", "when did we go?", ""),
+                    // new Collection("easter24", "easter 2024", "where?", ""),
+                    // new Collection("easter25", "easter 2025", "where?", ""),
+                    new Collection("gradparty", "graduation party", "who was the dj?", "___,_____")
+                ];
+            
+                for (col in collections) {
+                    let next_btn = collections[col].btn();
+                    let list = document.getElementById("collection_buttons");
+                    list.insertBefore(next_btn, list.children[0]);
+                }
+            }
+    
+            loadCollections();
+
+            document.getElementById("other_button").addEventListener('click', function () {
+                let name = document.getElementById("other_btn").value;
+                document.getElementById("hint").innerText = "hope u know what you're doing";
+                document.getElementById("description_text").innerText = "[going into: " + name + "]"
+                next_collection = name;
             });
         </script>
     </body>
