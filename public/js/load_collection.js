@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
  
     window.addEventListener("scroll", function(){
-        if (amountscrolled() > 85) {
+        if (amountscrolled() > 90) {
             displayImages(collection_details[0], collection_details[1], already_loaded, already_loaded + add_load);
             already_loaded += add_load;
 

@@ -294,8 +294,9 @@ input::selection {
     font-size: 1.6em;
     margin-left: 6em;
     margin-right: 6em;
-    margin-bottom: 5em;
+    margin-bottom: 1em;
     margin-top: 1em;
+    letter-spacing: 0.2rem;
 }
 
 #other_btn {
@@ -304,4 +305,20 @@ input::selection {
     font-size: 1em;
     color: var(--white);
     border: none;
+}
+
+.block_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.block_btn {
+    color: var(--white);
+    font-size: 1.6em;
+
+    margin-left: 6em;
+    margin-right: 6em;
+    margin-bottom: 3em;
 }

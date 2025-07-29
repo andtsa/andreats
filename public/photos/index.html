@@ -35,10 +35,11 @@
                     </div>
                     <br><br><br>
                     <p id="hint" class="overlay_text"> hint: select another collection </p>
-                    <form id="collection_form" class="nav_form">
+                    <form id="collection_form" class="block_form">
                     <!--     <input type="text" id="collection_input" class="nav_input" placeholder="collection name" required autocomplete="off"spellcheck="false"> -->
                         <input type="text" id="passkey_input" class="overlay_input" placeholder="pass key" autocomplete="off"spellcheck="false">
-                    <!--     <button type="submit" class="link text btn">-> enter.</button> -->
+                        <br>
+                        <button type="submit" class="link btn overlay_btn block_btn">-> enter.</button>
                     </form>
                     <!-- <input type="text" id="passkey_input" class="overlay_input" placeholder="pass key" required autocomplete="off"spellcheck="false"> -->
                 </div>
@@ -111,11 +112,11 @@
 
             // form for "see more"
             var next_collection = "";
-            var other_collection = "test";
             
             let see_more_btn = function () {
                 document.getElementById("description_text").innerText = "[now viewing: public photos]";
                 document.getElementById("hint").innerText = "hint: select another collection";
+                document.getElementById("passkey_input").placeholder = "pass key";
                 document.getElementById("coll_form").classList.remove("hidden");
                 document.getElementById("overlay").classList.remove("hidden");
             }
@@ -134,7 +135,7 @@
                         console.log(name);
                         document.getElementById("hint").innerText = "hint: " + hint;
                         document.getElementById("description_text").innerText = "[going into: " + display_name + "]"
-                        document.getElementById("passkey_input").value = template;
+                        document.getElementById("passkey_input").placeholder = template;
                         next_collection = name;
                     });
                     // btn.col_obj = this;
@@ -156,6 +157,22 @@
                     `./collection?n=${encodeURIComponent(cname)}&pk=${encodeURIComponent(cpass)}`;
             });
 
+            let update_other_field = () => {
+                let name = document.getElementById("other_btn").value;
+                document.getElementById("hint").innerText = "hope u know what you're doing";
+                document.getElementById("passkey_input").value = "";
+                document.getElementById("passkey_input").placeholder = "pass key";
+                document.getElementById("description_text").innerText = "[going into: " + name + "]"
+                next_collection = name;
+            };
+
+            document.getElementById("other_button").addEventListener('click', update_other_field);
+            document.getElementById("other_button").addEventListener('focus', update_other_field);
+            document.getElementById("other_button").addEventListener('blur', update_other_field);
+            document.getElementById("other_btn").addEventListener('click', update_other_field);
+            document.getElementById("other_btn").addEventListener('focus', update_other_field);
+            document.getElementById("other_btn").addEventListener('blur', update_other_field);
+
             document.getElementById('other_coll').addEventListener('submit', function(event) {
                 event.preventDefault();
 
@@ -165,11 +182,11 @@
             
             let loadCollections = () => {
                 let collections = [
-                    new Collection("bogor", "bogor trip", "when did we go?", "DD/MM/YYYY"),
+                    new Collection("bogor", "bogor trip", "when did we go?", "MMMM-D"),
                     // new Collection("bandung", "bandung trip", "when did we go?", ""),
                     // new Collection("easter24", "easter 2024", "where?", ""),
                     // new Collection("easter25", "easter 2025", "where?", ""),
-                    new Collection("gradparty", "graduation party", "who was the dj?", "___,_____")
+                    new Collection("gradparty", "graduation party", "who where the 2 djs?", "___,_____")
                 ];
             
                 for (col in collections) {
@@ -181,12 +198,6 @@
     
             loadCollections();
 
-            document.getElementById("other_button").addEventListener('click', function () {
-                let name = document.getElementById("other_btn").value;
-                document.getElementById("hint").innerText = "hope u know what you're doing";
-                document.getElementById("description_text").innerText = "[going into: " + name + "]"
-                next_collection = name;
-            });
         </script>
     </body>
 </html>
